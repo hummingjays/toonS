@@ -7,7 +7,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
       color-scheme: dark;
@@ -15,17 +15,18 @@
     html, body {
       margin: 0;
       padding: 0;
-      background-color: #08090d;
+      height: 100dvh;
+      background-color: #06070b;
       color: #f8fafc;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      overflow-x: hidden;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      overflow: hidden;
     }
     .font-cartoon {
-      font-family: 'Space Grotesk', sans-serif;
-      letter-spacing: -0.02em;
+      font-family: 'Syne', sans-serif;
+      letter-spacing: -0.025em;
     }
     .font-mono-tv {
-      font-family: 'IBM Plex Mono', monospace;
+      font-family: 'JetBrains Mono', monospace;
       font-variant-numeric: tabular-nums;
     }
     .hidden {
@@ -34,7 +35,7 @@
     .tv-seek-slider {
       -webkit-appearance: none;
       appearance: none;
-      background: rgba(255, 255, 255, 0.22);
+      background: rgba(255, 255, 255, 0.18);
       height: 5px;
       border-radius: 999px;
       outline: none;
@@ -46,18 +47,18 @@
       width: 14px;
       height: 14px;
       border-radius: 50%;
-      background: #facc15;
-      border: 2px solid #0f172a;
-      box-shadow: 0 0 8px rgba(250, 204, 21, 0.7);
+      background: #fbbf24;
+      border: 2px solid #090b10;
+      box-shadow: 0 0 10px rgba(251, 191, 36, 0.85);
       cursor: pointer;
     }
     .tv-seek-slider::-moz-range-thumb {
       width: 14px;
       height: 14px;
       border-radius: 50%;
-      background: #facc15;
-      border: 2px solid #0f172a;
-      box-shadow: 0 0 8px rgba(250, 204, 21, 0.7);
+      background: #fbbf24;
+      border: 2px solid #090b10;
+      box-shadow: 0 0 10px rgba(251, 191, 36, 0.85);
       cursor: pointer;
     }
     .crt-overlay {
@@ -71,13 +72,14 @@
         display: flex;
         flex-direction: row-reverse;
         align-items: stretch;
-        min-height: 250px;
+        min-height: 230px;
+        max-height: 270px;
       }
       #player-wrapper {
         width: 44%;
-        max-width: 560px;
+        max-width: 520px;
         flex-shrink: 0;
-        border-left: 1px solid rgba(255, 255, 255, 0.08);
+        border-left: 1px solid rgba(251, 191, 36, 0.14);
       }
       #metadata-panel {
         flex: 1;
@@ -95,29 +97,33 @@
       width: 100vw !important;
       max-width: 100vw !important;
       height: 100dvh !important;
+      max-height: 100dvh !important;
       z-index: 9999 !important;
       background: #000 !important;
       border: none !important;
     }
+    body.fs-active #top-app-bar,
+    body.fs-active nav {
+      display: none !important;
+    }
     ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
+      width: 5px;
+      height: 5px;
     }
     ::-webkit-scrollbar-track {
-      background: #0b0d14;
+      background: #080a10;
     }
     ::-webkit-scrollbar-thumb {
-      background: #272b3b;
+      background: #282d40;
       border-radius: 999px;
     }
   </style>
 </head>
-<body class="select-none">
+<body class="select-none bg-[#06070b] text-slate-100">
 
   <!-- ==================== DEVICE AUTHORIZATION LOCK SCREEN ==================== -->
-  <div id="device-auth-gate" class="fixed inset-0 z-[10000] bg-[#08090d] flex items-center justify-center p-4 overflow-y-auto">
+  <div id="device-auth-gate" class="fixed inset-0 z-[10000] bg-[#06070b] flex items-center justify-center p-4 overflow-y-auto">
     <div class="w-full max-w-[390px] rounded-[26px] bg-[#161821] border border-white/15 p-6 sm:p-7 shadow-[0_24px_64px_rgba(0,0,0,0.9)] text-center space-y-5 my-auto">
-      <!-- Top Crimson Rounded Lock Badge -->
       <div class="w-12 h-12 rounded-2xl bg-gradient-to-b from-[#fb3b5a] to-[#e11d48] mx-auto flex items-center justify-center shadow-[0_8px_24px_rgba(244,63,94,0.45)]">
         <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
           <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
@@ -209,22 +215,22 @@
   </div>
 
   <!-- ==================== MAIN WEB APP SHELL ==================== -->
-  <div id="app-shell" class="min-h-screen flex flex-col pb-24">
+  <div id="app-shell" class="h-[100dvh] flex flex-col overflow-hidden bg-gradient-to-b from-[#090b12] via-[#07080d] to-[#050609]">
 
     <!-- Top Admin & Brand Bar (Shows Admin button prominently when signed in as admin) -->
-    <header id="top-app-bar" class="sticky top-0 z-40 bg-[#0b0d14]/95 backdrop-blur-md border-b border-white/10 px-3 sm:px-5 py-2 flex items-center justify-between">
+    <header id="top-app-bar" class="flex-shrink-0 z-40 bg-[#090b12]/95 backdrop-blur-xl border-b border-amber-400/15 px-3.5 sm:px-5 py-2 flex items-center justify-between">
       <div class="flex items-center gap-2.5">
-        <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-amber-400 to-rose-500 flex items-center justify-center font-cartoon font-bold text-slate-950 text-xs shadow">
+        <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-amber-300 via-amber-500 to-rose-600 flex items-center justify-center font-cartoon font-extrabold text-slate-950 text-xs shadow-[0_0_14px_rgba(251,191,36,0.35)]">
           tS
         </div>
-        <span class="font-cartoon font-bold text-base sm:text-lg text-white tracking-tight">toonS</span>
-        <span class="hidden sm:inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-rose-500/15 border border-rose-500/30 text-[10px] font-mono-tv font-bold text-rose-300">
-          <span class="w-1.5 h-1.5 rounded-full bg-rose-400 animate-pulse"></span> LIVE TV
+        <span class="font-cartoon font-extrabold text-base sm:text-lg text-white tracking-tight">toonS</span>
+        <span class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-400/10 border border-amber-400/25 text-[10px] font-mono-tv font-semibold text-amber-300">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span> LIVE CARTOON &amp; MOVIE TV
         </span>
       </div>
 
       <div class="flex items-center gap-2">
-        <span id="header-clock" class="font-mono-tv text-xs text-slate-300 bg-white/5 px-2.5 py-1 rounded-lg border border-white/10">
+        <span id="header-clock" class="font-mono-tv text-[11px] text-amber-100/90 bg-white/[0.04] px-2.5 py-1 rounded-lg border border-white/10">
           --:--:--
         </span>
 
@@ -232,7 +238,7 @@
         <button
           id="top-admin-btn"
           onclick="openAdminKeygenModal()"
-          class="hidden flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-400 to-amber-300 hover:brightness-105 text-slate-950 font-bold text-xs shadow-[0_4px_14px_rgba(251,191,36,0.35)] cursor-pointer transition active:scale-95"
+          class="hidden flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-300 to-amber-500 hover:brightness-105 text-slate-950 font-bold text-xs shadow-[0_4px_16px_rgba(251,191,36,0.3)] cursor-pointer transition active:scale-95"
         >
           <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v2H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-1V6a4 4 0 00-4-4zm2 6V6a2 2 0 10-4 0v2h4z" clip-rule="evenodd" />
@@ -243,13 +249,13 @@
     </header>
 
     <!-- ==================== LIVE TV VIEW ==================== -->
-    <main id="view-livetv" class="flex-1 flex flex-col">
+    <main id="view-livetv" class="flex-1 min-h-0 flex flex-col overflow-hidden pb-[66px]">
 
-      <!-- TOP HERO STAGE: WIDESCREEN SPLIT (METADATA LEFT + TV PIP RIGHT) / PORTRAIT STACK -->
-      <section id="hero-stage" class="bg-gradient-to-b from-[#111522] via-[#0c0f18] to-[#08090d] border-b border-white/10">
+      <!-- TOP HERO STAGE: FIXED DISPLAY + METADATA -->
+      <section id="hero-stage" class="flex-shrink-0 z-30 bg-gradient-to-br from-[#121626] via-[#0c0f19] to-[#080a11] border-b border-amber-400/15 shadow-[0_12px_32px_rgba(0,0,0,0.65)]">
 
         <!-- Video Player Container -->
-        <div id="player-wrapper" class="relative bg-black aspect-video w-full overflow-hidden group" onmousemove="wakeFullscreenHUD()" onclick="wakeFullscreenHUD()">
+        <div id="player-wrapper" class="relative bg-black aspect-video max-h-[30dvh] sm:max-h-none w-full overflow-hidden group" onmousemove="wakeFullscreenHUD()" onclick="wakeFullscreenHUD()">
           <video id="tv-video" class="w-full h-full object-contain bg-black" playsinline autoplay muted></video>
           <iframe id="tv-embed-frame" class="hidden w-full h-full border-0 bg-black" allow="autoplay; fullscreen"></iframe>
 
@@ -309,10 +315,10 @@
           </div>
 
           <!-- NostalgiaTV Fullscreen HUD Overlay -->
-          <div id="fullscreen-hud" class="hidden absolute inset-0 z-30 flex flex-col justify-between p-4 sm:p-6 bg-gradient-to-b from-black/70 via-transparent to-black/90 transition-opacity duration-300">
+          <div id="fullscreen-hud" class="hidden absolute inset-0 z-30 flex flex-col justify-between p-4 pb-6 sm:p-6 bg-gradient-to-b from-black/75 via-transparent to-black/95 transition-opacity duration-300">
             <!-- Top Row -->
-            <div class="flex items-center justify-between">
-              <button onclick="toggleFullscreen()" class="w-11 h-11 rounded-xl bg-slate-900/85 hover:bg-slate-800 border border-white/15 flex items-center justify-center text-white cursor-pointer">
+            <div class="flex items-center justify-between pt-2 sm:pt-0">
+              <button onclick="toggleFullscreen()" class="w-11 h-11 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-white/15 flex items-center justify-center text-white cursor-pointer">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                 </svg>
@@ -323,11 +329,11 @@
             </div>
 
             <!-- Bottom Row -->
-            <div class="space-y-3">
+            <div class="space-y-3 pb-2">
               <div class="flex items-end justify-between gap-4">
                 <div class="space-y-1 max-w-[55%]">
                   <div class="font-mono-tv text-[10px] font-bold tracking-widest text-amber-300 uppercase">NOW PLAYING</div>
-                  <div id="fs-now-logo" class="h-10 w-36 flex items-center"></div>
+                  <div id="fs-now-logo" class="h-9 w-32 flex items-center"></div>
                   <div id="fs-now-title" class="text-xs sm:text-sm font-semibold text-white truncate">Episode Title</div>
                 </div>
                 <div class="space-y-1 text-right max-w-[40%]">
@@ -336,7 +342,7 @@
                 </div>
               </div>
 
-              <div class="space-y-1">
+              <div class="space-y-1.5">
                 <div class="flex justify-between font-mono-tv text-xs text-slate-300">
                   <span id="fs-start-time">00:00</span>
                   <span id="fs-end-time">22:00</span>
@@ -345,7 +351,7 @@
               </div>
 
               <!-- Transport Controls -->
-              <div class="flex items-center justify-center gap-2 sm:gap-3 pt-1">
+              <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 pt-1">
                 <button onclick="prevChannel()" title="Previous Channel" class="w-10 h-10 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-white/15 flex items-center justify-center text-white font-mono-tv text-xs font-bold cursor-pointer">CH-</button>
                 <button onclick="jumpRandomScene()" title="Random Scene" class="w-10 h-10 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-white/15 flex items-center justify-center text-amber-300 cursor-pointer">🎲</button>
                 <button onclick="toggleFullscreen()" title="Return to Guide" class="w-10 h-10 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-white/15 flex items-center justify-center text-white cursor-pointer">📺</button>
@@ -360,55 +366,55 @@
         </div>
 
         <!-- Metadata Info Zone -->
-        <div id="metadata-panel" class="p-3.5 sm:p-5 flex items-center justify-between gap-3">
-          <div class="space-y-1.5 min-w-0 flex-1">
-            <h2 id="meta-show-title" class="font-cartoon text-xl sm:text-2xl font-bold text-white truncate">
+        <div id="metadata-panel" class="px-3.5 py-2.5 sm:p-5 flex items-center justify-between gap-3">
+          <div class="space-y-1 min-w-0 flex-1">
+            <h2 id="meta-show-title" class="font-cartoon text-lg sm:text-2xl font-extrabold text-white tracking-tight truncate">
               Dexter's Laboratory
             </h2>
-            <div id="meta-episode-title" class="text-xs sm:text-sm font-semibold text-amber-300 truncate">
+            <div id="meta-episode-title" class="text-xs sm:text-sm font-semibold text-amber-300/95 truncate">
               Loading live episode...
             </div>
-            <div id="meta-air-window" class="font-mono-tv text-[11px] text-slate-300">
+            <div id="meta-air-window" class="font-mono-tv text-[10px] sm:text-[11px] text-slate-300/90">
               --:-- AM - --:-- AM &nbsp; 101 DEXTER'S LABORATORY
             </div>
             <div class="flex flex-wrap items-center gap-1.5 pt-0.5 font-mono-tv text-[10px]">
-              <span id="meta-year" class="px-1.5 py-0.5 rounded border border-white/20 text-slate-200">1995</span>
-              <span id="meta-rating" class="px-1.5 py-0.5 rounded border border-white/20 text-slate-200">TV-G</span>
-              <span class="px-1.5 py-0.5 rounded border border-white/20 text-slate-200">HD</span>
-              <span class="px-1.5 py-0.5 rounded border border-white/20 text-slate-200">AAC Stereo</span>
-              <span id="meta-runtime" class="px-1.5 py-0.5 rounded border border-white/20 text-slate-200">22 min</span>
+              <span id="meta-year" class="px-2 py-0.5 rounded-md bg-amber-400/10 border border-amber-400/25 text-amber-200 font-semibold">1995</span>
+              <span id="meta-rating" class="px-2 py-0.5 rounded-md bg-white/[0.04] border border-white/15 text-slate-200">TV-G</span>
+              <span class="px-2 py-0.5 rounded-md bg-white/[0.04] border border-white/15 text-slate-200">HD</span>
+              <span class="px-2 py-0.5 rounded-md bg-white/[0.04] border border-white/15 text-slate-200">AAC Stereo</span>
+              <span id="meta-runtime" class="px-2 py-0.5 rounded-md bg-white/[0.04] border border-white/15 text-slate-200">22 min</span>
             </div>
-            <p id="meta-description" class="text-xs text-slate-400 line-clamp-2 pt-0.5 leading-relaxed">
+            <p id="meta-description" class="hidden sm:line-clamp-2 text-xs text-slate-400 pt-0.5 leading-relaxed">
               Boy genius Dexter invents wild contraptions in his secret laboratory while keeping his older sister Dee Dee out.
             </p>
           </div>
 
-          <div id="meta-brand-logo" class="w-28 sm:w-36 h-16 flex-shrink-0 flex items-center justify-center"></div>
+          <div id="meta-brand-logo" class="w-24 sm:w-36 h-12 sm:h-16 flex-shrink-0 flex items-center justify-center"></div>
         </div>
       </section>
 
-      <!-- EPG TV GUIDE -->
-      <section class="flex-1 flex flex-col bg-[#08090d]">
+      <!-- SCROLLABLE EPG TV GUIDE -->
+      <section class="flex-1 min-h-0 flex flex-col bg-[#06070b] overflow-hidden">
         <!-- Guide Time Header Bar -->
-        <div class="sticky top-[45px] z-30 flex items-stretch bg-[#0d111d] border-b border-white/10">
-          <div class="w-36 sm:w-48 flex-shrink-0 px-3 py-2 flex items-center gap-2 border-r border-white/10 bg-[#0b0e18]">
+        <div class="flex-shrink-0 z-20 flex items-stretch bg-[#0c0f1a] border-b border-white/10">
+          <div class="w-36 sm:w-48 flex-shrink-0 px-3 py-2 flex items-center gap-2 border-r border-white/10 bg-[#0a0d16]">
             <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
-            <span id="epg-live-clock" class="font-mono-tv text-xs font-bold text-white">--:--:--</span>
+            <span id="epg-live-clock" class="font-mono-tv text-[11px] font-bold text-amber-100">--:--:--</span>
           </div>
-          <div id="epg-time-slots" class="flex-1 flex items-center overflow-x-auto font-mono-tv text-xs text-slate-300">
+          <div id="epg-time-slots" class="flex-1 flex items-center overflow-x-auto font-mono-tv text-[11px] text-slate-300">
             <!-- Populated dynamically with half-hour slots -->
           </div>
         </div>
 
         <!-- EPG Rows Container -->
-        <div id="epg-rows" class="divide-y divide-white/10">
+        <div id="epg-rows" class="flex-1 min-h-0 overflow-y-auto divide-y divide-white/[0.07]">
           <!-- Channels rendered here -->
         </div>
       </section>
     </main>
 
     <!-- ==================== ON DEMAND VIEW ==================== -->
-    <main id="view-ondemand" class="hidden flex-1 p-4 sm:p-6 space-y-6 max-w-6xl mx-auto w-full">
+    <main id="view-ondemand" class="hidden flex-1 min-h-0 overflow-y-auto p-4 sm:p-6 pb-24 space-y-6 max-w-6xl mx-auto w-full">
       <!-- Featured Hero Card -->
       <div class="rounded-2xl bg-gradient-to-r from-indigo-950 via-slate-900 to-amber-950/50 border border-white/10 p-5 sm:p-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div class="space-y-2 max-w-xl">
@@ -443,7 +449,7 @@
     </main>
 
     <!-- ==================== MOVIES VIEW ==================== -->
-    <main id="view-movies" class="hidden flex-1 p-4 sm:p-6 space-y-4 max-w-6xl mx-auto w-full">
+    <main id="view-movies" class="hidden flex-1 min-h-0 overflow-y-auto p-4 sm:p-6 pb-24 space-y-4 max-w-6xl mx-auto w-full">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <h2 class="font-cartoon text-2xl font-bold text-white">Walt Disney Animation Movies</h2>
@@ -455,7 +461,7 @@
     </main>
 
     <!-- ==================== SEARCH VIEW ==================== -->
-    <main id="view-search" class="hidden flex-1 p-4 sm:p-6 space-y-4 max-w-4xl mx-auto w-full">
+    <main id="view-search" class="hidden flex-1 min-h-0 overflow-y-auto p-4 sm:p-6 pb-24 space-y-4 max-w-4xl mx-auto w-full">
       <h2 class="font-cartoon text-2xl font-bold text-white">Search Channels, Shows & Movies</h2>
       <input id="global-search-input" type="text" oninput="renderGlobalSearch()" placeholder="Type a show, episode, or Disney movie..." class="w-full rounded-xl bg-[#121521] border border-white/15 px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-amber-400" />
       <div id="global-search-results" class="space-y-2"></div>
@@ -464,7 +470,7 @@
   </div>
 
   <!-- ==================== BOTTOM NAVIGATION BAR + BLENDED FOOTER ==================== -->
-  <nav class="fixed bottom-0 inset-x-0 z-40 bg-gradient-to-t from-[#07080c] via-[#0b0d14]/95 to-[#0b0d14]/85 backdrop-blur-lg">
+  <nav class="fixed bottom-0 inset-x-0 z-40 bg-gradient-to-t from-[#050609] via-[#090b12]/95 to-[#090b12]/85 backdrop-blur-xl border-t border-white/[0.06]">
     <div class="max-w-lg mx-auto grid grid-cols-4 px-2 pt-1.5 pb-1">
       <button id="nav-search" onclick="switchBottomTab('search')" class="flex flex-col items-center justify-center py-1 rounded-xl text-slate-400 hover:text-white transition cursor-pointer">
         <span class="text-base">🔍</span>
@@ -1240,6 +1246,7 @@
       const isCurrentlyFs = document.fullscreenElement || wrapper.classList.contains('is-theater');
 
       if (!isCurrentlyFs) {
+        document.body.classList.add('fs-active');
         try {
           if (wrapper.requestFullscreen) {
             await wrapper.requestFullscreen();
@@ -1256,6 +1263,7 @@
         stdControls.classList.add('hidden');
         wakeFullscreenHUD();
       } else {
+        document.body.classList.remove('fs-active');
         try {
           if (document.fullscreenElement && document.exitFullscreen) {
             await document.exitFullscreen();
@@ -1275,6 +1283,7 @@
       const fsHud = document.getElementById('fullscreen-hud');
       const stdControls = document.getElementById('standard-controls');
       if (!document.fullscreenElement && !wrapper.classList.contains('is-theater')) {
+        document.body.classList.remove('fs-active');
         fsHud.classList.add('hidden');
         stdControls.classList.remove('hidden');
       }
