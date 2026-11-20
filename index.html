@@ -1,0 +1,1558 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>toonS — Live Cartoon & Movie TV</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      color-scheme: dark;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: #08090d;
+      color: #f8fafc;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      overflow-x: hidden;
+    }
+    .font-cartoon {
+      font-family: 'Space Grotesk', sans-serif;
+      letter-spacing: -0.02em;
+    }
+    .font-mono-tv {
+      font-family: 'IBM Plex Mono', monospace;
+      font-variant-numeric: tabular-nums;
+    }
+    .hidden {
+      display: none !important;
+    }
+    .tv-seek-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      background: rgba(255, 255, 255, 0.22);
+      height: 5px;
+      border-radius: 999px;
+      outline: none;
+      cursor: pointer;
+    }
+    .tv-seek-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #facc15;
+      border: 2px solid #0f172a;
+      box-shadow: 0 0 8px rgba(250, 204, 21, 0.7);
+      cursor: pointer;
+    }
+    .tv-seek-slider::-moz-range-thumb {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #facc15;
+      border: 2px solid #0f172a;
+      box-shadow: 0 0 8px rgba(250, 204, 21, 0.7);
+      cursor: pointer;
+    }
+    .crt-overlay {
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.28) 50%),
+                  linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+      background-size: 100% 3px, 6px 100%;
+    }
+    /* Widescreen / Landscape Split Hero Layout */
+    @media (orientation: landscape) and (min-width: 640px), (min-width: 900px) {
+      #hero-stage {
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: stretch;
+        min-height: 250px;
+      }
+      #player-wrapper {
+        width: 44%;
+        max-width: 560px;
+        flex-shrink: 0;
+        border-left: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      #metadata-panel {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+    }
+    /* Fullscreen & Theater Mode Override */
+    #player-wrapper.is-theater,
+    #player-wrapper:fullscreen,
+    #player-wrapper:-webkit-full-screen {
+      position: fixed !important;
+      inset: 0 !important;
+      width: 100vw !important;
+      max-width: 100vw !important;
+      height: 100dvh !important;
+      z-index: 9999 !important;
+      background: #000 !important;
+      border: none !important;
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0b0d14;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #272b3b;
+      border-radius: 999px;
+    }
+  </style>
+</head>
+<body class="select-none">
+
+  <!-- ==================== DEVICE AUTHORIZATION LOCK SCREEN ==================== -->
+  <div id="device-auth-gate" class="fixed inset-0 z-[10000] bg-[#08090d] flex items-center justify-center p-4 overflow-y-auto">
+    <div class="w-full max-w-[390px] rounded-[26px] bg-[#161821] border border-white/15 p-6 sm:p-7 shadow-[0_24px_64px_rgba(0,0,0,0.9)] text-center space-y-5 my-auto">
+      <!-- Top Crimson Rounded Lock Badge -->
+      <div class="w-12 h-12 rounded-2xl bg-gradient-to-b from-[#fb3b5a] to-[#e11d48] mx-auto flex items-center justify-center shadow-[0_8px_24px_rgba(244,63,94,0.45)]">
+        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
+        </svg>
+      </div>
+
+      <!-- Heading & Subtitle -->
+      <div class="space-y-1.5">
+        <div class="font-mono-tv text-[10px] font-bold tracking-[0.18em] text-[#fb3b5a] uppercase">
+          DEVICE AUTHORIZATION REQUIRED
+        </div>
+        <h1 class="font-cartoon text-2xl font-bold text-white tracking-tight">
+          Unlock This Browser
+        </h1>
+        <p class="text-xs text-slate-400 leading-relaxed px-1">
+          Access is bound per browser. Send your <strong class="text-slate-200 font-semibold">Device Request Code</strong> to the Admin to receive a single-device <strong class="text-slate-200 font-semibold">Unlock Key</strong>.
+        </p>
+      </div>
+
+      <!-- Device Request Code Box -->
+      <div class="rounded-2xl bg-[#0e1016] border border-white/10 p-4 space-y-2.5">
+        <div class="font-mono-tv text-[10px] font-bold tracking-[0.14em] text-slate-400 uppercase">
+          YOUR DEVICE REQUEST CODE
+        </div>
+        <div class="flex items-center justify-center gap-2.5">
+          <span id="device-request-code" class="font-mono-tv text-lg sm:text-xl font-bold text-white tracking-widest select-all">
+            TS-XXXX-XX
+          </span>
+          <button type="button" onclick="copyDeviceRequestCode()" class="px-3 py-1 rounded-lg bg-[#232634] hover:bg-[#2e3244] text-slate-200 text-xs font-semibold border border-white/10 cursor-pointer transition active:scale-95">
+            Copy
+          </button>
+        </div>
+        <p class="text-[11px] text-slate-500 leading-snug">
+          Keys generated for this code will not work on any other browser.
+        </p>
+      </div>
+
+      <!-- Standard Unlock Form -->
+      <form id="unlock-browser-form" onsubmit="handleUnlockBrowser(event)" class="space-y-3 text-left">
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1.5">Single-Device Unlock Key</label>
+          <input
+            id="unlock-key-input"
+            type="text"
+            autocomplete="off"
+            spellcheck="false"
+            placeholder="E.G. UNLOCK-XXXX-XXXX-XXXX"
+            class="w-full rounded-xl bg-[#0e1016] border border-white/15 focus:border-[#fb3b5a] px-3.5 py-2.5 font-mono-tv text-xs sm:text-sm text-white placeholder-slate-500 uppercase tracking-wider focus:outline-none"
+          />
+        </div>
+
+        <div id="auth-error-msg" class="hidden text-center font-mono-tv text-[11px] text-rose-400 bg-rose-500/10 border border-rose-500/30 rounded-lg py-1.5 px-2"></div>
+
+        <button type="submit" class="w-full py-3 rounded-xl bg-gradient-to-r from-[#fb3b5a] to-[#f43f5e] hover:brightness-110 text-white font-bold text-sm shadow-[0_8px_20px_rgba(244,63,94,0.35)] cursor-pointer transition active:scale-[0.99]">
+          Unlock Browser
+        </button>
+      </form>
+
+      <!-- Collapsible Admin Login Form -->
+      <form id="admin-login-form" onsubmit="handleAdminLogin(event)" class="hidden space-y-3 text-left pt-1 border-t border-white/10">
+        <div class="font-mono-tv text-[10px] font-bold tracking-widest text-amber-300 uppercase text-center pt-1">
+          Admin Direct Authorization
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Admin Username</label>
+          <input id="admin-user-input" type="text" autocomplete="username" placeholder="admin" class="w-full rounded-xl bg-[#0e1016] border border-white/15 focus:border-amber-400 px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Admin Password</label>
+          <input id="admin-pass-input" type="password" autocomplete="current-password" placeholder="•••••••••••" class="w-full rounded-xl bg-[#0e1016] border border-white/15 focus:border-amber-400 px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none" />
+        </div>
+        <div id="admin-error-msg" class="hidden text-center font-mono-tv text-[11px] text-rose-400 bg-rose-500/10 border border-rose-500/30 rounded-lg py-1.5 px-2"></div>
+        <button type="submit" class="w-full py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs cursor-pointer transition">
+          Sign In & Authorize Browser
+        </button>
+      </form>
+
+      <!-- Toggle Admin Sign-In Link -->
+      <div class="pt-2 border-t border-white/10 space-y-3">
+        <button type="button" id="toggle-admin-btn" onclick="toggleAdminAuthPanel()" class="text-xs text-slate-400 hover:text-white transition cursor-pointer leading-relaxed">
+          Admin on a new device? Sign in with Admin Credentials<br/>→
+        </button>
+
+        <div class="text-[11px] font-mono-tv text-slate-500">
+          toonS by SenthilKumar
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MAIN WEB APP SHELL ==================== -->
+  <div id="app-shell" class="min-h-screen flex flex-col pb-24">
+
+    <!-- Top Admin & Brand Bar (Shows Admin button prominently when signed in as admin) -->
+    <header id="top-app-bar" class="sticky top-0 z-40 bg-[#0b0d14]/95 backdrop-blur-md border-b border-white/10 px-3 sm:px-5 py-2 flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-amber-400 to-rose-500 flex items-center justify-center font-cartoon font-bold text-slate-950 text-xs shadow">
+          tS
+        </div>
+        <span class="font-cartoon font-bold text-base sm:text-lg text-white tracking-tight">toonS</span>
+        <span class="hidden sm:inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-rose-500/15 border border-rose-500/30 text-[10px] font-mono-tv font-bold text-rose-300">
+          <span class="w-1.5 h-1.5 rounded-full bg-rose-400 animate-pulse"></span> LIVE TV
+        </span>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <span id="header-clock" class="font-mono-tv text-xs text-slate-300 bg-white/5 px-2.5 py-1 rounded-lg border border-white/10">
+          --:--:--
+        </span>
+
+        <!-- Prominent Top Admin Button to Enable Other Browsers / Users -->
+        <button
+          id="top-admin-btn"
+          onclick="openAdminKeygenModal()"
+          class="hidden flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-400 to-amber-300 hover:brightness-105 text-slate-950 font-bold text-xs shadow-[0_4px_14px_rgba(251,191,36,0.35)] cursor-pointer transition active:scale-95"
+        >
+          <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v2H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-1V6a4 4 0 00-4-4zm2 6V6a2 2 0 10-4 0v2h4z" clip-rule="evenodd" />
+          </svg>
+          <span>Admin</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- ==================== LIVE TV VIEW ==================== -->
+    <main id="view-livetv" class="flex-1 flex flex-col">
+
+      <!-- TOP HERO STAGE: WIDESCREEN SPLIT (METADATA LEFT + TV PIP RIGHT) / PORTRAIT STACK -->
+      <section id="hero-stage" class="bg-gradient-to-b from-[#111522] via-[#0c0f18] to-[#08090d] border-b border-white/10">
+
+        <!-- Video Player Container -->
+        <div id="player-wrapper" class="relative bg-black aspect-video w-full overflow-hidden group" onmousemove="wakeFullscreenHUD()" onclick="wakeFullscreenHUD()">
+          <video id="tv-video" class="w-full h-full object-contain bg-black" playsinline autoplay muted></video>
+          <iframe id="tv-embed-frame" class="hidden w-full h-full border-0 bg-black" allow="autoplay; fullscreen"></iframe>
+
+          <!-- Optional CRT Scanline Effect -->
+          <div id="crt-layer" class="hidden crt-overlay pointer-events-none absolute inset-0 z-10"></div>
+
+          <!-- Top-Left Channel OSD Pill -->
+          <div id="osd-banner" class="absolute top-3 left-3 z-20 flex items-center gap-2 bg-black/75 backdrop-blur-md border border-white/15 px-2.5 py-1.5 rounded-xl transition-opacity duration-300">
+            <div id="osd-logo-slot" class="w-12 h-6 flex items-center justify-center"></div>
+            <div>
+              <div class="flex items-center gap-1.5 font-mono-tv text-[10px] text-amber-300 font-bold">
+                <span id="osd-ch-num">CH 101</span>
+                <span class="px-1.5 py-0.2 rounded bg-rose-600 text-white text-[9px]">LIVE</span>
+              </div>
+              <div id="osd-ch-name" class="text-xs font-bold text-white leading-tight">Dexter's Laboratory</div>
+            </div>
+          </div>
+
+          <!-- Unmute Prompt Button -->
+          <button id="unmute-cta" onclick="unmuteVideo(event)" class="absolute bottom-14 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 px-4 py-2 rounded-full bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs shadow-xl cursor-pointer transition">
+            <span>🔊 Tap for Audio</span>
+          </button>
+
+          <!-- Loader Overlay -->
+          <div id="player-loader" class="hidden absolute inset-0 z-20 bg-black/85 flex flex-col items-center justify-center p-4 text-center">
+            <div class="w-8 h-8 border-2 border-amber-400 border-t-transparent rounded-full animate-spin mb-2"></div>
+            <div id="loader-text" class="font-cartoon text-sm font-bold text-white">Tuning Channel...</div>
+            <div id="loader-subtext" class="font-mono-tv text-[11px] text-slate-400 mt-0.5">Syncing broadcast stream</div>
+          </div>
+
+          <!-- Standard Bottom Controls Bar -->
+          <div id="standard-controls" class="absolute bottom-0 inset-x-0 z-20 bg-gradient-to-t from-black/95 via-black/75 to-transparent px-3 pt-5 pb-2 space-y-1.5">
+            <div class="flex items-center gap-2">
+              <span id="time-elapsed" class="font-mono-tv text-[10px] text-slate-300 w-10">00:00</span>
+              <input id="seek-slider" type="range" min="0" max="1000" value="0" oninput="handleSeekInput(this.value)" onchange="handleSeekCommit(this.value)" class="tv-seek-slider flex-1" />
+              <span id="time-duration" class="font-mono-tv text-[10px] text-slate-300 w-10 text-right">00:00</span>
+            </div>
+
+            <div class="flex items-center justify-between gap-1.5">
+              <div class="flex items-center gap-1">
+                <button onclick="prevChannel()" class="px-2 py-1 rounded-md bg-slate-800/90 hover:bg-slate-700 text-white font-mono-tv text-[10px] font-bold border border-white/10 cursor-pointer">CH ▼</button>
+                <button onclick="nextChannel()" class="px-2 py-1 rounded-md bg-slate-800/90 hover:bg-slate-700 text-white font-mono-tv text-[10px] font-bold border border-white/10 cursor-pointer">CH ▲</button>
+                <button onclick="playNextInQueue()" class="px-2 py-1 rounded-md bg-slate-800/90 hover:bg-slate-700 text-amber-300 font-mono-tv text-[10px] font-bold border border-white/10 cursor-pointer">NEXT ⏭</button>
+              </div>
+
+              <div class="flex items-center gap-1">
+                <button id="mute-btn" onclick="toggleMute()" title="Mute/Unmute" class="p-1.5 rounded-md bg-slate-800/90 hover:bg-slate-700 text-white text-xs border border-white/10 cursor-pointer">🔇</button>
+                <button id="crt-btn" onclick="toggleCRT()" title="CRT Scanlines" class="px-1.5 py-1 rounded-md bg-slate-800/90 hover:bg-slate-700 text-slate-300 font-mono-tv text-[10px] border border-white/10 cursor-pointer">CRT</button>
+                <button onclick="openManageModal()" title="Manage Channels" class="px-1.5 py-1 rounded-md bg-slate-800/90 hover:bg-slate-700 text-amber-300 font-mono-tv text-[10px] font-bold border border-white/10 cursor-pointer">+ CH</button>
+                <button onclick="toggleFullscreen()" title="Fullscreen" class="p-1.5 rounded-md bg-slate-800/90 hover:bg-slate-700 text-white border border-white/10 cursor-pointer">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 8V4h4M20 8V4h-4M4 16v4h4M20 16v4h-4" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- NostalgiaTV Fullscreen HUD Overlay -->
+          <div id="fullscreen-hud" class="hidden absolute inset-0 z-30 flex flex-col justify-between p-4 sm:p-6 bg-gradient-to-b from-black/70 via-transparent to-black/90 transition-opacity duration-300">
+            <!-- Top Row -->
+            <div class="flex items-center justify-between">
+              <button onclick="toggleFullscreen()" class="w-11 h-11 rounded-xl bg-slate-900/85 hover:bg-slate-800 border border-white/15 flex items-center justify-center text-white cursor-pointer">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <div id="fs-ch-number" class="font-mono-tv text-2xl sm:text-3xl font-bold text-amber-300 tracking-wider drop-shadow">
+                101
+              </div>
+            </div>
+
+            <!-- Bottom Row -->
+            <div class="space-y-3">
+              <div class="flex items-end justify-between gap-4">
+                <div class="space-y-1 max-w-[55%]">
+                  <div class="font-mono-tv text-[10px] font-bold tracking-widest text-amber-300 uppercase">NOW PLAYING</div>
+                  <div id="fs-now-logo" class="h-10 w-36 flex items-center"></div>
+                  <div id="fs-now-title" class="text-xs sm:text-sm font-semibold text-white truncate">Episode Title</div>
+                </div>
+                <div class="space-y-1 text-right max-w-[40%]">
+                  <div class="font-mono-tv text-[10px] font-bold tracking-widest text-amber-300 uppercase">COMING UP</div>
+                  <div id="fs-next-title" class="text-xs sm:text-sm font-semibold text-slate-200 truncate">Next Episode</div>
+                </div>
+              </div>
+
+              <div class="space-y-1">
+                <div class="flex justify-between font-mono-tv text-xs text-slate-300">
+                  <span id="fs-start-time">00:00</span>
+                  <span id="fs-end-time">22:00</span>
+                </div>
+                <input id="fs-seek-slider" type="range" min="0" max="1000" value="0" oninput="handleSeekInput(this.value)" onchange="handleSeekCommit(this.value)" class="tv-seek-slider w-full" />
+              </div>
+
+              <!-- Transport Controls -->
+              <div class="flex items-center justify-center gap-2 sm:gap-3 pt-1">
+                <button onclick="prevChannel()" title="Previous Channel" class="w-10 h-10 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-white/15 flex items-center justify-center text-white font-mono-tv text-xs font-bold cursor-pointer">CH-</button>
+                <button onclick="jumpRandomScene()" title="Random Scene" class="w-10 h-10 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-white/15 flex items-center justify-center text-amber-300 cursor-pointer">🎲</button>
+                <button onclick="toggleFullscreen()" title="Return to Guide" class="w-10 h-10 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-white/15 flex items-center justify-center text-white cursor-pointer">📺</button>
+                <button onclick="skipSeconds(-15)" title="Rewind 15s" class="w-10 h-10 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-white/15 flex items-center justify-center text-white font-mono-tv text-xs cursor-pointer">-15</button>
+                <button id="fs-playpause-btn" onclick="togglePlayPause()" title="Play/Pause" class="w-11 h-11 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold flex items-center justify-center cursor-pointer">⏸</button>
+                <button onclick="skipSeconds(15)" title="Forward 15s" class="w-10 h-10 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-white/15 flex items-center justify-center text-white font-mono-tv text-xs cursor-pointer">+15</button>
+                <button id="fs-mute-btn" onclick="toggleMute()" title="Mute/Unmute" class="w-10 h-10 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-white/15 flex items-center justify-center text-white cursor-pointer">🔊</button>
+                <button onclick="nextChannel()" title="Next Channel" class="w-10 h-10 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-white/15 flex items-center justify-center text-white font-mono-tv text-xs font-bold cursor-pointer">CH+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Metadata Info Zone -->
+        <div id="metadata-panel" class="p-3.5 sm:p-5 flex items-center justify-between gap-3">
+          <div class="space-y-1.5 min-w-0 flex-1">
+            <h2 id="meta-show-title" class="font-cartoon text-xl sm:text-2xl font-bold text-white truncate">
+              Dexter's Laboratory
+            </h2>
+            <div id="meta-episode-title" class="text-xs sm:text-sm font-semibold text-amber-300 truncate">
+              Loading live episode...
+            </div>
+            <div id="meta-air-window" class="font-mono-tv text-[11px] text-slate-300">
+              --:-- AM - --:-- AM &nbsp; 101 DEXTER'S LABORATORY
+            </div>
+            <div class="flex flex-wrap items-center gap-1.5 pt-0.5 font-mono-tv text-[10px]">
+              <span id="meta-year" class="px-1.5 py-0.5 rounded border border-white/20 text-slate-200">1995</span>
+              <span id="meta-rating" class="px-1.5 py-0.5 rounded border border-white/20 text-slate-200">TV-G</span>
+              <span class="px-1.5 py-0.5 rounded border border-white/20 text-slate-200">HD</span>
+              <span class="px-1.5 py-0.5 rounded border border-white/20 text-slate-200">AAC Stereo</span>
+              <span id="meta-runtime" class="px-1.5 py-0.5 rounded border border-white/20 text-slate-200">22 min</span>
+            </div>
+            <p id="meta-description" class="text-xs text-slate-400 line-clamp-2 pt-0.5 leading-relaxed">
+              Boy genius Dexter invents wild contraptions in his secret laboratory while keeping his older sister Dee Dee out.
+            </p>
+          </div>
+
+          <div id="meta-brand-logo" class="w-28 sm:w-36 h-16 flex-shrink-0 flex items-center justify-center"></div>
+        </div>
+      </section>
+
+      <!-- EPG TV GUIDE -->
+      <section class="flex-1 flex flex-col bg-[#08090d]">
+        <!-- Guide Time Header Bar -->
+        <div class="sticky top-[45px] z-30 flex items-stretch bg-[#0d111d] border-b border-white/10">
+          <div class="w-36 sm:w-48 flex-shrink-0 px-3 py-2 flex items-center gap-2 border-r border-white/10 bg-[#0b0e18]">
+            <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+            <span id="epg-live-clock" class="font-mono-tv text-xs font-bold text-white">--:--:--</span>
+          </div>
+          <div id="epg-time-slots" class="flex-1 flex items-center overflow-x-auto font-mono-tv text-xs text-slate-300">
+            <!-- Populated dynamically with half-hour slots -->
+          </div>
+        </div>
+
+        <!-- EPG Rows Container -->
+        <div id="epg-rows" class="divide-y divide-white/10">
+          <!-- Channels rendered here -->
+        </div>
+      </section>
+    </main>
+
+    <!-- ==================== ON DEMAND VIEW ==================== -->
+    <main id="view-ondemand" class="hidden flex-1 p-4 sm:p-6 space-y-6 max-w-6xl mx-auto w-full">
+      <!-- Featured Hero Card -->
+      <div class="rounded-2xl bg-gradient-to-r from-indigo-950 via-slate-900 to-amber-950/50 border border-white/10 p-5 sm:p-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div class="space-y-2 max-w-xl">
+          <span class="inline-block px-2.5 py-0.5 rounded-full bg-amber-400/20 text-amber-300 font-mono-tv text-[10px] font-bold uppercase tracking-wider">ON DEMAND HUB</span>
+          <h2 class="font-cartoon text-2xl sm:text-3xl font-bold text-white">Watch Any Cartoon or Disney Classic Anytime</h2>
+          <p class="text-xs sm:text-sm text-slate-300">Browse all 12 classic cartoon series organized by season and episode, or jump straight into full-length Walt Disney Animation Studios movies.</p>
+        </div>
+        <button onclick="switchBottomTab('movies')" class="px-4 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs sm:text-sm cursor-pointer transition">
+          Explore Movies →
+        </button>
+      </div>
+
+      <!-- Channels Strip -->
+      <div class="space-y-2.5">
+        <h3 class="font-cartoon text-base font-bold text-white">Live Cartoon Channels</h3>
+        <div id="od-channels-strip" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-2.5"></div>
+      </div>
+
+      <!-- Show Detail Drawer (Season & Episode Selector) -->
+      <div id="od-show-detail" class="hidden rounded-2xl bg-[#111420] border border-white/15 p-4 sm:p-6 space-y-4">
+        <div class="flex items-start justify-between gap-3">
+          <div>
+            <div id="od-detail-meta" class="font-mono-tv text-[11px] text-amber-300">CH 101 • 1995 • TV-G</div>
+            <h3 id="od-detail-title" class="font-cartoon text-2xl font-bold text-white">Show Name</h3>
+            <p id="od-detail-desc" class="text-xs text-slate-300 mt-1 max-w-2xl"></p>
+          </div>
+          <button onclick="document.getElementById('od-show-detail').classList.add('hidden')" class="px-2.5 py-1 rounded-lg bg-white/10 text-xs text-white cursor-pointer">Close ✕</button>
+        </div>
+        <div id="od-season-tabs" class="flex flex-wrap gap-2"></div>
+        <div id="od-episode-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5"></div>
+      </div>
+    </main>
+
+    <!-- ==================== MOVIES VIEW ==================== -->
+    <main id="view-movies" class="hidden flex-1 p-4 sm:p-6 space-y-4 max-w-6xl mx-auto w-full">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="font-cartoon text-2xl font-bold text-white">Walt Disney Animation Movies</h2>
+          <p class="text-xs text-slate-400">Select any movie to stream from the opening scene</p>
+        </div>
+        <input id="movie-search-input" type="text" oninput="renderMoviesCatalog()" placeholder="Filter movies..." class="rounded-xl bg-[#121521] border border-white/15 px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 w-full sm:w-64" />
+      </div>
+      <div id="movies-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3"></div>
+    </main>
+
+    <!-- ==================== SEARCH VIEW ==================== -->
+    <main id="view-search" class="hidden flex-1 p-4 sm:p-6 space-y-4 max-w-4xl mx-auto w-full">
+      <h2 class="font-cartoon text-2xl font-bold text-white">Search Channels, Shows & Movies</h2>
+      <input id="global-search-input" type="text" oninput="renderGlobalSearch()" placeholder="Type a show, episode, or Disney movie..." class="w-full rounded-xl bg-[#121521] border border-white/15 px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-amber-400" />
+      <div id="global-search-results" class="space-y-2"></div>
+    </main>
+
+  </div>
+
+  <!-- ==================== BOTTOM NAVIGATION BAR + BLENDED FOOTER ==================== -->
+  <nav class="fixed bottom-0 inset-x-0 z-40 bg-gradient-to-t from-[#07080c] via-[#0b0d14]/95 to-[#0b0d14]/85 backdrop-blur-lg">
+    <div class="max-w-lg mx-auto grid grid-cols-4 px-2 pt-1.5 pb-1">
+      <button id="nav-search" onclick="switchBottomTab('search')" class="flex flex-col items-center justify-center py-1 rounded-xl text-slate-400 hover:text-white transition cursor-pointer">
+        <span class="text-base">🔍</span>
+        <span class="text-[10px] font-semibold mt-0.5">Search</span>
+      </button>
+      <button id="nav-livetv" onclick="switchBottomTab('livetv')" class="flex flex-col items-center justify-center py-1 rounded-xl text-amber-300 bg-amber-400/10 transition cursor-pointer">
+        <span class="text-base">📺</span>
+        <span class="text-[10px] font-semibold mt-0.5">Live TV</span>
+      </button>
+      <button id="nav-ondemand" onclick="switchBottomTab('ondemand')" class="flex flex-col items-center justify-center py-1 rounded-xl text-slate-400 hover:text-white transition cursor-pointer">
+        <span class="text-base">☰</span>
+        <span class="text-[10px] font-semibold mt-0.5">On Demand</span>
+      </button>
+      <button id="nav-movies" onclick="switchBottomTab('movies')" class="flex flex-col items-center justify-center py-1 rounded-xl text-slate-400 hover:text-white transition cursor-pointer">
+        <span class="text-base">🎞️</span>
+        <span class="text-[10px] font-semibold mt-0.5">Movies</span>
+      </button>
+    </div>
+    <div class="text-center pb-1.5 text-[10px] font-mono-tv text-slate-500/80 tracking-wide">
+      toonS by SenthilKumar
+    </div>
+  </nav>
+
+  <!-- ==================== MANAGE / ADD CHANNEL MODAL ==================== -->
+  <div id="manage-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-[#141722] border border-white/15 rounded-2xl max-w-md w-full p-5 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-white/10 pb-2.5">
+        <h3 class="font-cartoon text-lg font-bold text-white">Add Custom Channel</h3>
+        <button onclick="closeManageModal()" class="text-slate-400 hover:text-white font-bold cursor-pointer">✕</button>
+      </div>
+      <div class="space-y-3 text-xs">
+        <div>
+          <label class="block text-slate-300 font-semibold mb-1">Channel Name</label>
+          <input id="new-ch-name" type="text" placeholder="e.g. Tom & Jerry Classics" class="w-full rounded-xl bg-[#0b0d14] border border-white/15 px-3 py-2 text-white" />
+        </div>
+        <div>
+          <label class="block text-slate-300 font-semibold mb-1">Content Link</label>
+          <input id="new-ch-url" type="text" placeholder="https://archive.org/details/..." class="w-full rounded-xl bg-[#0b0d14] border border-white/15 px-3 py-2 text-white" />
+        </div>
+        <button onclick="addCustomChannel()" class="w-full py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold cursor-pointer">
+          Add Channel to Guide
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== TOAST NOTIFICATION ==================== -->
+  <div id="toast-box" class="fixed top-14 right-4 z-[10002] hidden bg-slate-900 border border-amber-400/50 text-amber-200 text-xs font-mono-tv px-3.5 py-2 rounded-xl shadow-2xl"></div>
+
+  <!-- ==================== ADMIN SINGLE-DEVICE KEY GENERATOR MODAL ==================== -->
+  <div id="admin-keygen-modal" class="fixed inset-0 z-[10001] hidden bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-[#161821] border border-white/15 rounded-2xl max-w-md w-full p-5 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between border-b border-white/10 pb-3">
+        <div>
+          <div class="font-mono-tv text-[10px] text-amber-300 font-bold uppercase tracking-widest">ADMIN CONSOLE</div>
+          <h2 class="font-cartoon text-lg text-white">Enable Another Browser or User</h2>
+        </div>
+        <button onclick="closeAdminKeygenModal()" class="text-slate-400 hover:text-white p-1 text-lg font-bold cursor-pointer">✕</button>
+      </div>
+
+      <p class="text-xs text-slate-400 leading-relaxed">
+        Enter the user's <strong class="text-slate-200">Device Request Code</strong> (e.g. <span class="font-mono-tv text-slate-200">TS-EDFG-TJ</span>) shown on their screen to generate an Unlock Key bound strictly to their browser.
+      </p>
+
+      <div class="space-y-2">
+        <label class="block text-xs font-semibold text-slate-300">User's Device Request Code</label>
+        <input
+          id="keygen-target-code"
+          type="text"
+          oninput="updateGeneratedKeyPreview()"
+          placeholder="TS-XXXX-XX"
+          class="w-full rounded-xl bg-[#0e1016] border border-white/15 focus:border-amber-400 px-3.5 py-2.5 font-mono-tv text-sm text-white uppercase tracking-widest focus:outline-none"
+        />
+      </div>
+
+      <div class="rounded-xl bg-[#0e1016] border border-amber-400/30 p-3.5 space-y-2">
+        <div class="font-mono-tv text-[10px] text-amber-300 uppercase tracking-wider">Single-Device Unlock Key</div>
+        <div class="flex items-center justify-between gap-2">
+          <span id="keygen-output-value" class="font-mono-tv text-xs sm:text-sm font-bold text-white tracking-wider select-all">
+            UNLOCK-XXXX-XXXX-XXXX
+          </span>
+          <button type="button" onclick="copyGeneratedUnlockKey()" class="px-3 py-1 rounded-lg bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs cursor-pointer transition">
+            Copy Key
+          </button>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between pt-2 border-t border-white/10 text-xs">
+        <button type="button" onclick="lockCurrentBrowser()" class="text-rose-400 hover:text-rose-300 underline cursor-pointer">
+          Lock This Browser
+        </button>
+        <button type="button" onclick="closeAdminKeygenModal()" class="px-4 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-semibold cursor-pointer">
+          Done
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /**
+     * ============================================================================
+     * DEVICE AUTHORIZATION & SINGLE-DEVICE KEY SYSTEM
+     * Admin Credentials: admin / hummingjays
+     * ============================================================================
+     */
+    const AUTH_STORAGE_KEY = 'toons_browser_auth_v1';
+    const DEVICE_CODE_STORAGE_KEY = 'toons_device_req_code_v1';
+    const ADMIN_USERNAME = 'admin';
+    const ADMIN_PASSWORD = 'hummingjays';
+    const SECRET_SALT = 'TOONS_SENTHIL_HUMMINGJAYS_2026';
+
+    function getOrCreateDeviceRequestCode() {
+      try {
+        const existing = localStorage.getItem(DEVICE_CODE_STORAGE_KEY);
+        if (existing && /^TS-[A-Z0-9]{4}-[A-Z0-9]{2}$/.test(existing)) {
+          return existing;
+        }
+      } catch (e) {}
+
+      const fpSource = [
+        navigator.userAgent || '',
+        navigator.language || '',
+        screen.width + 'x' + screen.height,
+        Intl.DateTimeFormat().resolvedOptions().timeZone || '',
+        Math.random().toString(36).slice(2)
+      ].join('|');
+
+      let h1 = 0x811c9dc5;
+      for (let i = 0; i < fpSource.length; i++) {
+        h1 ^= fpSource.charCodeAt(i);
+        h1 = Math.imul(h1, 0x01000193);
+      }
+      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+      let part1 = '';
+      let part2 = '';
+      let seed = Math.abs(h1) + Math.floor(Math.random() * 999999);
+      for (let i = 0; i < 4; i++) {
+        part1 += chars[seed % chars.length];
+        seed = Math.floor(seed / 7) + (i * 19 + 11);
+      }
+      for (let i = 0; i < 2; i++) {
+        part2 += chars[seed % chars.length];
+        seed = Math.floor(seed / 5) + (i * 23 + 17);
+      }
+      const code = `TS-${part1}-${part2}`;
+      try {
+        localStorage.setItem(DEVICE_CODE_STORAGE_KEY, code);
+      } catch (e) {}
+      return code;
+    }
+
+    function deriveUnlockKeyForDeviceCode(deviceCode) {
+      const normalized = String(deviceCode || '').trim().toUpperCase();
+      if (!/^TS-[A-Z0-9]{4}-[A-Z0-9]{2}$/.test(normalized)) return '';
+
+      const payload = `${SECRET_SALT}::${normalized}`;
+      let s1 = 0x9e3779b9;
+      let s2 = 0x85ebca6b;
+      let s3 = 0xc2b2ae35;
+      for (let i = 0; i < payload.length; i++) {
+        const c = payload.charCodeAt(i);
+        s1 = Math.imul(s1 ^ c, 0x27d4eb2f);
+        s2 = Math.imul(s2 ^ (c * 31), 0x165667b1);
+        s3 = Math.imul(s3 ^ (c * 17), 0x9e3779b1);
+      }
+      const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+      const makeChunk = (seedVal) => {
+        let v = Math.abs(seedVal);
+        let out = '';
+        for (let i = 0; i < 4; i++) {
+          out += alphabet[v % alphabet.length];
+          v = Math.floor(v / 11) + (i * 37 + 13);
+        }
+        return out;
+      };
+      return `UNLOCK-${makeChunk(s1)}-${makeChunk(s2)}-${makeChunk(s3)}`;
+    }
+
+    function isBrowserAuthorized() {
+      const currentCode = getOrCreateDeviceRequestCode();
+      const expectedKey = deriveUnlockKeyForDeviceCode(currentCode);
+      try {
+        const saved = JSON.parse(localStorage.getItem(AUTH_STORAGE_KEY) || 'null');
+        if (saved && saved.deviceCode === currentCode && saved.unlockKey === expectedKey) {
+          return saved;
+        }
+      } catch (e) {}
+      return null;
+    }
+
+    function applyAuthorizationState() {
+      const code = getOrCreateDeviceRequestCode();
+      const codeEl = document.getElementById('device-request-code');
+      if (codeEl) codeEl.textContent = code;
+
+      const authRecord = isBrowserAuthorized();
+      const gateEl = document.getElementById('device-auth-gate');
+      const topAdminBtn = document.getElementById('top-admin-btn');
+
+      if (authRecord) {
+        if (gateEl) gateEl.classList.add('hidden');
+        if (topAdminBtn) {
+          if (authRecord.isAdmin) {
+            topAdminBtn.classList.remove('hidden');
+          } else {
+            topAdminBtn.classList.add('hidden');
+          }
+        }
+        return true;
+      } else {
+        if (gateEl) gateEl.classList.remove('hidden');
+        if (topAdminBtn) topAdminBtn.classList.add('hidden');
+        return false;
+      }
+    }
+
+    function copyTextFallback(text, successMsg) {
+      const temp = document.createElement('textarea');
+      temp.value = text;
+      temp.style.position = 'fixed';
+      temp.style.opacity = '0';
+      document.body.appendChild(temp);
+      temp.select();
+      try {
+        document.execCommand('copy');
+        showToast(successMsg);
+      } catch (e) {
+        showToast('Copied: ' + text);
+      }
+      document.body.removeChild(temp);
+    }
+
+    function copyDeviceRequestCode() {
+      const code = getOrCreateDeviceRequestCode();
+      copyTextFallback(code, `Copied Request Code: ${code}`);
+    }
+
+    function toggleAdminAuthPanel() {
+      const adminForm = document.getElementById('admin-login-form');
+      const unlockForm = document.getElementById('unlock-browser-form');
+      const toggleBtn = document.getElementById('toggle-admin-btn');
+      const errEl = document.getElementById('auth-error-msg');
+      const adminErrEl = document.getElementById('admin-error-msg');
+      if (errEl) errEl.classList.add('hidden');
+      if (adminErrEl) adminErrEl.classList.add('hidden');
+
+      const showingAdmin = !adminForm.classList.contains('hidden');
+      if (showingAdmin) {
+        adminForm.classList.add('hidden');
+        unlockForm.classList.remove('hidden');
+        toggleBtn.innerHTML = 'Admin on a new device? Sign in with Admin Credentials<br/>→';
+      } else {
+        unlockForm.classList.add('hidden');
+        adminForm.classList.remove('hidden');
+        toggleBtn.innerHTML = '← Back to Single-Device Unlock Key';
+        setTimeout(() => document.getElementById('admin-user-input')?.focus(), 60);
+      }
+    }
+
+    function handleUnlockBrowser(e) {
+      e.preventDefault();
+      const inputKey = (document.getElementById('unlock-key-input').value || '').trim().toUpperCase();
+      const currentCode = getOrCreateDeviceRequestCode();
+      const expectedKey = deriveUnlockKeyForDeviceCode(currentCode);
+      const errEl = document.getElementById('auth-error-msg');
+
+      if (inputKey === expectedKey) {
+        localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify({
+          deviceCode: currentCode,
+          unlockKey: expectedKey,
+          isAdmin: false,
+          authorizedAt: Date.now()
+        }));
+        errEl.classList.add('hidden');
+        applyAuthorizationState();
+        startToonSApp();
+        showToast('Browser authorized! Welcome to toonS');
+      } else {
+        errEl.textContent = 'Invalid Unlock Key for this browser code.';
+        errEl.classList.remove('hidden');
+      }
+    }
+
+    function handleAdminLogin(e) {
+      e.preventDefault();
+      const user = (document.getElementById('admin-user-input').value || '').trim();
+      const pass = (document.getElementById('admin-pass-input').value || '').trim();
+      const adminErrEl = document.getElementById('admin-error-msg');
+
+      if (user === ADMIN_USERNAME && pass === ADMIN_PASSWORD) {
+        const currentCode = getOrCreateDeviceRequestCode();
+        const generatedKey = deriveUnlockKeyForDeviceCode(currentCode);
+        localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify({
+          deviceCode: currentCode,
+          unlockKey: generatedKey,
+          isAdmin: true,
+          authorizedAt: Date.now()
+        }));
+        if (adminErrEl) adminErrEl.classList.add('hidden');
+        applyAuthorizationState();
+        startToonSApp();
+        showToast('Admin signed in — Full web app unlocked');
+      } else {
+        if (adminErrEl) {
+          adminErrEl.textContent = 'Invalid Admin username or password.';
+          adminErrEl.classList.remove('hidden');
+        }
+      }
+    }
+
+    function openAdminKeygenModal() {
+      const modal = document.getElementById('admin-keygen-modal');
+      const targetInput = document.getElementById('keygen-target-code');
+      targetInput.value = '';
+      document.getElementById('keygen-output-value').textContent = 'ENTER TS-XXXX-XX CODE';
+      modal.classList.remove('hidden');
+      setTimeout(() => targetInput.focus(), 60);
+    }
+
+    function closeAdminKeygenModal() {
+      document.getElementById('admin-keygen-modal').classList.add('hidden');
+    }
+
+    function updateGeneratedKeyPreview() {
+      const raw = (document.getElementById('keygen-target-code').value || '').trim().toUpperCase();
+      const key = deriveUnlockKeyForDeviceCode(raw);
+      document.getElementById('keygen-output-value').textContent = key || 'ENTER VALID TS-XXXX-XX CODE';
+    }
+
+    function copyGeneratedUnlockKey() {
+      const val = document.getElementById('keygen-output-value').textContent;
+      if (val.startsWith('UNLOCK-')) {
+        copyTextFallback(val, `Copied Unlock Key: ${val}`);
+      } else {
+        showToast('Enter a valid TS-XXXX-XX request code first');
+      }
+    }
+
+    function lockCurrentBrowser() {
+      localStorage.removeItem(AUTH_STORAGE_KEY);
+      if (videoEl) videoEl.pause();
+      closeAdminKeygenModal();
+      applyAuthorizationState();
+      showToast('Browser locked');
+    }
+
+    /**
+     * ============================================================================
+     * toonS — MULTI-CHANNEL CARTOON & MOVIE TV SIMULATOR
+     * ============================================================================
+     */
+    const DEFAULT_CHANNELS = [
+      { id: 'ch-101', number: 101, name: "Dexter's Laboratory", year: '1995', rating: 'TV-G', color: '#1e3a2f', url: 'https://archive.org/details/dexters-laboratory_202507', desc: 'Boy genius Dexter invents wild contraptions in his secret laboratory while keeping his sister Dee Dee out.' },
+      { id: 'ch-102', number: 102, name: 'The Mask: Animated Series', year: '1995', rating: 'TV-Y7', color: '#1b3b24', url: 'https://archive.org/details/the-addams-family-1992', desc: 'Stanley Ipkiss dons an ancient wooden mask that transforms him into a cartoonish, Reality-bending superhero.' },
+      { id: 'ch-103', number: 103, name: 'Mighty Mouse: The New Adventures', year: '1987', rating: 'TV-Y7', color: '#3f1d24', url: 'https://archive.org/details/the-new-adventures-of-mighty-mouse-s-01e-01-night-on-bald-pate_202208', desc: 'Here he comes to save the day! Mighty Mouse defends Mouseville from villains in Ralph Bakshi style.' },
+      { id: 'ch-104', number: 104, name: 'Bluey', year: '2018', rating: 'TV-Y', color: '#173753', url: 'https://archive.org/details/bluey-in-4K', desc: 'Six-year-old Blue Heeler pup Bluey turns everyday family life into limitless, imaginative adventures.' },
+      { id: 'ch-105', number: 105, name: 'Ed, Edd N Eddy', year: '1999', rating: 'TV-Y7', color: '#3b2818', url: 'https://archive.org/details/ed-edd-n-eddys-big-picture-show_202509', desc: 'Three best friends in Peach Creek hatch elaborate schemes to earn quarters for giant jawbreakers.' },
+      { id: 'ch-106', number: 106, name: 'Johnny Bravo', year: '1997', rating: 'TV-Y7', color: '#3d2c14', url: 'https://archive.org/details/s-01-e-01-super-duped-bungled-in-the-jungle-bearly-enough-time', desc: 'Sunglasses-wearing, pompadour-sporting muscleman Johnny Bravo struts through Aron City.' },
+      { id: 'ch-107', number: 107, name: 'Courage the Cowardly Dog', year: '1999', rating: 'TV-Y7', color: '#341c38', url: 'https://archive.org/details/s-1-e-03-.-courage-meets-big-foot-hothead', desc: 'In the middle of Nowhere, timid pink dog Courage protects Muriel and Eustace from paranormal monsters.' },
+      { id: 'ch-108', number: 108, name: 'Cave Kids', year: '1996', rating: 'TV-Y', color: '#1d3633', url: 'https://archive.org/details/cave.-kids.-s-01-e-05.-of.-mice.and.-moon.-480p.-boom.-web-dl.-aac-2.0.x-264-jew', desc: 'Pebbles Flintstone, Bamm-Bamm Rubble, and Dino explore prehistoric Bedrock.' },
+      { id: 'ch-109', number: 109, name: 'The Jetsons', year: '1962', rating: 'TV-G', color: '#1a2d47', url: 'https://archive.org/details/9-elroys-tv-show', desc: 'Meet George Jetson and his space-age family living high above Orbit City.' },
+      { id: 'ch-110', number: 110, name: 'Yogi Bear', year: '1958', rating: 'TV-G', color: '#1f3822', url: 'https://archive.org/details/68-yogis-birthday-party_202606', desc: 'Smarter-than-the-average bear Yogi and Boo-Boo outwit Ranger Smith for pic-a-nic baskets in Jellystone Park.' },
+      { id: 'ch-111', number: 111, name: 'Baby Looney Tunes', year: '2002', rating: 'TV-Y', color: '#193545', url: 'https://archive.org/details/baby-looney-tunes-epds', desc: 'Toddler versions of Bugs, Daffy, Tweety, Sylvester, and Lola play and learn under Granny’s care.' },
+      { id: 'ch-112', number: 112, name: 'Scooby-Doo, Where Are You!', year: '1969', rating: 'TV-G', color: '#2b2442', url: 'https://archive.org/details/scooby-doo-where-are-you-the-complete-season-one-and-two-series', desc: 'Fred, Daphne, Velma, Shaggy, and Scooby-Doo unmask spooky villains in the Mystery Machine.' },
+      { id: 'ch-201', number: 201, name: 'Disney Movies 1', year: '1937-Present', rating: 'G / PG', isMovieChannel: true, color: '#16284c', url: 'https://archive.org/details/walt-disney-animation-studios-1937-present_202502', desc: '24/7 Walt Disney Animation Studios feature presentation.' },
+      { id: 'ch-202', number: 202, name: 'Disney Movies 2', year: '1937-Present', rating: 'G / PG', isMovieChannel: true, color: '#1a2e54', url: 'https://archive.org/details/walt-disney-animation-studios-1937-present_202502', desc: '24/7 Walt Disney Animation Studios feature presentation.' },
+      { id: 'ch-203', number: 203, name: 'Disney Movies 3', year: '1937-Present', rating: 'G / PG', isMovieChannel: true, color: '#1e345c', url: 'https://archive.org/details/walt-disney-animation-studios-1937-present_202502', desc: '24/7 Walt Disney Animation Studios feature presentation.' },
+      { id: 'ch-204', number: 204, name: 'Disney Movies 4', year: '1937-Present', rating: 'G / PG', isMovieChannel: true, color: '#223a64', url: 'https://archive.org/details/walt-disney-animation-studios-1937-present_202502', desc: '24/7 Walt Disney Animation Studios feature presentation.' },
+      { id: 'ch-205', number: 205, name: 'Disney Movies 5', year: '1937-Present', rating: 'G / PG', isMovieChannel: true, color: '#26406c', url: 'https://archive.org/details/walt-disney-animation-studios-1937-present_202502', desc: '24/7 Walt Disney Animation Studios feature presentation.' }
+    ];
+
+    function loadChannels() {
+      try {
+        const saved = JSON.parse(localStorage.getItem('toons_channels_v2') || 'null');
+        if (Array.isArray(saved) && saved.length > 0) return saved;
+      } catch (e) {}
+      return DEFAULT_CHANNELS.slice();
+    }
+
+    function saveChannels() {
+      try {
+        localStorage.setItem('toons_channels_v2', JSON.stringify(channels));
+      } catch (e) {}
+    }
+
+    function shuffleArray(arr) {
+      const copy = arr.slice();
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    let channels = loadChannels();
+    let activeChannelIndex = 0;
+    const playlistCache = {};
+    let currentPlaylist = [];
+    let currentEpisodeIndex = 0;
+    let crtEnabled = false;
+    let isSeeking = false;
+    let hudHideTimer = null;
+
+    const videoEl = document.getElementById('tv-video');
+    const embedEl = document.getElementById('tv-embed-frame');
+    const loaderEl = document.getElementById('player-loader');
+    const loaderTextEl = document.getElementById('loader-text');
+    const loaderSubtextEl = document.getElementById('loader-subtext');
+
+    function showToast(msg) {
+      const box = document.getElementById('toast-box');
+      if (!box) return;
+      box.textContent = msg;
+      box.classList.remove('hidden');
+      clearTimeout(box._t);
+      box._t = setTimeout(() => box.classList.add('hidden'), 2600);
+    }
+
+    function getShowLogoSVG(ch) {
+      const id = ch.id || '';
+      if (id === 'ch-101') {
+        return `<svg viewBox="0 0 220 64" class="w-full h-full"><text x="110" y="26" text-anchor="middle" fill="#a3e635" stroke="#090d16" stroke-width="4" paint-order="stroke" font-family="Space Grotesk, sans-serif" font-weight="900" font-size="22">DEXTER'S</text><text x="110" y="52" text-anchor="middle" fill="#090d16" stroke="#a3e635" stroke-width="5" paint-order="stroke" font-family="Space Grotesk, sans-serif" font-weight="900" font-size="22">LABORATORY</text></svg>`;
+      }
+      if (id === 'ch-102') {
+        return `<svg viewBox="0 0 220 64" class="w-full h-full"><text x="110" y="14" text-anchor="middle" fill="#facc15" stroke="#000" stroke-width="2.5" paint-order="stroke" font-weight="900" font-size="11">THE</text><text x="110" y="48" text-anchor="middle" fill="#4ade80" stroke="#dc2626" stroke-width="3.5" paint-order="stroke" font-family="Space Grotesk, sans-serif" font-weight="900" font-size="36" letter-spacing="2">MASK</text><text x="110" y="60" text-anchor="middle" fill="#fde047" font-weight="800" font-size="8" letter-spacing="2">ANIMATED SERIES</text></svg>`;
+      }
+      if (id === 'ch-103') {
+        return `<svg viewBox="0 0 220 64" class="w-full h-full"><g transform="skewX(-10)"><text x="120" y="29" text-anchor="middle" fill="#ef4444" stroke="#fff" stroke-width="3.5" paint-order="stroke" font-weight="900" font-size="25">MIGHTY</text><text x="125" y="54" text-anchor="middle" fill="#ef4444" stroke="#fff" stroke-width="3.5" paint-order="stroke" font-weight="900" font-size="25">MOUSE</text></g></svg>`;
+      }
+      if (id === 'ch-104') {
+        return `<svg viewBox="0 0 220 64" class="w-full h-full"><text x="110" y="42" text-anchor="middle" fill="#93c5fd" stroke="#1e3a8a" stroke-width="4" paint-order="stroke" font-family="Space Grotesk, sans-serif" font-weight="900" font-size="36" letter-spacing="2">BLUEY</text><path d="M92 49 Q140 57 172 36" fill="none" stroke="#93c5fd" stroke-width="5" stroke-linecap="round"/></svg>`;
+      }
+      if (id === 'ch-105') {
+        return `<svg viewBox="0 0 220 64" class="w-full h-full"><text x="110" y="43" text-anchor="middle" fill="#dc2626" stroke="#fff" stroke-width="5" paint-order="stroke" font-family="Space Grotesk, sans-serif" font-weight="900" font-size="25">Ed, Edd n Eddy</text></svg>`;
+      }
+      if (id === 'ch-106') {
+        return `<svg viewBox="0 0 220 64" class="w-full h-full"><text x="110" y="28" text-anchor="middle" fill="#f97316" stroke="#000" stroke-width="4" paint-order="stroke" font-weight="900" font-size="24">JOHNNY</text><text x="110" y="54" text-anchor="middle" fill="#f97316" stroke="#000" stroke-width="4" paint-order="stroke" font-weight="900" font-size="25">BRAVO</text></svg>`;
+      }
+      if (id === 'ch-107') {
+        return `<svg viewBox="0 0 220 64" class="w-full h-full"><text x="110" y="36" text-anchor="middle" fill="#ef4444" stroke="#000" stroke-width="4.5" paint-order="stroke" font-weight="900" font-size="29">COURAGE</text><text x="110" y="54" text-anchor="middle" fill="#a3e635" stroke="#000" stroke-width="2.5" paint-order="stroke" font-weight="800" font-size="11">THE COWARDLY DOG</text></svg>`;
+      }
+      if (id === 'ch-108') {
+        return `<svg viewBox="0 0 220 64" class="w-full h-full"><text x="110" y="16" text-anchor="middle" fill="#86efac" font-weight="800" font-size="10">THE FLINTSTONES</text><text x="110" y="48" text-anchor="middle" fill="#6ee7b7" stroke="#064e3b" stroke-width="3.5" paint-order="stroke" font-weight="900" font-size="27">CAVE KIDS</text></svg>`;
+      }
+      if (id === 'ch-109') {
+        return `<svg viewBox="0 0 220 64" class="w-full h-full"><text x="45" y="28" fill="#fff" font-style="italic" font-weight="900" font-size="13">THE</text><text x="122" y="45" text-anchor="middle" fill="#ef4444" stroke="#000" stroke-width="3" paint-order="stroke" font-style="italic" font-weight="900" font-size="32">Jetsons</text></svg>`;
+      }
+      if (id === 'ch-110') {
+        return `<svg viewBox="0 0 220 64" class="w-full h-full"><text x="110" y="28" text-anchor="middle" fill="#fde047" stroke="#000" stroke-width="3.5" paint-order="stroke" font-weight="900" font-size="24">YOGI</text><text x="110" y="54" text-anchor="middle" fill="#4ade80" stroke="#000" stroke-width="3.5" paint-order="stroke" font-weight="900" font-size="24">BEAR</text></svg>`;
+      }
+      if (id === 'ch-111') {
+        return `<svg viewBox="0 0 220 64" class="w-full h-full"><circle cx="110" cy="32" r="26" fill="#0891b2" opacity="0.45"/><text x="68" y="24" fill="#f472b6" stroke="#831843" stroke-width="2" paint-order="stroke" font-style="italic" font-weight="900" font-size="15">baby</text><text x="110" y="48" text-anchor="middle" fill="#fde047" stroke="#1d4ed8" stroke-width="3.5" paint-order="stroke" font-weight="900" font-size="19">LOONEY TUNES</text></svg>`;
+      }
+      if (id === 'ch-112') {
+        return `<svg viewBox="0 0 220 64" class="w-full h-full"><text x="110" y="35" text-anchor="middle" fill="#facc15" stroke="#9333ea" stroke-width="5" paint-order="stroke" font-weight="900" font-size="24">SCOOBY-DOO</text><text x="110" y="54" text-anchor="middle" fill="#fde047" stroke="#7e22ce" stroke-width="3" paint-order="stroke" font-weight="800" font-size="11">WHERE ARE YOU!</text></svg>`;
+      }
+      if (ch.isMovieChannel) {
+        const num = ch.name.replace(/\D/g, '') || '1';
+        return `<svg viewBox="0 0 220 64" class="w-full h-full"><text x="110" y="34" text-anchor="middle" fill="#ffffff" font-family="Georgia, serif" font-style="italic" font-weight="700" font-size="30">Disney</text><rect x="66" y="41" width="88" height="16" rx="8" fill="#0284c7"/><text x="110" y="52" text-anchor="middle" fill="#fff" font-family="IBM Plex Mono, monospace" font-weight="700" font-size="9">MOVIES ${num}</text></svg>`;
+      }
+      return `<div class="font-cartoon text-xs font-bold text-white text-center truncate px-1">${ch.name}</div>`;
+    }
+
+    function cleanMovieTitle(rawTitle) {
+      return String(rawTitle || '')
+        .replace(/\.[^/.]+$/, '')
+        .replace(/^\s*\(?S\d+E\d+\)?\s*[-–:]?\s*/i, '')
+        .replace(/\(\d{4}\)/g, '')
+        .replace(/\[.*?\]/g, '')
+        .replace(/[_]+/g, ' ')
+        .replace(/\s{2,}/g, ' ')
+        .trim();
+    }
+
+    function extractArchiveIdentifier(url) {
+      const m = String(url || '').match(/archive\.org\/(?:details|embed|download)\/([^/?#]+)/i);
+      return m ? m[1] : null;
+    }
+
+    let sharedDisneyPoolPromise = null;
+    async function resolveDisneyMoviesPool() {
+      if (sharedDisneyPoolPromise) return sharedDisneyPoolPromise;
+      sharedDisneyPoolPromise = (async () => {
+        const items = [];
+        try {
+          const res = await fetch('https://archive.org/metadata/walt-disney-animation-studios-1937-present_202502');
+          const data = await res.json();
+          const files = Array.isArray(data.files) ? data.files : [];
+          const mp4s = files.filter(f => /\.(mp4|m4v|webm)$/i.test(f.name || ''));
+          for (const f of mp4s) {
+            items.push({
+              title: cleanMovieTitle(f.title || f.name),
+              url: `https://archive.org/download/walt-disney-animation-studios-1937-present_202502/${encodeURIComponent(f.name)}`,
+              duration: parseFloat(f.length) || 5400,
+              isDerivative: f.source === 'derivative'
+            });
+          }
+        } catch (e) {}
+        return items;
+      })();
+      return sharedDisneyPoolPromise;
+    }
+
+    async function fetchChannelPlaylist(ch) {
+      if (playlistCache[ch.id] && playlistCache[ch.id].length > 0) {
+        return playlistCache[ch.id];
+      }
+
+      if (ch.isMovieChannel) {
+        const pool = await resolveDisneyMoviesPool();
+        if (pool.length > 0) {
+          const shuffled = shuffleArray(pool);
+          playlistCache[ch.id] = shuffled;
+          return shuffled;
+        }
+      }
+
+      const identifier = extractArchiveIdentifier(ch.url);
+      if (!identifier) {
+        const fallback = [{ title: ch.name, url: ch.url, duration: 1320, isEmbed: false }];
+        playlistCache[ch.id] = fallback;
+        return fallback;
+      }
+
+      try {
+        const res = await fetch(`https://archive.org/metadata/${identifier}`);
+        const data = await res.json();
+        const files = Array.isArray(data.files) ? data.files : [];
+
+        // Prioritize derivative AAC stereo MP4s over raw surround/AC3 files
+        const videoFiles = files.filter(f => {
+          const name = (f.name || '').toLowerCase();
+          const fmt = (f.format || '').toLowerCase();
+          return name.endsWith('.mp4') || name.endsWith('.m4v') || name.endsWith('.webm') || fmt.includes('mpeg4') || fmt.includes('h.264');
+        });
+
+        videoFiles.sort((a, b) => {
+          const aDeriv = (a.source === 'derivative' || /\.ia\.mp4$/i.test(a.name || '')) ? 0 : 1;
+          const bDeriv = (b.source === 'derivative' || /\.ia\.mp4$/i.test(b.name || '')) ? 0 : 1;
+          return aDeriv - bDeriv;
+        });
+
+        // Deduplicate base episode names preferring derivative stream
+        const seenBases = new Set();
+        const episodes = [];
+        for (const f of videoFiles) {
+          const base = (f.name || '').replace(/\.ia\.mp4$/i, '').replace(/\.[^/.]+$/, '').toLowerCase();
+          if (seenBases.has(base)) continue;
+          seenBases.add(base);
+          const cleanTitle = (f.title || f.name || ch.name)
+            .replace(/\.[^/.]+$/, '')
+            .replace(/[_]+/g, ' ')
+            .trim();
+          episodes.push({
+            title: ch.isMovieChannel ? cleanMovieTitle(cleanTitle) : cleanTitle,
+            url: `https://archive.org/download/${identifier}/${encodeURIComponent(f.name)}`,
+            embedUrl: `https://archive.org/embed/${identifier}?autoplay=1`,
+            duration: parseFloat(f.length) || 1320,
+            isDerivative: f.source === 'derivative' || /\.ia\.mp4$/i.test(f.name || '')
+          });
+        }
+
+        if (episodes.length > 0) {
+          const shuffled = shuffleArray(episodes);
+          playlistCache[ch.id] = shuffled;
+          return shuffled;
+        }
+      } catch (e) {}
+
+      const embedFallback = [{
+        title: ch.name,
+        url: `https://archive.org/embed/${identifier}?autoplay=1`,
+        embedUrl: `https://archive.org/embed/${identifier}?autoplay=1`,
+        duration: 1320,
+        isEmbed: true
+      }];
+      playlistCache[ch.id] = embedFallback;
+      return embedFallback;
+    }
+
+    async function tuneToChannel(index, jumpToRandomScene = true, specificEpisodeIndex = null) {
+      if (!isBrowserAuthorized()) return;
+      if (index < 0) index = channels.length - 1;
+      if (index >= channels.length) index = 0;
+      activeChannelIndex = index;
+
+      const ch = channels[activeChannelIndex];
+      loaderEl.classList.remove('hidden');
+      loaderTextEl.textContent = `Tuning CH ${ch.number} — ${ch.name}`;
+      loaderSubtextEl.textContent = 'Syncing live broadcast feed...';
+
+      document.getElementById('osd-ch-num').textContent = `CH ${ch.number}`;
+      document.getElementById('osd-ch-name').textContent = ch.name;
+      document.getElementById('osd-logo-slot').innerHTML = getShowLogoSVG(ch);
+      document.getElementById('fs-ch-number').textContent = ch.number;
+      document.getElementById('fs-now-logo').innerHTML = getShowLogoSVG(ch);
+      document.getElementById('meta-brand-logo').innerHTML = getShowLogoSVG(ch);
+
+      renderEPG();
+
+      const list = await fetchChannelPlaylist(ch);
+      currentPlaylist = list;
+      if (specificEpisodeIndex !== null && list[specificEpisodeIndex]) {
+        currentEpisodeIndex = specificEpisodeIndex;
+      } else {
+        currentEpisodeIndex = Math.floor(Math.random() * list.length);
+      }
+
+      playCurrentEpisode(jumpToRandomScene);
+    }
+
+    function playCurrentEpisode(jumpToRandomScene = true) {
+      const ch = channels[activeChannelIndex];
+      const ep = currentPlaylist[currentEpisodeIndex] || { title: ch.name, url: ch.url, duration: 1320 };
+      const nextEp = currentPlaylist[(currentEpisodeIndex + 1) % currentPlaylist.length] || ep;
+
+      const displayMainTitle = ch.isMovieChannel ? cleanMovieTitle(ep.title) : ch.name;
+      const displaySubTitle = ch.isMovieChannel ? 'Feature Presentation' : ep.title;
+
+      document.getElementById('meta-show-title').textContent = displayMainTitle;
+      document.getElementById('meta-episode-title').textContent = displaySubTitle;
+      document.getElementById('meta-year').textContent = ch.year || '1995';
+      document.getElementById('meta-rating').textContent = ch.rating || 'TV-G';
+      const mins = Math.max(1, Math.round((ep.duration || 1320) / 60));
+      document.getElementById('meta-runtime').textContent = `${mins} min`;
+      document.getElementById('meta-description').textContent = ch.desc || '';
+
+      document.getElementById('fs-now-title').textContent = ch.isMovieChannel ? displayMainTitle : ep.title;
+      document.getElementById('fs-next-title').textContent = ch.isMovieChannel ? cleanMovieTitle(nextEp.title) : nextEp.title;
+
+      const now = new Date();
+      const end = new Date(now.getTime() + mins * 60000);
+      const fmt = (d) => d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+      document.getElementById('meta-air-window').textContent = `${fmt(now)} - ${fmt(end)}   ${ch.number} ${ch.name.toUpperCase()}`;
+
+      if (ep.isEmbed) {
+        videoEl.pause();
+        videoEl.classList.add('hidden');
+        embedEl.src = ep.embedUrl || ep.url;
+        embedEl.classList.remove('hidden');
+        loaderEl.classList.add('hidden');
+        return;
+      }
+
+      embedEl.classList.add('hidden');
+      embedEl.src = '';
+      videoEl.classList.remove('hidden');
+      videoEl.src = ep.url;
+
+      videoEl.onloadedmetadata = () => {
+        loaderEl.classList.add('hidden');
+        if (jumpToRandomScene && isFinite(videoEl.duration) && videoEl.duration > 30) {
+          const minOffset = videoEl.duration * 0.08;
+          const maxOffset = videoEl.duration * 0.82;
+          videoEl.currentTime = minOffset + Math.random() * (maxOffset - minOffset);
+        }
+        videoEl.play().catch(() => {});
+      };
+
+      videoEl.onerror = () => {
+        if (ep.embedUrl) {
+          videoEl.classList.add('hidden');
+          embedEl.src = ep.embedUrl;
+          embedEl.classList.remove('hidden');
+          loaderEl.classList.add('hidden');
+        } else {
+          playNextInQueue();
+        }
+      };
+
+      videoEl.onended = () => {
+        playNextInQueue();
+      };
+    }
+
+    function playNextInQueue() {
+      if (!currentPlaylist.length) return;
+      currentEpisodeIndex = (currentEpisodeIndex + 1) % currentPlaylist.length;
+      playCurrentEpisode(false);
+      renderEPG();
+    }
+
+    function prevChannel() { tuneToChannel(activeChannelIndex - 1, true); }
+    function nextChannel() { tuneToChannel(activeChannelIndex + 1, true); }
+
+    function jumpRandomScene() {
+      if (isFinite(videoEl.duration) && videoEl.duration > 20) {
+        videoEl.currentTime = videoEl.duration * (0.08 + Math.random() * 0.78);
+        showToast('Jumped to random scene');
+      }
+    }
+
+    function skipSeconds(delta) {
+      if (isFinite(videoEl.duration)) {
+        videoEl.currentTime = Math.max(0, Math.min(videoEl.duration, videoEl.currentTime + delta));
+      }
+    }
+
+    function togglePlayPause() {
+      if (videoEl.paused) {
+        videoEl.play().catch(() => {});
+        document.getElementById('fs-playpause-btn').textContent = '⏸';
+      } else {
+        videoEl.pause();
+        document.getElementById('fs-playpause-btn').textContent = '▶';
+      }
+    }
+
+    function unmuteVideo(e) {
+      if (e) e.stopPropagation();
+      videoEl.muted = false;
+      document.getElementById('unmute-cta').classList.add('hidden');
+      document.getElementById('mute-btn').textContent = '🔊';
+      document.getElementById('fs-mute-btn').textContent = '🔊';
+    }
+
+    function toggleMute() {
+      videoEl.muted = !videoEl.muted;
+      const icon = videoEl.muted ? '🔇' : '🔊';
+      document.getElementById('mute-btn').textContent = icon;
+      document.getElementById('fs-mute-btn').textContent = icon;
+      if (!videoEl.muted) {
+        document.getElementById('unmute-cta').classList.add('hidden');
+      }
+    }
+
+    function toggleCRT() {
+      crtEnabled = !crtEnabled;
+      document.getElementById('crt-layer').classList.toggle('hidden', !crtEnabled);
+      showToast(crtEnabled ? 'CRT Scanlines ON' : 'CRT Scanlines OFF');
+    }
+
+    function formatTimeSec(sec) {
+      if (!isFinite(sec) || sec < 0) return '00:00';
+      const m = Math.floor(sec / 60);
+      const s = Math.floor(sec % 60);
+      return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    }
+
+    videoEl.addEventListener('timeupdate', () => {
+      if (isSeeking || !isFinite(videoEl.duration) || videoEl.duration <= 0) return;
+      const ratio = Math.round((videoEl.currentTime / videoEl.duration) * 1000);
+      document.getElementById('seek-slider').value = ratio;
+      document.getElementById('fs-seek-slider').value = ratio;
+      const curStr = formatTimeSec(videoEl.currentTime);
+      const durStr = formatTimeSec(videoEl.duration);
+      document.getElementById('time-elapsed').textContent = curStr;
+      document.getElementById('time-duration').textContent = durStr;
+      document.getElementById('fs-start-time').textContent = curStr;
+      document.getElementById('fs-end-time').textContent = durStr;
+    });
+
+    function handleSeekInput(val) {
+      isSeeking = true;
+      if (isFinite(videoEl.duration) && videoEl.duration > 0) {
+        const previewSec = (val / 1000) * videoEl.duration;
+        document.getElementById('time-elapsed').textContent = formatTimeSec(previewSec);
+        document.getElementById('fs-start-time').textContent = formatTimeSec(previewSec);
+      }
+    }
+
+    function handleSeekCommit(val) {
+      if (isFinite(videoEl.duration) && videoEl.duration > 0) {
+        videoEl.currentTime = (val / 1000) * videoEl.duration;
+      }
+      isSeeking = false;
+    }
+
+    async function toggleFullscreen() {
+      const wrapper = document.getElementById('player-wrapper');
+      const fsHud = document.getElementById('fullscreen-hud');
+      const stdControls = document.getElementById('standard-controls');
+      const isCurrentlyFs = document.fullscreenElement || wrapper.classList.contains('is-theater');
+
+      if (!isCurrentlyFs) {
+        try {
+          if (wrapper.requestFullscreen) {
+            await wrapper.requestFullscreen();
+          } else {
+            wrapper.classList.add('is-theater');
+          }
+          if (screen.orientation && screen.orientation.lock) {
+            screen.orientation.lock('landscape').catch(() => {});
+          }
+        } catch (e) {
+          wrapper.classList.add('is-theater');
+        }
+        fsHud.classList.remove('hidden');
+        stdControls.classList.add('hidden');
+        wakeFullscreenHUD();
+      } else {
+        try {
+          if (document.fullscreenElement && document.exitFullscreen) {
+            await document.exitFullscreen();
+          }
+          if (screen.orientation && screen.orientation.unlock) {
+            screen.orientation.unlock();
+          }
+        } catch (e) {}
+        wrapper.classList.remove('is-theater');
+        fsHud.classList.add('hidden');
+        stdControls.classList.remove('hidden');
+      }
+    }
+
+    document.addEventListener('fullscreenchange', () => {
+      const wrapper = document.getElementById('player-wrapper');
+      const fsHud = document.getElementById('fullscreen-hud');
+      const stdControls = document.getElementById('standard-controls');
+      if (!document.fullscreenElement && !wrapper.classList.contains('is-theater')) {
+        fsHud.classList.add('hidden');
+        stdControls.classList.remove('hidden');
+      }
+    });
+
+    function wakeFullscreenHUD() {
+      const fsHud = document.getElementById('fullscreen-hud');
+      if (fsHud.classList.contains('hidden')) return;
+      fsHud.style.opacity = '1';
+      clearTimeout(hudHideTimer);
+      hudHideTimer = setTimeout(() => {
+        if (!videoEl.paused) {
+          fsHud.style.opacity = '0';
+        }
+      }, 3500);
+    }
+
+    function updateLiveClock() {
+      const now = new Date();
+      const str = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      const epgClock = document.getElementById('epg-live-clock');
+      const hdrClock = document.getElementById('header-clock');
+      if (epgClock) epgClock.textContent = str;
+      if (hdrClock) hdrClock.textContent = str;
+    }
+
+    function renderTimeSlotsHeader() {
+      const container = document.getElementById('epg-time-slots');
+      if (!container) return;
+      const now = new Date();
+      now.setMinutes(now.getMinutes() < 30 ? 0 : 30, 0, 0);
+      let html = '';
+      for (let i = 0; i < 6; i++) {
+        const slot = new Date(now.getTime() + i * 30 * 60000);
+        const label = slot.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+        html += `<div class="min-w-[180px] px-3 py-2 border-r border-white/10 font-bold">${label}</div>`;
+      }
+      container.innerHTML = html;
+    }
+
+    function renderEPG() {
+      renderTimeSlotsHeader();
+      const rowsEl = document.getElementById('epg-rows');
+      if (!rowsEl) return;
+
+      rowsEl.innerHTML = channels.map((ch, idx) => {
+        const isActive = idx === activeChannelIndex;
+        const cached = playlistCache[ch.id] || [];
+        const slots = cached.length > 0
+          ? cached.slice(0, 6)
+          : [{ title: ch.name, duration: ch.isMovieChannel ? 5400 : 1320 }];
+
+        const blocksHtml = slots.map((item, sIdx) => {
+          const isNow = isActive && sIdx === 0;
+          const mins = Math.max(7, Math.round((item.duration || 1320) / 60));
+          const widthPx = ch.isMovieChannel ? Math.max(260, Math.min(480, mins * 4)) : Math.max(150, Math.min(260, mins * 8));
+          const label = ch.isMovieChannel ? cleanMovieTitle(item.title) : item.title;
+
+          return `
+            <button
+              onclick="tuneToChannel(${idx}, true, ${sIdx})"
+              style="min-width:${widthPx}px; max-width:${widthPx}px; background-color:${isNow ? '#facc15' : ch.color};"
+              class="h-16 px-3 py-2 text-left border-r border-black/40 flex flex-col justify-center transition hover:brightness-110 cursor-pointer ${isNow ? 'text-slate-950 font-bold' : 'text-white'}"
+            >
+              <div class="flex items-center justify-between gap-1.5">
+                <span class="text-xs font-semibold truncate">${label}</span>
+                ${sIdx === 0 ? `<span class="px-1.5 py-0.2 rounded text-[9px] font-mono-tv font-bold ${isNow ? 'bg-slate-950 text-amber-300' : 'bg-black/40 text-amber-200'}">LIVE</span>` : ''}
+              </div>
+              <div class="font-mono-tv text-[10px] mt-0.5 ${isNow ? 'text-slate-800' : 'text-slate-300/80'}">
+                ${mins}m • CC
+              </div>
+            </button>
+          `;
+        }).join('');
+
+        return `
+          <div class="flex items-stretch ${isActive ? 'bg-amber-400/10' : 'bg-[#090c14]'}">
+            <button
+              onclick="tuneToChannel(${idx}, true)"
+              class="sticky left-0 z-20 w-36 sm:w-48 flex-shrink-0 px-2.5 py-1.5 flex items-center gap-2 border-r border-white/10 ${isActive ? 'bg-[#1a1f33]' : 'bg-[#0d111d]'} hover:bg-[#161c2e] cursor-pointer text-left"
+            >
+              <span class="font-mono-tv text-[11px] font-bold text-amber-300 w-7 flex-shrink-0">${ch.number}</span>
+              <div class="flex-1 h-11 flex items-center justify-center overflow-hidden">
+                ${getShowLogoSVG(ch)}
+              </div>
+            </button>
+            <div class="flex-1 flex items-stretch overflow-x-auto">
+              ${blocksHtml}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    async function prefetchAllChannelSchedules() {
+      // Prioritize Disney Movie channels first so live movie titles appear immediately in the EPG
+      const movieChs = channels.filter(c => c.isMovieChannel);
+      for (const ch of movieChs) {
+        await fetchChannelPlaylist(ch);
+        renderEPG();
+      }
+      const showChs = channels.filter(c => !c.isMovieChannel);
+      for (const ch of showChs) {
+        await fetchChannelPlaylist(ch);
+        renderEPG();
+      }
+    }
+
+    function switchBottomTab(tab) {
+      const views = ['livetv', 'ondemand', 'movies', 'search'];
+      views.forEach(v => {
+        document.getElementById(`view-${v}`)?.classList.toggle('hidden', v !== tab);
+        const navBtn = document.getElementById(`nav-${v}`);
+        if (navBtn) {
+          if (v === tab) {
+            navBtn.classList.add('text-amber-300', 'bg-amber-400/10');
+            navBtn.classList.remove('text-slate-400');
+          } else {
+            navBtn.classList.remove('text-amber-300', 'bg-amber-400/10');
+            navBtn.classList.add('text-slate-400');
+          }
+        }
+      });
+
+      if (tab === 'ondemand') renderOnDemandHub();
+      if (tab === 'movies') renderMoviesCatalog();
+      if (tab === 'search') renderGlobalSearch();
+    }
+
+    function renderOnDemandHub() {
+      const strip = document.getElementById('od-channels-strip');
+      if (!strip) return;
+      strip.innerHTML = channels.filter(c => !c.isMovieChannel).map((ch, idx) => `
+        <button onclick="openOnDemandShow(${idx})" class="rounded-xl bg-[#111522] hover:bg-[#181e30] border border-white/10 p-3 flex flex-col items-center gap-2 cursor-pointer transition">
+          <div class="h-12 w-full flex items-center justify-center">${getShowLogoSVG(ch)}</div>
+          <span class="font-mono-tv text-[10px] text-slate-400">CH ${ch.number}</span>
+        </button>
+      `).join('');
+    }
+
+    async function openOnDemandShow(idx) {
+      const ch = channels[idx];
+      const drawer = document.getElementById('od-show-detail');
+      drawer.classList.remove('hidden');
+      document.getElementById('od-detail-meta').textContent = `CH ${ch.number} • ${ch.year} • ${ch.rating}`;
+      document.getElementById('od-detail-title').textContent = ch.name;
+      document.getElementById('od-detail-desc').textContent = ch.desc;
+
+      const list = await fetchChannelPlaylist(ch);
+      const grid = document.getElementById('od-episode-grid');
+      grid.innerHTML = list.map((ep, epIdx) => `
+        <button onclick="switchBottomTab('livetv'); tuneToChannel(${idx}, false, ${epIdx});" class="rounded-xl bg-[#0b0d14] hover:bg-amber-400/10 border border-white/10 p-3 text-left transition cursor-pointer">
+          <div class="font-mono-tv text-[10px] text-amber-300">EPISODE ${epIdx + 1}</div>
+          <div class="text-xs font-bold text-white mt-0.5 line-clamp-2">${ep.title}</div>
+          <div class="font-mono-tv text-[10px] text-slate-400 mt-1">${Math.max(1, Math.round((ep.duration || 1320) / 60))} min • Play from start</div>
+        </button>
+      `).join('');
+    }
+
+    async function renderMoviesCatalog() {
+      const grid = document.getElementById('movies-grid');
+      if (!grid) return;
+      const query = (document.getElementById('movie-search-input')?.value || '').trim().toLowerCase();
+      const pool = await resolveDisneyMoviesPool();
+      const movieChIdx = channels.findIndex(c => c.isMovieChannel);
+
+      const filtered = pool.filter(m => cleanMovieTitle(m.title).toLowerCase().includes(query));
+      grid.innerHTML = filtered.map((m, idx) => {
+        const title = cleanMovieTitle(m.title);
+        return `
+          <div class="rounded-2xl bg-gradient-to-b from-[#17213a] to-[#0d111c] border border-white/10 p-3.5 flex flex-col justify-between gap-3">
+            <div class="space-y-2">
+              <div class="flex justify-between font-mono-tv text-[9px] text-slate-300">
+                <span class="px-1.5 py-0.5 rounded bg-black/40">HD</span>
+                <span class="px-1.5 py-0.5 rounded bg-black/40">G / PG</span>
+              </div>
+              <div class="h-12 flex items-center justify-center">
+                ${getShowLogoSVG(channels[movieChIdx] || { id: 'ch-201', name: 'Disney Movies 1', isMovieChannel: true })}
+              </div>
+              <div class="text-xs sm:text-sm font-bold text-white text-center line-clamp-2">${title}</div>
+            </div>
+            <button onclick="playMovieOnDemand(${idx})" class="w-full py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs cursor-pointer transition">
+              ▶ Watch Movie
+            </button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    async function playMovieOnDemand(poolIndex) {
+      const pool = await resolveDisneyMoviesPool();
+      const movie = pool[poolIndex];
+      if (!movie) return;
+      const movieChIdx = Math.max(0, channels.findIndex(c => c.isMovieChannel));
+      playlistCache[channels[movieChIdx].id] = [movie, ...pool.filter((_, i) => i !== poolIndex)];
+      switchBottomTab('livetv');
+      tuneToChannel(movieChIdx, false, 0);
+    }
+
+    function renderGlobalSearch() {
+      const q = (document.getElementById('global-search-input')?.value || '').trim().toLowerCase();
+      const box = document.getElementById('global-search-results');
+      if (!box) return;
+      if (!q) {
+        box.innerHTML = '<div class="text-xs text-slate-500">Start typing to search all cartoon channels and Disney movies.</div>';
+        return;
+      }
+      const matches = channels.filter(c => c.name.toLowerCase().includes(q));
+      box.innerHTML = matches.map(c => {
+        const idx = channels.indexOf(c);
+        return `
+          <button onclick="switchBottomTab('livetv'); tuneToChannel(${idx}, true);" class="w-full rounded-xl bg-[#111522] hover:bg-[#192034] border border-white/10 p-3 flex items-center justify-between text-left cursor-pointer">
+            <div>
+              <div class="font-mono-tv text-[10px] text-amber-300">CH ${c.number}</div>
+              <div class="text-sm font-bold text-white">${c.name}</div>
+            </div>
+            <span class="text-xs font-bold text-amber-300">Watch Live →</span>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function openManageModal() {
+      document.getElementById('manage-modal').classList.remove('hidden');
+    }
+
+    function closeManageModal() {
+      document.getElementById('manage-modal').classList.add('hidden');
+    }
+
+    function addCustomChannel() {
+      const name = (document.getElementById('new-ch-name').value || '').trim();
+      const url = (document.getElementById('new-ch-url').value || '').trim();
+      if (!name || !url) {
+        showToast('Enter both channel name and link');
+        return;
+      }
+      const nextNum = Math.max(...channels.map(c => c.number)) + 1;
+      channels.push({
+        id: 'ch-' + Date.now(),
+        number: nextNum,
+        name,
+        year: 'Classic',
+        rating: 'TV-G',
+        color: '#1e293b',
+        url,
+        desc: `24/7 broadcast of ${name}.`
+      });
+      saveChannels();
+      closeManageModal();
+      renderEPG();
+      tuneToChannel(channels.length - 1, true);
+      showToast(`Added CH ${nextNum}: ${name}`);
+    }
+
+    // Initialize Application only when browser is authorized
+    let appBooted = false;
+    function startToonSApp() {
+      if (appBooted) {
+        if (videoEl && videoEl.paused && videoEl.src) {
+          videoEl.play().catch(() => {});
+        }
+        return;
+      }
+      appBooted = true;
+      updateLiveClock();
+      setInterval(updateLiveClock, 1000);
+      renderEPG();
+      tuneToChannel(0, true);
+      prefetchAllChannelSchedules();
+    }
+
+    window.addEventListener('load', () => {
+      const authorized = applyAuthorizationState();
+      if (authorized) {
+        startToonSApp();
+      }
+    });
+  </script>
+</body>
+</html>
