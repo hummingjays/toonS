@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>arrS — Live A.R. Rahman Movie TV</title>
+  <title>toonS — Live Cartoon & Movie TV</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=JetBrains+Mono:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
       color-scheme: dark;
@@ -21,13 +21,9 @@
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
       overflow: hidden;
     }
-    .font-display {
+    .font-cartoon {
       font-family: 'Syne', sans-serif;
       letter-spacing: -0.025em;
-    }
-    .font-cinema {
-      font-family: 'Cinzel', Georgia, serif;
-      letter-spacing: 0.02em;
     }
     .font-mono-tv {
       font-family: 'JetBrains Mono', monospace;
@@ -139,25 +135,27 @@
         </svg>
       </div>
 
+      <!-- Heading & Subtitle -->
       <div class="space-y-1.5">
         <div class="font-mono-tv text-[10px] font-bold tracking-[0.18em] text-[#fb3b5a] uppercase">
           DEVICE AUTHORIZATION REQUIRED
         </div>
-        <h1 class="font-display text-2xl font-bold text-white tracking-tight">
+        <h1 class="font-cartoon text-2xl font-bold text-white tracking-tight">
           Unlock This Browser
         </h1>
         <p class="text-xs text-slate-400 leading-relaxed px-1">
-          Access to <strong class="text-white">arrS</strong> is bound per browser. Send your <strong class="text-slate-200 font-semibold">Device Request Code</strong> to the Admin to receive a single-device <strong class="text-slate-200 font-semibold">Unlock Key</strong>.
+          Access is bound per browser. Send your <strong class="text-slate-200 font-semibold">Device Request Code</strong> to the Admin to receive a single-device <strong class="text-slate-200 font-semibold">Unlock Key</strong>.
         </p>
       </div>
 
+      <!-- Device Request Code Box -->
       <div class="rounded-2xl bg-[#0e1016] border border-white/10 p-4 space-y-2.5">
         <div class="font-mono-tv text-[10px] font-bold tracking-[0.14em] text-slate-400 uppercase">
           YOUR DEVICE REQUEST CODE
         </div>
         <div class="flex items-center justify-center gap-2.5">
           <span id="device-request-code" class="font-mono-tv text-lg sm:text-xl font-bold text-white tracking-widest select-all">
-            AR-XXXX-XX
+            TS-XXXX-XX
           </span>
           <button type="button" onclick="copyDeviceRequestCode()" class="px-3 py-1 rounded-lg bg-[#232634] hover:bg-[#2e3244] text-slate-200 text-xs font-semibold border border-white/10 cursor-pointer transition active:scale-95">
             Copy
@@ -168,6 +166,7 @@
         </p>
       </div>
 
+      <!-- Standard Unlock Form -->
       <form id="unlock-browser-form" onsubmit="handleUnlockBrowser(event)" class="space-y-3 text-left">
         <div>
           <label class="block text-xs font-semibold text-slate-300 mb-1.5">Single-Device Unlock Key</label>
@@ -188,6 +187,7 @@
         </button>
       </form>
 
+      <!-- Collapsible Admin Login Form -->
       <form id="admin-login-form" onsubmit="handleAdminLogin(event)" class="hidden space-y-3 text-left pt-1 border-t border-white/10">
         <div class="font-mono-tv text-[10px] font-bold tracking-widest text-amber-300 uppercase text-center pt-1">
           Admin Direct Authorization
@@ -206,13 +206,14 @@
         </button>
       </form>
 
+      <!-- Toggle Admin Sign-In Link -->
       <div class="pt-2 border-t border-white/10 space-y-3">
         <button type="button" id="toggle-admin-btn" onclick="toggleAdminAuthPanel()" class="text-xs text-slate-400 hover:text-white transition cursor-pointer leading-relaxed">
           Admin on a new device? Sign in with Admin Credentials<br/>→
         </button>
 
         <div class="text-[11px] font-mono-tv text-slate-500">
-          arrS by SenthilKumar
+          toonS by SenthilKumar
         </div>
       </div>
     </div>
@@ -221,15 +222,15 @@
   <!-- ==================== MAIN WEB APP SHELL ==================== -->
   <div id="app-shell" class="h-[100dvh] flex flex-col overflow-hidden bg-gradient-to-b from-[#090b12] via-[#07080d] to-[#050609]">
 
-    <!-- Top Admin & Brand Bar -->
+    <!-- Top Admin & Brand Bar (Shows Admin button prominently when signed in as admin) -->
     <header id="top-app-bar" class="flex-shrink-0 z-40 bg-[#090b12]/95 backdrop-blur-xl border-b border-amber-400/15 px-3.5 sm:px-5 py-2 flex items-center justify-between">
       <div class="flex items-center gap-2.5">
-        <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-amber-300 via-amber-500 to-rose-600 flex items-center justify-center font-display font-extrabold text-slate-950 text-xs shadow-[0_0_14px_rgba(251,191,36,0.35)]">
-          aS
+        <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-amber-300 via-amber-500 to-rose-600 flex items-center justify-center font-cartoon font-extrabold text-slate-950 text-xs shadow-[0_0_14px_rgba(251,191,36,0.35)]">
+          tS
         </div>
-        <span class="font-display font-extrabold text-base sm:text-lg text-white tracking-tight">arrS</span>
+        <span class="font-cartoon font-extrabold text-base sm:text-lg text-white tracking-tight">toonS</span>
         <span class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-400/10 border border-amber-400/25 text-[10px] font-mono-tv font-semibold text-amber-300">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span> A.R. RAHMAN CINEMA TV
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span> LIVE CARTOON &amp; MOVIE TV
         </span>
       </div>
 
@@ -238,7 +239,7 @@
           --:--:--
         </span>
 
-        <!-- Prominent Top Admin Button -->
+        <!-- Prominent Top Admin Button to Enable Other Browsers / Users -->
         <button
           id="top-admin-btn"
           onclick="openAdminKeygenModal()"
@@ -252,28 +253,29 @@
       </div>
     </header>
 
-    <!-- ==================== LIVE TV VIEW (FIXED DISPLAY + SCROLLABLE EPG) ==================== -->
+    <!-- ==================== LIVE TV VIEW ==================== -->
     <main id="view-livetv" class="flex-1 min-h-0 flex flex-col overflow-hidden pb-[66px]">
 
-      <!-- FIXED TOP HERO STAGE -->
+      <!-- TOP HERO STAGE: FIXED DISPLAY + METADATA -->
       <section id="hero-stage" class="flex-shrink-0 z-30 bg-gradient-to-br from-[#121626] via-[#0c0f19] to-[#080a11] border-b border-amber-400/15 shadow-[0_12px_32px_rgba(0,0,0,0.65)]">
 
         <!-- Video Player Container -->
         <div id="player-wrapper" class="relative bg-black aspect-video max-h-[30dvh] sm:max-h-none w-full overflow-hidden group" onmousemove="wakeFullscreenHUD()" onclick="wakeFullscreenHUD()">
           <video id="tv-video" class="w-full h-full object-contain bg-black" playsinline autoplay muted></video>
+          <iframe id="tv-embed-frame" class="hidden w-full h-full border-0 bg-black" allow="autoplay; fullscreen"></iframe>
 
           <!-- Optional CRT Scanline Effect -->
           <div id="crt-layer" class="hidden crt-overlay pointer-events-none absolute inset-0 z-10"></div>
 
           <!-- Top-Left Channel OSD Pill -->
           <div id="osd-banner" class="absolute top-3 left-3 z-20 flex items-center gap-2 bg-black/75 backdrop-blur-md border border-white/15 px-2.5 py-1.5 rounded-xl transition-opacity duration-300">
-            <div id="osd-logo-slot" class="w-14 h-6 flex items-center justify-center"></div>
+            <div id="osd-logo-slot" class="w-16 h-7 flex items-center justify-center overflow-hidden"></div>
             <div>
               <div class="flex items-center gap-1.5 font-mono-tv text-[10px] text-amber-300 font-bold">
-                <span id="osd-ch-num">CH 301</span>
+                <span id="osd-ch-num">CH 101</span>
                 <span class="px-1.5 py-0.2 rounded bg-rose-600 text-white text-[9px]">LIVE</span>
               </div>
-              <div id="osd-ch-name" class="text-xs font-bold text-white leading-tight">Madras Talkies</div>
+              <div id="osd-ch-name" class="text-xs font-bold text-white leading-tight">Dexter's Laboratory</div>
             </div>
           </div>
 
@@ -285,16 +287,16 @@
           <!-- Loader Overlay -->
           <div id="player-loader" class="hidden absolute inset-0 z-20 bg-black/85 flex flex-col items-center justify-center p-4 text-center">
             <div class="w-8 h-8 border-2 border-amber-400 border-t-transparent rounded-full animate-spin mb-2"></div>
-            <div id="loader-text" class="font-display text-sm font-bold text-white">Tuning Channel...</div>
-            <div id="loader-subtext" class="font-mono-tv text-[11px] text-slate-400 mt-0.5">Syncing movie broadcast</div>
+            <div id="loader-text" class="font-cartoon text-sm font-bold text-white">Tuning Channel...</div>
+            <div id="loader-subtext" class="font-mono-tv text-[11px] text-slate-400 mt-0.5">Syncing broadcast stream</div>
           </div>
 
           <!-- Standard Bottom Controls Bar -->
           <div id="standard-controls" class="absolute bottom-0 inset-x-0 z-20 bg-gradient-to-t from-black/95 via-black/75 to-transparent px-3 pt-5 pb-2 space-y-1.5">
             <div class="flex items-center gap-2">
-              <span id="time-elapsed" class="font-mono-tv text-[10px] text-slate-300 w-12">00:00</span>
+              <span id="time-elapsed" class="font-mono-tv text-[10px] text-slate-300 w-10">00:00</span>
               <input id="seek-slider" type="range" min="0" max="1000" value="0" oninput="handleSeekInput(this.value)" onchange="handleSeekCommit(this.value)" class="tv-seek-slider flex-1" />
-              <span id="time-duration" class="font-mono-tv text-[10px] text-slate-300 w-12 text-right">00:00</span>
+              <span id="time-duration" class="font-mono-tv text-[10px] text-slate-300 w-10 text-right">00:00</span>
             </div>
 
             <div class="flex items-center justify-between gap-1.5">
@@ -307,7 +309,7 @@
               <div class="flex items-center gap-1">
                 <button id="mute-btn" onclick="toggleMute()" title="Mute/Unmute" class="p-1.5 rounded-md bg-slate-800/90 hover:bg-slate-700 text-white text-xs border border-white/10 cursor-pointer">🔇</button>
                 <button id="crt-btn" onclick="toggleCRT()" title="CRT Scanlines" class="px-1.5 py-1 rounded-md bg-slate-800/90 hover:bg-slate-700 text-slate-300 font-mono-tv text-[10px] border border-white/10 cursor-pointer">CRT</button>
-                <button onclick="jumpRandomScene()" title="Random Scene" class="px-1.5 py-1 rounded-md bg-slate-800/90 hover:bg-slate-700 text-amber-300 font-mono-tv text-[10px] font-bold border border-white/10 cursor-pointer">🎲 SCENE</button>
+                <button onclick="openManageModal()" title="Manage Channels" class="px-1.5 py-1 rounded-md bg-slate-800/90 hover:bg-slate-700 text-amber-300 font-mono-tv text-[10px] font-bold border border-white/10 cursor-pointer">+ CH</button>
                 <button onclick="toggleFullscreen()" title="Fullscreen" class="p-1.5 rounded-md bg-slate-800/90 hover:bg-slate-700 text-white border border-white/10 cursor-pointer">
                   <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M4 8V4h4M20 8V4h-4M4 16v4h4M20 16v4h-4" />
@@ -319,6 +321,7 @@
 
           <!-- NostalgiaTV Fullscreen HUD Overlay -->
           <div id="fullscreen-hud" class="hidden absolute inset-0 z-30 flex flex-col justify-between p-4 pb-6 sm:p-6 bg-gradient-to-b from-black/75 via-transparent to-black/95 transition-opacity duration-300">
+            <!-- Top Row -->
             <div class="flex items-center justify-between pt-2 sm:pt-0">
               <button onclick="toggleFullscreen()" class="w-11 h-11 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-white/15 flex items-center justify-center text-white cursor-pointer">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
@@ -326,31 +329,33 @@
                 </svg>
               </button>
               <div id="fs-ch-number" class="font-mono-tv text-2xl sm:text-3xl font-bold text-amber-300 tracking-wider drop-shadow">
-                301
+                101
               </div>
             </div>
 
+            <!-- Bottom Row -->
             <div class="space-y-3 pb-2">
               <div class="flex items-end justify-between gap-4">
                 <div class="space-y-1 max-w-[55%]">
                   <div class="font-mono-tv text-[10px] font-bold tracking-widest text-amber-300 uppercase">NOW PLAYING</div>
-                  <div id="fs-now-logo" class="h-9 w-32 flex items-center"></div>
-                  <div id="fs-now-title" class="text-xs sm:text-sm font-semibold text-white truncate">Movie Title</div>
+                  <div id="fs-now-logo" class="h-10 w-36 flex items-center overflow-hidden"></div>
+                  <div id="fs-now-title" class="text-xs sm:text-sm font-semibold text-white truncate">Episode Title</div>
                 </div>
                 <div class="space-y-1 text-right max-w-[40%]">
                   <div class="font-mono-tv text-[10px] font-bold tracking-widest text-amber-300 uppercase">COMING UP</div>
-                  <div id="fs-next-title" class="text-xs sm:text-sm font-semibold text-slate-200 truncate">Next Movie</div>
+                  <div id="fs-next-title" class="text-xs sm:text-sm font-semibold text-slate-200 truncate">Next Episode</div>
                 </div>
               </div>
 
               <div class="space-y-1.5">
                 <div class="flex justify-between font-mono-tv text-xs text-slate-300">
                   <span id="fs-start-time">00:00</span>
-                  <span id="fs-end-time">02:30:00</span>
+                  <span id="fs-end-time">22:00</span>
                 </div>
                 <input id="fs-seek-slider" type="range" min="0" max="1000" value="0" oninput="handleSeekInput(this.value)" onchange="handleSeekCommit(this.value)" class="tv-seek-slider w-full" />
               </div>
 
+              <!-- Transport Controls -->
               <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 pt-1">
                 <button onclick="prevChannel()" title="Previous Channel" class="w-10 h-10 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-white/15 flex items-center justify-center text-white font-mono-tv text-xs font-bold cursor-pointer">CH-</button>
                 <button onclick="jumpRandomScene()" title="Random Scene" class="w-10 h-10 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-white/15 flex items-center justify-center text-amber-300 cursor-pointer">🎲</button>
@@ -365,31 +370,32 @@
           </div>
         </div>
 
-        <!-- Metadata Info Zone (Clean Movie Title Only) -->
+        <!-- Metadata Info Zone -->
         <div id="metadata-panel" class="w-full min-w-0 px-3.5 py-2.5 sm:px-5 sm:py-3.5 flex items-center justify-between gap-3 overflow-hidden">
           <div class="w-full min-w-0 flex-1 space-y-1.5 overflow-hidden">
             <div class="flex items-center justify-between gap-3 min-w-0">
               <div class="min-w-0 flex-1 space-y-0.5">
-                <h2 id="meta-movie-title" class="font-display text-base sm:text-xl lg:text-2xl font-extrabold text-white tracking-tight truncate">
-                  Aayutha Ezhuthu
+                <h2 id="meta-show-title" class="font-cartoon text-base sm:text-xl lg:text-2xl font-extrabold text-white tracking-tight truncate">
+                  Dexter's Laboratory
                 </h2>
-                <div id="meta-channel-subtitle" class="text-xs sm:text-sm font-semibold text-amber-300/95 truncate">
-                  Madras Talkies • Feature Presentation
+                <div id="meta-episode-title" class="text-xs sm:text-sm font-semibold text-amber-300/95 truncate">
+                  Loading live episode...
                 </div>
               </div>
               <div id="meta-brand-logo" class="w-24 sm:w-32 h-11 sm:h-14 flex-shrink-0 flex items-center justify-center overflow-hidden"></div>
             </div>
             <div id="meta-air-window" class="font-mono-tv text-[10px] sm:text-[11px] text-slate-300/90 truncate">
-              --:-- AM - --:-- AM &nbsp; 301 MADRAS TALKIES
+              --:-- AM - --:-- AM &nbsp; 101 DEXTER'S LABORATORY
             </div>
             <div class="flex flex-wrap items-center gap-1.5 pt-0.5 font-mono-tv text-[10px]">
-              <span class="px-2 py-0.5 rounded-md bg-amber-400/10 border border-amber-400/25 text-amber-200 font-semibold">A.R. Rahman</span>
+              <span id="meta-year" class="px-2 py-0.5 rounded-md bg-amber-400/10 border border-amber-400/25 text-amber-200 font-semibold">1995</span>
+              <span id="meta-rating" class="px-2 py-0.5 rounded-md bg-white/[0.04] border border-white/15 text-slate-200">TV-G</span>
               <span class="px-2 py-0.5 rounded-md bg-white/[0.04] border border-white/15 text-slate-200">HD</span>
               <span class="px-2 py-0.5 rounded-md bg-white/[0.04] border border-white/15 text-slate-200">AAC Stereo</span>
-              <span id="meta-runtime" class="px-2 py-0.5 rounded-md bg-white/[0.04] border border-white/15 text-slate-200">150 min</span>
+              <span id="meta-runtime" class="px-2 py-0.5 rounded-md bg-white/[0.04] border border-white/15 text-slate-200">22 min</span>
             </div>
             <p id="meta-description" class="hidden sm:line-clamp-2 text-xs text-slate-400 pt-0.5 leading-relaxed">
-              Mani Ratnam &amp; A.R. Rahman timeless cinema collection streaming 24/7.
+              Boy genius Dexter invents wild contraptions in his secret laboratory while keeping his older sister Dee Dee out.
             </p>
           </div>
         </div>
@@ -397,55 +403,65 @@
 
       <!-- SCROLLABLE EPG TV GUIDE -->
       <section class="flex-1 min-h-0 flex flex-col bg-[#06070b] overflow-hidden">
+        <!-- Guide Time Header Bar -->
         <div class="flex-shrink-0 z-20 flex items-stretch bg-[#0c0f1a] border-b border-white/10">
           <div class="w-36 sm:w-48 flex-shrink-0 px-3 py-2 flex items-center gap-2 border-r border-white/10 bg-[#0a0d16]">
             <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
             <span id="epg-live-clock" class="font-mono-tv text-[11px] font-bold text-amber-100">--:--:--</span>
           </div>
-          <div id="epg-time-slots" class="flex-1 flex items-center overflow-x-auto font-mono-tv text-[11px] text-slate-300"></div>
+          <div id="epg-time-slots" class="flex-1 flex items-center overflow-x-auto font-mono-tv text-[11px] text-slate-300">
+            <!-- Populated dynamically with half-hour slots -->
+          </div>
         </div>
 
-        <div id="epg-rows" class="flex-1 min-h-0 overflow-y-auto divide-y divide-white/[0.07]"></div>
+        <!-- EPG Rows Container -->
+        <div id="epg-rows" class="flex-1 min-h-0 overflow-y-auto divide-y divide-white/[0.07]">
+          <!-- Channels rendered here -->
+        </div>
       </section>
     </main>
 
     <!-- ==================== ON DEMAND VIEW ==================== -->
     <main id="view-ondemand" class="hidden flex-1 min-h-0 overflow-y-auto p-4 sm:p-6 pb-24 space-y-6 max-w-6xl mx-auto w-full">
-      <div class="rounded-2xl bg-gradient-to-r from-amber-950/60 via-slate-900 to-rose-950/50 border border-white/10 p-5 sm:p-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <!-- Featured Hero Card -->
+      <div class="rounded-2xl bg-gradient-to-r from-indigo-950 via-slate-900 to-amber-950/50 border border-white/10 p-5 sm:p-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div class="space-y-2 max-w-xl">
           <span class="inline-block px-2.5 py-0.5 rounded-full bg-amber-400/20 text-amber-300 font-mono-tv text-[10px] font-bold uppercase tracking-wider">ON DEMAND HUB</span>
-          <h2 class="font-display text-2xl sm:text-3xl font-bold text-white">A.R. Rahman Movie Channels On Demand</h2>
-          <p class="text-xs sm:text-sm text-slate-300">Select any curated channel below to inspect its full lineup and play any movie from the beginning.</p>
+          <h2 class="font-cartoon text-2xl sm:text-3xl font-bold text-white">Watch Any Cartoon or Disney Classic Anytime</h2>
+          <p class="text-xs sm:text-sm text-slate-300">Browse all 12 classic cartoon series organized by season and episode, or jump straight into full-length Walt Disney Animation Studios movies.</p>
         </div>
         <button onclick="switchBottomTab('movies')" class="px-4 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs sm:text-sm cursor-pointer transition">
-          All Movies →
+          Explore Movies →
         </button>
       </div>
 
+      <!-- Channels Strip -->
       <div class="space-y-2.5">
-        <h3 class="font-display text-base font-bold text-white">Curated Movie Channels</h3>
-        <div id="od-channels-strip" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5"></div>
+        <h3 class="font-cartoon text-base font-bold text-white">Live Cartoon Channels</h3>
+        <div id="od-channels-strip" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-2.5"></div>
       </div>
 
-      <div id="od-channel-detail" class="hidden rounded-2xl bg-[#111420] border border-white/15 p-4 sm:p-6 space-y-4">
+      <!-- Show Detail Drawer (Season & Episode Selector) -->
+      <div id="od-show-detail" class="hidden rounded-2xl bg-[#111420] border border-white/15 p-4 sm:p-6 space-y-4">
         <div class="flex items-start justify-between gap-3">
           <div>
-            <div id="od-detail-meta" class="font-mono-tv text-[11px] text-amber-300">CH 301 • CURATED LINEUP</div>
-            <h3 id="od-detail-title" class="font-display text-2xl font-bold text-white">Channel Name</h3>
+            <div id="od-detail-meta" class="font-mono-tv text-[11px] text-amber-300">CH 101 • 1995 • TV-G</div>
+            <h3 id="od-detail-title" class="font-cartoon text-2xl font-bold text-white">Show Name</h3>
             <p id="od-detail-desc" class="text-xs text-slate-300 mt-1 max-w-2xl"></p>
           </div>
-          <button onclick="document.getElementById('od-channel-detail').classList.add('hidden')" class="px-2.5 py-1 rounded-lg bg-white/10 text-xs text-white cursor-pointer">Close ✕</button>
+          <button onclick="document.getElementById('od-show-detail').classList.add('hidden')" class="px-2.5 py-1 rounded-lg bg-white/10 text-xs text-white cursor-pointer">Close ✕</button>
         </div>
-        <div id="od-movie-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5"></div>
+        <div id="od-season-tabs" class="flex flex-wrap gap-2"></div>
+        <div id="od-episode-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5"></div>
       </div>
     </main>
 
-    <!-- ==================== ALL MOVIES VIEW ==================== -->
+    <!-- ==================== MOVIES VIEW ==================== -->
     <main id="view-movies" class="hidden flex-1 min-h-0 overflow-y-auto p-4 sm:p-6 pb-24 space-y-4 max-w-6xl mx-auto w-full">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h2 class="font-display text-2xl font-bold text-white">All A.R. Rahman Movies</h2>
-          <p class="text-xs text-slate-400">Click any movie to watch from the opening scene</p>
+          <h2 class="font-cartoon text-2xl font-bold text-white">Walt Disney Animation Movies</h2>
+          <p class="text-xs text-slate-400">Select any movie to stream from the opening scene</p>
         </div>
         <input id="movie-search-input" type="text" oninput="renderMoviesCatalog()" placeholder="Filter movies..." class="rounded-xl bg-[#121521] border border-white/15 px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 w-full sm:w-64" />
       </div>
@@ -454,8 +470,8 @@
 
     <!-- ==================== SEARCH VIEW ==================== -->
     <main id="view-search" class="hidden flex-1 min-h-0 overflow-y-auto p-4 sm:p-6 pb-24 space-y-4 max-w-4xl mx-auto w-full">
-      <h2 class="font-display text-2xl font-bold text-white">Search Channels & Movies</h2>
-      <input id="global-search-input" type="text" oninput="renderGlobalSearch()" placeholder="Type a movie or channel name (e.g., Rockstar, Sivaji, Bombay)..." class="w-full rounded-xl bg-[#121521] border border-white/15 px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-amber-400" />
+      <h2 class="font-cartoon text-2xl font-bold text-white">Search Channels, Shows & Movies</h2>
+      <input id="global-search-input" type="text" oninput="renderGlobalSearch()" placeholder="Type a show, episode, or Disney movie..." class="w-full rounded-xl bg-[#121521] border border-white/15 px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-amber-400" />
       <div id="global-search-results" class="space-y-2"></div>
     </main>
 
@@ -482,9 +498,32 @@
       </button>
     </div>
     <div class="text-center pb-1.5 text-[10px] font-mono-tv text-slate-500/80 tracking-wide">
-      arrS by SenthilKumar
+      toonS by SenthilKumar
     </div>
   </nav>
+
+  <!-- ==================== MANAGE / ADD CHANNEL MODAL ==================== -->
+  <div id="manage-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-[#141722] border border-white/15 rounded-2xl max-w-md w-full p-5 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-white/10 pb-2.5">
+        <h3 class="font-cartoon text-lg font-bold text-white">Add Custom Channel</h3>
+        <button onclick="closeManageModal()" class="text-slate-400 hover:text-white font-bold cursor-pointer">✕</button>
+      </div>
+      <div class="space-y-3 text-xs">
+        <div>
+          <label class="block text-slate-300 font-semibold mb-1">Channel Name</label>
+          <input id="new-ch-name" type="text" placeholder="e.g. Tom & Jerry Classics" class="w-full rounded-xl bg-[#0b0d14] border border-white/15 px-3 py-2 text-white" />
+        </div>
+        <div>
+          <label class="block text-slate-300 font-semibold mb-1">Content Link</label>
+          <input id="new-ch-url" type="text" placeholder="https://archive.org/details/..." class="w-full rounded-xl bg-[#0b0d14] border border-white/15 px-3 py-2 text-white" />
+        </div>
+        <button onclick="addCustomChannel()" class="w-full py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold cursor-pointer">
+          Add Channel to Guide
+        </button>
+      </div>
+    </div>
+  </div>
 
   <!-- ==================== TOAST NOTIFICATION ==================== -->
   <div id="toast-box" class="fixed top-14 right-4 z-[10002] hidden bg-slate-900 border border-amber-400/50 text-amber-200 text-xs font-mono-tv px-3.5 py-2 rounded-xl shadow-2xl"></div>
@@ -495,13 +534,13 @@
       <div class="flex items-center justify-between border-b border-white/10 pb-3">
         <div>
           <div class="font-mono-tv text-[10px] text-amber-300 font-bold uppercase tracking-widest">ADMIN CONSOLE</div>
-          <h2 class="font-display text-lg text-white">Enable Another Browser or User</h2>
+          <h2 class="font-cartoon text-lg text-white">Enable Another Browser or User</h2>
         </div>
         <button onclick="closeAdminKeygenModal()" class="text-slate-400 hover:text-white p-1 text-lg font-bold cursor-pointer">✕</button>
       </div>
 
       <p class="text-xs text-slate-400 leading-relaxed">
-        Enter the user's <strong class="text-slate-200">Device Request Code</strong> (e.g. <span class="font-mono-tv text-slate-200">AR-EDFG-TJ</span>) shown on their screen to generate an Unlock Key bound strictly to their browser.
+        Enter the user's <strong class="text-slate-200">Device Request Code</strong> (e.g. <span class="font-mono-tv text-slate-200">TS-EDFG-TJ</span>) shown on their screen to generate an Unlock Key bound strictly to their browser.
       </p>
 
       <div class="space-y-2">
@@ -510,7 +549,7 @@
           id="keygen-target-code"
           type="text"
           oninput="updateGeneratedKeyPreview()"
-          placeholder="AR-XXXX-XX"
+          placeholder="TS-XXXX-XX"
           class="w-full rounded-xl bg-[#0e1016] border border-white/15 focus:border-amber-400 px-3.5 py-2.5 font-mono-tv text-sm text-white uppercase tracking-widest focus:outline-none"
         />
       </div>
@@ -541,20 +580,20 @@
   <script>
     /**
      * ============================================================================
-     * DEVICE AUTHORIZATION & SINGLE-DEVICE KEY SYSTEM (arrS)
+     * DEVICE AUTHORIZATION & SINGLE-DEVICE KEY SYSTEM
      * Admin Credentials: admin / hummingjays
      * ============================================================================
      */
-    const AUTH_STORAGE_KEY = 'arrs_browser_auth_v1';
-    const DEVICE_CODE_STORAGE_KEY = 'arrs_device_req_code_v1';
+    const AUTH_STORAGE_KEY = 'toons_browser_auth_v1';
+    const DEVICE_CODE_STORAGE_KEY = 'toons_device_req_code_v1';
     const ADMIN_USERNAME = 'admin';
     const ADMIN_PASSWORD = 'hummingjays';
-    const SECRET_SALT = 'ARRS_SENTHIL_HUMMINGJAYS_2026';
+    const SECRET_SALT = 'TOONS_SENTHIL_HUMMINGJAYS_2026';
 
     function getOrCreateDeviceRequestCode() {
       try {
         const existing = localStorage.getItem(DEVICE_CODE_STORAGE_KEY);
-        if (existing && /^AR-[A-Z0-9]{4}-[A-Z0-9]{2}$/.test(existing)) {
+        if (existing && /^TS-[A-Z0-9]{4}-[A-Z0-9]{2}$/.test(existing)) {
           return existing;
         }
       } catch (e) {}
@@ -584,7 +623,7 @@
         part2 += chars[seed % chars.length];
         seed = Math.floor(seed / 5) + (i * 23 + 17);
       }
-      const code = `AR-${part1}-${part2}`;
+      const code = `TS-${part1}-${part2}`;
       try {
         localStorage.setItem(DEVICE_CODE_STORAGE_KEY, code);
       } catch (e) {}
@@ -593,7 +632,7 @@
 
     function deriveUnlockKeyForDeviceCode(deviceCode) {
       const normalized = String(deviceCode || '').trim().toUpperCase();
-      if (!/^AR-[A-Z0-9]{4}-[A-Z0-9]{2}$/.test(normalized)) return '';
+      if (!/^TS-[A-Z0-9]{4}-[A-Z0-9]{2}$/.test(normalized)) return '';
 
       const payload = `${SECRET_SALT}::${normalized}`;
       let s1 = 0x9e3779b9;
@@ -642,7 +681,11 @@
       if (authRecord) {
         if (gateEl) gateEl.classList.add('hidden');
         if (topAdminBtn) {
-          topAdminBtn.classList.toggle('hidden', !authRecord.isAdmin);
+          if (authRecord.isAdmin) {
+            topAdminBtn.classList.remove('hidden');
+          } else {
+            topAdminBtn.classList.add('hidden');
+          }
         }
         return true;
       } else {
@@ -677,8 +720,10 @@
       const adminForm = document.getElementById('admin-login-form');
       const unlockForm = document.getElementById('unlock-browser-form');
       const toggleBtn = document.getElementById('toggle-admin-btn');
-      document.getElementById('auth-error-msg')?.classList.add('hidden');
-      document.getElementById('admin-error-msg')?.classList.add('hidden');
+      const errEl = document.getElementById('auth-error-msg');
+      const adminErrEl = document.getElementById('admin-error-msg');
+      if (errEl) errEl.classList.add('hidden');
+      if (adminErrEl) adminErrEl.classList.add('hidden');
 
       const showingAdmin = !adminForm.classList.contains('hidden');
       if (showingAdmin) {
@@ -709,8 +754,8 @@
         }));
         errEl.classList.add('hidden');
         applyAuthorizationState();
-        startArrSApp();
-        showToast('Browser authorized! Welcome to arrS');
+        startToonSApp();
+        showToast('Browser authorized! Welcome to toonS');
       } else {
         errEl.textContent = 'Invalid Unlock Key for this browser code.';
         errEl.classList.remove('hidden');
@@ -734,8 +779,8 @@
         }));
         if (adminErrEl) adminErrEl.classList.add('hidden');
         applyAuthorizationState();
-        startArrSApp();
-        showToast('Admin signed in — Full arrS web app unlocked');
+        startToonSApp();
+        showToast('Admin signed in — Full web app unlocked');
       } else {
         if (adminErrEl) {
           adminErrEl.textContent = 'Invalid Admin username or password.';
@@ -748,7 +793,7 @@
       const modal = document.getElementById('admin-keygen-modal');
       const targetInput = document.getElementById('keygen-target-code');
       targetInput.value = '';
-      document.getElementById('keygen-output-value').textContent = 'ENTER AR-XXXX-XX CODE';
+      document.getElementById('keygen-output-value').textContent = 'ENTER TS-XXXX-XX CODE';
       modal.classList.remove('hidden');
       setTimeout(() => targetInput.focus(), 60);
     }
@@ -760,7 +805,7 @@
     function updateGeneratedKeyPreview() {
       const raw = (document.getElementById('keygen-target-code').value || '').trim().toUpperCase();
       const key = deriveUnlockKeyForDeviceCode(raw);
-      document.getElementById('keygen-output-value').textContent = key || 'ENTER VALID AR-XXXX-XX CODE';
+      document.getElementById('keygen-output-value').textContent = key || 'ENTER VALID TS-XXXX-XX CODE';
     }
 
     function copyGeneratedUnlockKey() {
@@ -768,7 +813,7 @@
       if (val.startsWith('UNLOCK-')) {
         copyTextFallback(val, `Copied Unlock Key: ${val}`);
       } else {
-        showToast('Enter a valid AR-XXXX-XX request code first');
+        showToast('Enter a valid TS-XXXX-XX request code first');
       }
     }
 
@@ -782,261 +827,66 @@
 
     /**
      * ============================================================================
-     * arrS — 9 CURATED A.R. RAHMAN MOVIE CHANNELS
-     * Source Archive: https://archive.org/details/ARRMovies
+     * toonS — MULTI-CHANNEL CARTOON & MOVIE TV SIMULATOR (36 SHOWS + 5 MOVIE CH)
      * ============================================================================
      */
-    const ARCHIVE_ID = 'ARRMovies';
-
-    const ARR_CHANNELS = [
-      {
-        id: 'arr-301',
-        number: 301,
-        name: 'Madras Talkies',
-        color: '#2c1824',
-        desc: 'Mani Ratnam & A.R. Rahman iconic collaborations streaming 24/7.',
-        files: [
-          'Aayutha Ezhuthu (2004).mp4',
-          'Guru (2007) .mp4',
-          'Alai Payuthey (2000).mp4',
-          'Bombay (1995) .mp4',
-          'Chekka Chivantha Vaanam (2018) .mp4',
-          'Iruvar (1997).mp4',
-          'Kaatru Veliyidai (2017).mp4',
-          'Kadal (2013).mp4',
-          'Kannathil Muthamittal (2002).mp4',
-          'O Kadhal Kanmani (2015).mp4',
-          'Ponniyin Selvan 1 (2022).mp4',
-          'Ponniyin Selvan 2 (2023).mp4',
-          'Thug Life (2025) .mp4',
-          'Yuva (2004).mp4',
-          'Dil Se (1998) - Tamil.mp4'
-        ]
-      },
-      {
-        id: 'arr-302',
-        number: 302,
-        name: 'The Big Picture',
-        color: '#172947',
-        desc: 'Shankar & A.R. Rahman grand theatrical blockbusters.',
-        files: [
-          'Sivaji (2007).mp4',
-          'Enthiran (2010) - Tamil.mp4',
-          '2.0 (2018).mp4',
-          'Gentleman (1993).mp4',
-          'Indian (1996).mp4',
-          'I (2015).mp4',
-          'Jeans (1998).mp4',
-          'Mudhalvan (1999).mp4',
-          'Nayak The Real Hero (2001).mp4',
-          'Kadhalan (1994).mp4',
-          'Boys (2003) - Remastered.mp4'
-        ]
-      },
-      {
-        id: 'arr-303',
-        number: 303,
-        name: 'Aaromalae',
-        color: '#261e42',
-        desc: 'Gautham Vasudev Menon & A.R. Rahman soulful romantic dramas.',
-        files: [
-          'Vendhu Thanindhathu Kaadu (2022).mp4',
-          'Vinnaithaandi Varuvaayaa (2010).mp4',
-          'Achcham Yenbadhu Madamaiyada (2016).mp4',
-          'Ye Maaya Chesave (2010).mp4'
-        ]
-      },
-      {
-        id: 'arr-304',
-        number: 304,
-        name: 'Safarnama',
-        color: '#382516',
-        desc: 'Imtiaz Ali & A.R. Rahman soul-stirring musical journeys.',
-        files: [
-          'Tamasha (2015).mp4',
-          'Highway (2014).mp4',
-          'Rockstar (2011).mp4',
-          'Amar Singh Chamkila (2024).mp4',
-          'Main Vaapas Aaunga (2026).mp4'
-        ]
-      },
-      {
-        id: 'arr-305',
-        number: 305,
-        name: 'KSR Gold',
-        color: '#3b2e12',
-        desc: 'K.S. Ravikumar, Kamal Haasan, Rajinikanth & A.R. Rahman mass entertainers.',
-        files: [
-          'Lingaa (2014).mp4',
-          'Kochadaiiyaan (2014).mp4',
-          'Muthu (1995).mp4',
-          'Padayappa (1999).mp4',
-          'Thenali (2000).mp4'
-        ]
-      },
-      {
-        id: 'arr-306',
-        number: 306,
-        name: 'Love and Love only',
-        color: '#3f192d',
-        desc: 'Pure romance and timeless love anthems composed by A.R. Rahman.',
-        files: [
-          'Jodi (1999) .mp4',
-          'Kadhal Desam (1996).mp4',
-          'Kadhal Virus (2002).mp4',
-          'Kadhalan (1994).mp4',
-          'Kadhalikka Neramillai (2025).mp4',
-          'O Kadhal Kanmani (2015).mp4',
-          'Dil Se (1998) - Tamil.mp4',
-          'Enakku 20 Unakku18 (2003).mp4',
-          'Jaane Tu...Ya Jaane Na (2008).mp4',
-          'Kandukondain Kandukondain (2000).mp4',
-          'Raanjhanaa (2013).mp4',
-          'Sillunu Oru Kaadhal (2006).mp4'
-        ]
-      },
-      {
-        id: 'arr-307',
-        number: 307,
-        name: 'Musical',
-        color: '#16362c',
-        desc: 'Movies where music and rhythm are the heartbeat of the story.',
-        files: [
-          'Sangamam (1999) .mp4',
-          'Taal (1999).mp4',
-          'Rockstar (2011).mp4',
-          'Sarvam Thaala Mayam (2018).mp4',
-          'Amar Singh Chamkila (2024).mp4',
-          '99 Songs (2019).mp4',
-          'Duet (1994) .mp4',
-          'Kaaviya Thalaivan (2014).mp4'
-        ]
-      },
-      {
-        id: 'arr-308',
-        number: 308,
-        name: 'Sci-fi',
-        color: '#123342',
-        desc: 'Futuristic worlds, time travel, and sci-fi spectacles scored by A.R. Rahman.',
-        files: [
-          '2.0 (2018).mp4',
-          '24 (2016).mp4',
-          'Ayalaan (2024).mp4',
-          'New (2004).mp4',
-          'Nani (2004).mp4'
-        ]
-      },
-      {
-        id: 'arr-309',
-        number: 309,
-        name: 'EmperAR',
-        color: '#3a2214',
-        desc: 'Royal historical epics with majestic orchestral scores by A.R. Rahman.',
-        files: [
-          'Chhaava (2025).mp4',
-          'Jodhaa Akbar (2008).mp4',
-          'Ponniyin Selvan 1 (2022).mp4',
-          'Ponniyin Selvan 2 (2023).mp4',
-          'Mohenjo Daro (2016).mp4'
-        ]
-      },
-      {
-        id: 'arr-310',
-        number: 310,
-        name: 'SurvivAR',
-        color: '#2b2618',
-        desc: 'Gripping tales of human grit, endurance, and survival scored by A.R. Rahman.',
-        files: [
-          'Maryan (2013).mp4',
-          'The Goat Life (2024).mp4',
-          'Malayankunju (2022).mp4',
-          'Mili (2022).mp4',
-          '127 Hours (2010).mp4'
-        ]
-      },
-      {
-        id: 'arr-311',
-        number: 311,
-        name: 'Sports',
-        color: '#143326',
-        desc: 'Inspiring sporting triumphs and stadium anthems by A.R. Rahman.',
-        files: [
-          'Maidaan (2024).mp4',
-          'Sachin A Billion Dream (2017).mp4',
-          'Pelé (2016) .mp4',
-          'Bigil (2019).mp4',
-          'Lal Salaam (2024).mp4',
-          'Million Dollar Arm (2014).mp4'
-        ]
-      },
-      {
-        id: 'arr-312',
-        number: 312,
-        name: 'SuperStar',
-        color: '#382412',
-        desc: 'Superstar Rajinikanth & A.R. Rahman legendary mass blockbusters.',
-        files: [
-          'Baba (2002).mp4',
-          'Sivaji (2007).mp4',
-          'Enthiran (2010) - Tamil.mp4',
-          '2.0 (2018).mp4',
-          'Lingaa (2014).mp4',
-          'Kochadaiiyaan (2014).mp4',
-          'Muthu (1995).mp4',
-          'Padayappa (1999).mp4'
-        ]
-      },
-      {
-        id: 'arr-313',
-        number: 313,
-        name: 'Political',
-        color: '#34181c',
-        desc: 'Powerful socio-political dramas elevated by A.R. Rahman’s rousing scores.',
-        files: [
-          'Maamannan (2023).mp4',
-          'Sarkar (2018).mp4',
-          'Indira (1995).mp4',
-          'Aayutha Ezhuthu (2004).mp4'
-        ]
-      },
-      {
-        id: 'arr-314',
-        number: 314,
-        name: 'Maa',
-        color: '#331c38',
-        desc: 'Emotional stories celebrating motherhood, family, and warmth.',
-        files: [
-          'Mom (2017).mp4',
-          'Mimi (2021).mp4',
-          'New (2004).mp4',
-          'Pavithra (1994).mp4'
-        ]
-      },
-      {
-        id: 'arr-315',
-        number: 315,
-        name: 'International',
-        color: '#162c46',
-        desc: 'Academy Award & global cinema masterpieces scored by A.R. Rahman.',
-        files: [
-          'The Hundred Foot Journey (2014).mp4',
-          "Viceroy's House (2017).mp4",
-          'Couples Retreat (2009).mp4',
-          'Million Dollar Arm (2014).mp4',
-          'Slumdog Millionaire (2008).mp4',
-          'Blinded by the Light (2019).mp4',
-          '127 Hours (2010).mp4'
-        ]
-      }
+    const DEFAULT_CHANNELS = [
+      { id: 'ch-101', number: 101, name: 'Bluey', year: '2018', rating: 'TV-Y', color: '#173753', url: 'https://archive.org/details/bluey-in-4K', desc: 'Six-year-old Blue Heeler pup Bluey turns everyday family life into limitless, imaginative adventures.' },
+      { id: 'ch-102', number: 102, name: 'Barbie Dreamhouse Adventures', year: '2018', rating: 'TV-Y', color: '#3f1933', url: 'https://archive.org/details/barbie-dreamhouse-adventures-complete', desc: 'Barbie, her sisters, and friends embark on fun-filled Malibu adventures.' },
+      { id: 'ch-103', number: 103, name: 'Mickey Mouse Clubhouse', year: '2006', rating: 'TV-Y', color: '#3b181e', url: 'https://archive.org/details/s-1-e-16-24m-plutos-best', desc: 'Mickey, Minnie, Donald, Daisy, Goofy, and Pluto solve playful puzzles at the Clubhouse.' },
+      { id: 'ch-104', number: 104, name: 'Sofia the First', year: '2013', rating: 'TV-Y', color: '#2b1b47', url: 'https://archive.org/details/s-1-e-22-floating-palace', desc: 'Young Sofia adjusts to royal life in Enchancia while discovering the magic of her amulet.' },
+      { id: 'ch-105', number: 105, name: "Ben and Holly's Little Kingdom", year: '2009', rating: 'TV-Y', color: '#193829', url: 'https://archive.org/details/ben-and-hollys-little-kingdom-epds', desc: 'Fairy Princess Holly and her best friend Ben Elf explore a magical miniature kingdom.' },
+      { id: 'ch-106', number: 106, name: 'Peppa Pig', year: '2004', rating: 'TV-Y', color: '#3d1c2e', url: 'https://archive.org/details/peppa-pig-police-car_202602', desc: 'Peppa, George, Mummy Pig, and Daddy Pig share heartwarming everyday family fun.' },
+      { id: 'ch-107', number: 107, name: 'LEGO Friends', year: '2012', rating: 'TV-Y7', color: '#2b1e46', url: 'https://archive.org/details/legofriends2012', desc: 'Olivia, Mia, Andrea, Stephanie, and Emma team up for adventures in Heartlake City.' },
+      { id: 'ch-108', number: 108, name: 'Hilda', year: '2018', rating: 'TV-Y7', color: '#183344', url: 'https://archive.org/details/hilda-season-complete-episodes', desc: 'Fearless blue-haired explorer Hilda journeys from a wilderness full of trolls to bustling Trolberg.' },
+      { id: 'ch-109', number: 109, name: "Stranger Things: Tales from '85", year: '2026', rating: 'TV-PG', color: '#36161d', url: 'https://archive.org/details/stranger.-things.-tales.from.-85.', desc: 'Animated mysteries and supernatural chills unfold in Hawkins during the winter of 1985.' },
+      { id: 'ch-110', number: 110, name: 'Action Pack', year: '2022', rating: 'TV-Y', color: '#182f4d', url: 'https://archive.org/details/action-pack_20260526', desc: 'Heroic kids at the Action Academy use their super-powered hearts and teamwork to save Hope Springs.' },
+      { id: 'ch-111', number: 111, name: 'PJ Masks: Power Heroes', year: '2023', rating: 'TV-Y', color: '#14294a', url: 'https://archive.org/details/pj-masks-power-heroes-complete-series', desc: 'Catboy, Owlette, Gekko, and new night-time allies unite to stop nighttime villains.' },
+      { id: 'ch-112', number: 112, name: 'Garfield and Friends', year: '1988', rating: 'TV-G', color: '#3d2514', url: 'https://archive.org/details/garfield-s-01-e-09-the-binky-show-keeping-cool-dont-move', desc: 'Lasagna-loving cat Garfield, Odie, Jon, and Orson’s Farm gang bring classic Saturday morning laughs.' },
+      { id: 'ch-113', number: 113, name: 'Jackie Chan Adventures', year: '2000', rating: 'TV-Y7', color: '#382416', url: 'https://archive.org/details/jackie-chan-adventures_202609', desc: 'Archaeologist Jackie Chan, Jade, and Uncle hunt down magical talismans across the globe.' },
+      { id: 'ch-114', number: 114, name: 'The Magic School Bus', year: '1994', rating: 'TV-Y', color: '#382d12', url: 'https://archive.org/details/the-magic-school-bus-1994-PBS', desc: 'Ms. Frizzle takes her class on wild, shrinking, and space-faring science field trips.' },
+      { id: 'ch-115', number: 115, name: 'Vida the Vet: Ask Vida!', year: '2023', rating: 'TV-Y', color: '#173832', url: 'https://archive.org/details/vida-the-vet-ask-vida-full-series', desc: 'Ten-year-old animal doctor Vida cares for woodland creatures in Sweetwood.' },
+      { id: 'ch-116', number: 116, name: "Dexter's Laboratory", year: '1995', rating: 'TV-G', color: '#1e3a2f', url: 'https://archive.org/details/dexters-laboratory_202507', desc: 'Boy genius Dexter invents wild contraptions in his secret laboratory while keeping his sister Dee Dee out.' },
+      { id: 'ch-117', number: 117, name: 'The Complete CN Shows', year: '1990s', rating: 'TV-G', color: '#1b273d', url: 'https://archive.org/details/dexters-laboratory-s-01-e-01c-tv-super-pals', desc: 'Classic Cartoon Network anthology block packed with iconic 90s shorts and episodes.' },
+      { id: 'ch-118', number: 118, name: 'Cartoon Network Scoobtober', year: '2022', rating: 'TV-G', color: '#2b1d3d', url: 'https://archive.org/details/001.-what-a-night-for-a-knight', desc: 'Spooky mystery marathons starring Scooby-Doo and the Mystery Inc. gang.' },
+      { id: 'ch-119', number: 119, name: 'The Mask: Animated Series', year: '1995', rating: 'TV-Y7', color: '#1b3b24', url: 'https://archive.org/details/the-addams-family-1992', desc: 'Stanley Ipkiss dons an ancient wooden mask that transforms him into a cartoonish, reality-bending superhero.' },
+      { id: 'ch-120', number: 120, name: 'Mighty Mouse: The New Adventures', year: '1987', rating: 'TV-Y7', color: '#3f1d24', url: 'https://archive.org/details/the-new-adventures-of-mighty-mouse-s-01e-01-night-on-bald-pate_202208', desc: 'Here he comes to save the day! Mighty Mouse defends Mouseville from villains in Ralph Bakshi style.' },
+      { id: 'ch-121', number: 121, name: 'Ed, Edd N Eddy', year: '1999', rating: 'TV-Y7', color: '#3b2818', url: 'https://archive.org/details/ed-edd-n-eddys-big-picture-show_202509', desc: 'Three best friends in Peach Creek hatch elaborate schemes to earn quarters for giant jawbreakers.' },
+      { id: 'ch-122', number: 122, name: 'Johnny Bravo', year: '1997', rating: 'TV-Y7', color: '#3d2c14', url: 'https://archive.org/details/s-01-e-01-super-duped-bungled-in-the-jungle-bearly-enough-time', desc: 'Sunglasses-wearing, pompadour-sporting muscleman Johnny Bravo struts through Aron City.' },
+      { id: 'ch-123', number: 123, name: 'Cow and Chicken', year: '1997', rating: 'TV-Y7', color: '#3b1d28', url: 'https://archive.org/details/cow-and-chicken-s-01-e-02-the-girls-bathroom-480p-dvdrip_202411', desc: 'Surreal misadventures of Cow, her big brother Chicken, and the Red Guy.' },
+      { id: 'ch-124', number: 124, name: 'Courage the Cowardly Dog', year: '1999', rating: 'TV-Y7', color: '#341c38', url: 'https://archive.org/details/s-1-e-03-.-courage-meets-big-foot-hothead', desc: 'In the middle of Nowhere, timid pink dog Courage protects Muriel and Eustace from paranormal monsters.' },
+      { id: 'ch-125', number: 125, name: 'Cave Kids', year: '1996', rating: 'TV-Y', color: '#1d3633', url: 'https://archive.org/details/cave.-kids.-s-01-e-05.-of.-mice.and.-moon.-480p.-boom.-web-dl.-aac-2.0.x-264-jew', desc: 'Pebbles Flintstone, Bamm-Bamm Rubble, and Dino explore prehistoric Bedrock.' },
+      { id: 'ch-126', number: 126, name: 'The New Fred and Barney Show', year: '1979', rating: 'TV-G', color: '#362717', url: 'https://archive.org/details/the-new-fred-and-barney-show', desc: 'Fred Flintstone and Barney Rubble get into brand-new Bedrock antics.' },
+      { id: 'ch-127', number: 127, name: 'The Jetsons', year: '1962', rating: 'TV-G', color: '#1a2d47', url: 'https://archive.org/details/9-elroys-tv-show', desc: 'Meet George Jetson and his space-age family living high above Orbit City.' },
+      { id: 'ch-128', number: 128, name: 'Yogi Bear', year: '1958', rating: 'TV-G', color: '#1f3822', url: 'https://archive.org/details/68-yogis-birthday-party_202606', desc: 'Smarter-than-the-average bear Yogi and Boo-Boo outwit Ranger Smith for pic-a-nic baskets in Jellystone Park.' },
+      { id: 'ch-129', number: 129, name: 'The Looney Tunes Show', year: '2011', rating: 'TV-PG', color: '#38211b', url: 'https://archive.org/details/the-looney-tunes-show-complete-series', desc: 'Bugs Bunny and Daffy Duck live as suburban roommates alongside Lola, Porky, and Yosemite Sam.' },
+      { id: 'ch-130', number: 130, name: 'Baby Looney Tunes', year: '2002', rating: 'TV-Y', color: '#193545', url: 'https://archive.org/details/baby-looney-tunes-epds', desc: 'Toddler versions of Bugs, Daffy, Tweety, Sylvester, and Lola play and learn under Granny’s care.' },
+      { id: 'ch-131', number: 131, name: 'Scooby-Doo, Where Are You!', year: '1969', rating: 'TV-G', color: '#2b2442', url: 'https://archive.org/details/ds-store_20260105', desc: 'Fred, Daphne, Velma, Shaggy, and Scooby-Doo unmask spooky villains in the Mystery Machine.' },
+      { id: 'ch-132', number: 132, name: 'SWAT Kats: The Radical Squadron', year: '1993', rating: 'TV-Y7', color: '#381b1b', url: 'https://archive.org/details/swat-kats-moonsong', desc: 'T-Bone and Razor pilot the Turbokat jet to defend Megakat City from Dark Kat and Dr. Viper.' },
+      { id: 'ch-133', number: 133, name: 'Popeye the Sailor', year: '1960', rating: 'TV-G', color: '#172d44', url: 'https://archive.org/details/popeye-the-sailor-1960', desc: 'Popeye eats his spinach to rescue Olive Oyl from Bluto and the Sea Hag.' },
+      { id: 'ch-134', number: 134, name: 'Dora the Explorer', year: '2000', rating: 'TV-Y', color: '#361b34', url: 'https://archive.org/details/dora-the-explorer-season-8-episode-02-puppies-galore', desc: 'Dora, Boots, Backpack, and Map set out on interactive bilingual quests.' },
+      { id: 'ch-135', number: 135, name: 'Littlest Pet Shop', year: '2012', rating: 'TV-Y', color: '#2f1c3d', url: 'https://archive.org/details/littlestpetshop2012fullseriesreupload', desc: 'Blythe Baxter discovers she can talk to the quirky pets inside Downtown City’s Littlest Pet Shop.' },
+      { id: 'ch-136', number: 136, name: 'She-Ra and the Princesses of Power', year: '2018', rating: 'TV-Y7', color: '#2b1e48', url: 'https://archive.org/details/she-ra-and-the-princesses-of-power-s1', desc: 'Adora wields the Sword of Protection to unite the Princess Alliance across Etheria.' },
+      { id: 'ch-201', number: 201, name: 'Disney Movies 1', year: 'Classic-Present', rating: 'G / PG', isMovieChannel: true, color: '#16284c', url: 'https://archive.org/details/disney_202105', desc: '24/7 Walt Disney Animation Studios feature presentation.' },
+      { id: 'ch-202', number: 202, name: 'Disney Movies 2', year: 'Classic-Present', rating: 'G / PG', isMovieChannel: true, color: '#1a2e54', url: 'https://archive.org/details/disney_202105', desc: '24/7 Walt Disney Animation Studios feature presentation.' },
+      { id: 'ch-203', number: 203, name: 'Disney Movies 3', year: 'Classic-Present', rating: 'G / PG', isMovieChannel: true, color: '#1e345c', url: 'https://archive.org/details/disney_202105', desc: '24/7 Walt Disney Animation Studios feature presentation.' },
+      { id: 'ch-204', number: 204, name: 'Disney Movies 4', year: 'Classic-Present', rating: 'G / PG', isMovieChannel: true, color: '#223a64', url: 'https://archive.org/details/disney_202105', desc: '24/7 Walt Disney Animation Studios feature presentation.' },
+      { id: 'ch-205', number: 205, name: 'Disney Movies 5', year: 'Classic-Present', rating: 'G / PG', isMovieChannel: true, color: '#26406c', url: 'https://archive.org/details/disney_202105', desc: '24/7 Walt Disney Animation Studios feature presentation.' },
+      { id: 'ch-206', number: 206, name: 'KPop Demon Hunters', year: '2025', rating: 'PG', isKpopChannel: true, color: '#3b153c', url: 'https://archive.org/details/kpop-demon-hunters-2025-1080p-nf-web-dl-dd5.1-atmos-h264-play-web-sub-viet', desc: '24/7 non-stop loop of KPop Demon Hunters (2025).' }
     ];
 
-    function cleanMovieTitle(rawFilename) {
-      return String(rawFilename || '')
-        .replace(/\.mp4$/i, '')
-        .replace(/\(\d{4}\)/g, '')
-        .replace(/-\s*(Tamil|Remastered)/gi, '')
-        .replace(/\s{2,}/g, ' ')
-        .trim();
+    function loadChannels() {
+      try {
+        const saved = JSON.parse(localStorage.getItem('toons_channels_v4') || 'null');
+        if (Array.isArray(saved) && saved.length > 0) return saved;
+      } catch (e) {}
+      return DEFAULT_CHANNELS.slice();
+    }
+
+    function saveChannels() {
+      try {
+        localStorage.setItem('toons_channels_v4', JSON.stringify(channels));
+      } catch (e) {}
     }
 
     function shuffleArray(arr) {
@@ -1048,16 +898,17 @@
       return copy;
     }
 
+    let channels = loadChannels();
     let activeChannelIndex = 0;
-    const channelPlaylists = {};
-    let archiveFileMap = null;
+    const playlistCache = {};
     let currentPlaylist = [];
-    let currentMovieIndex = 0;
+    let currentEpisodeIndex = 0;
     let crtEnabled = false;
     let isSeeking = false;
     let hudHideTimer = null;
 
     const videoEl = document.getElementById('tv-video');
+    const embedEl = document.getElementById('tv-embed-frame');
     const loaderEl = document.getElementById('player-loader');
     const loaderTextEl = document.getElementById('loader-text');
     const loaderSubtextEl = document.getElementById('loader-subtext');
@@ -1071,156 +922,397 @@
       box._t = setTimeout(() => box.classList.add('hidden'), 2600);
     }
 
-    function getChannelLogoSVG(ch) {
-      const id = ch.id;
-      if (id === 'arr-301') {
-        return `<svg viewBox="0 0 220 64" class="w-full h-full"><text x="110" y="28" text-anchor="middle" fill="#f43f5e" stroke="#000" stroke-width="3" paint-order="stroke" font-family="Space Grotesk, sans-serif" font-weight="800" font-size="22" letter-spacing="1.5">MADRAS</text><text x="110" y="50" text-anchor="middle" fill="#fde047" font-family="IBM Plex Mono, monospace" font-weight="700" font-size="13" letter-spacing="3">TALKIES</text></svg>`;
+    function getShowLogoSVG(ch) {
+      const id = ch.id || '';
+      const wrap = (inner) => `<svg viewBox="0 0 240 68" preserveAspectRatio="xMidYMid meet" class="w-full h-full block">${inner}</svg>`;
+
+      if (id === 'ch-101') {
+        return wrap(`<text x="120" y="42" text-anchor="middle" fill="#93c5fd" stroke="#1e3a8a" stroke-width="4" paint-order="stroke" font-family="Syne, sans-serif" font-weight="800" font-size="32" letter-spacing="2">BLUEY</text><path d="M98 50 Q144 58 174 38" fill="none" stroke="#93c5fd" stroke-width="4.5" stroke-linecap="round"/>`);
       }
-      if (id === 'arr-302') {
-        return `<svg viewBox="0 0 220 64" class="w-full h-full"><text x="110" y="24" text-anchor="middle" fill="#60a5fa" font-family="IBM Plex Mono, monospace" font-weight="700" font-size="11" letter-spacing="3">THE</text><text x="110" y="50" text-anchor="middle" fill="#ffffff" stroke="#1d4ed8" stroke-width="3.5" paint-order="stroke" font-family="Space Grotesk, sans-serif" font-weight="900" font-size="22">BIG PICTURE</text></svg>`;
+      if (id === 'ch-102') {
+        return wrap(`<text x="120" y="34" text-anchor="middle" fill="#f472b6" stroke="#831843" stroke-width="3" paint-order="stroke" font-family="Georgia, serif" font-style="italic" font-weight="700" font-size="25">Barbie</text><text x="120" y="53" text-anchor="middle" fill="#fbcfe8" font-family="JetBrains Mono, monospace" font-weight="700" font-size="10" letter-spacing="2">DREAMHOUSE</text>`);
       }
-      if (id === 'arr-303') {
-        return `<svg viewBox="0 0 220 64" class="w-full h-full"><text x="110" y="40" text-anchor="middle" fill="#c084fc" stroke="#1e1b4b" stroke-width="3" paint-order="stroke" font-family="Georgia, serif" font-style="italic" font-weight="700" font-size="27">Aaromalae</text></svg>`;
+      if (id === 'ch-103') {
+        return wrap(`<text x="120" y="29" text-anchor="middle" fill="#facc15" stroke="#991b1b" stroke-width="3" paint-order="stroke" font-family="Syne, sans-serif" font-weight="800" font-size="17">MICKEY MOUSE</text><text x="120" y="51" text-anchor="middle" fill="#f87171" stroke="#000" stroke-width="2.5" paint-order="stroke" font-family="JetBrains Mono, monospace" font-weight="700" font-size="13" letter-spacing="1.5">CLUBHOUSE</text>`);
       }
-      if (id === 'arr-304') {
-        return `<svg viewBox="0 0 220 64" class="w-full h-full"><text x="110" y="40" text-anchor="middle" fill="#fb923c" stroke="#000" stroke-width="3" paint-order="stroke" font-family="Space Grotesk, sans-serif" font-weight="800" font-size="24" letter-spacing="1">SAFARNAMA</text></svg>`;
+      if (id === 'ch-104') {
+        return wrap(`<text x="120" y="35" text-anchor="middle" fill="#e9d5ff" stroke="#581c87" stroke-width="3.5" paint-order="stroke" font-family="Georgia, serif" font-style="italic" font-weight="700" font-size="26">Sofia</text><text x="120" y="53" text-anchor="middle" fill="#facc15" font-family="JetBrains Mono, monospace" font-weight="700" font-size="11" letter-spacing="3">THE FIRST</text>`);
       }
-      if (id === 'arr-305') {
-        return `<svg viewBox="0 0 220 64" class="w-full h-full"><text x="110" y="34" text-anchor="middle" fill="#facc15" stroke="#000" stroke-width="3.5" paint-order="stroke" font-family="Space Grotesk, sans-serif" font-weight="900" font-size="28">KSR</text><text x="110" y="53" text-anchor="middle" fill="#fef08a" font-family="IBM Plex Mono, monospace" font-weight="700" font-size="12" letter-spacing="4">GOLD</text></svg>`;
+      if (id === 'ch-105') {
+        return wrap(`<text x="120" y="30" text-anchor="middle" fill="#6ee7b7" stroke="#064e3b" stroke-width="3" paint-order="stroke" font-family="Syne, sans-serif" font-weight="800" font-size="16">BEN &amp; HOLLY'S</text><text x="120" y="50" text-anchor="middle" fill="#fde047" font-family="JetBrains Mono, monospace" font-weight="700" font-size="10.5" letter-spacing="1.2">LITTLE KINGDOM</text>`);
       }
-      if (id === 'arr-306') {
-        return `<svg viewBox="0 0 220 64" class="w-full h-full"><text x="110" y="29" text-anchor="middle" fill="#fb7185" font-family="Georgia, serif" font-style="italic" font-weight="700" font-size="20">Love &amp; Love</text><text x="110" y="50" text-anchor="middle" fill="#fda4af" font-family="IBM Plex Mono, monospace" font-weight="700" font-size="12" letter-spacing="3">ONLY</text></svg>`;
+      if (id === 'ch-106') {
+        return wrap(`<text x="120" y="42" text-anchor="middle" fill="#f9a8d4" stroke="#9d174d" stroke-width="3.5" paint-order="stroke" font-family="Syne, sans-serif" font-weight="800" font-size="24">Peppa Pig</text>`);
       }
-      if (id === 'arr-307') {
-        return `<svg viewBox="0 0 220 64" class="w-full h-full"><text x="110" y="41" text-anchor="middle" fill="#34d399" stroke="#022c22" stroke-width="3" paint-order="stroke" font-family="Space Grotesk, sans-serif" font-weight="900" font-size="26" letter-spacing="1">♪ MUSICAL</text></svg>`;
+      if (id === 'ch-107') {
+        return wrap(`<text x="120" y="29" text-anchor="middle" fill="#facc15" stroke="#b91c1c" stroke-width="3.5" paint-order="stroke" font-family="Syne, sans-serif" font-weight="800" font-size="19">LEGO</text><text x="120" y="51" text-anchor="middle" fill="#e879f9" stroke="#3b0764" stroke-width="2.5" paint-order="stroke" font-family="Syne, sans-serif" font-weight="800" font-size="17" letter-spacing="2">FRIENDS</text>`);
       }
-      if (id === 'arr-308') {
-        return `<svg viewBox="0 0 220 64" class="w-full h-full"><text x="110" y="41" text-anchor="middle" fill="#38bdf8" stroke="#082f49" stroke-width="3" paint-order="stroke" font-family="IBM Plex Mono, monospace" font-weight="700" font-size="26" letter-spacing="2">SCI-FI</text></svg>`;
+      if (id === 'ch-108') {
+        return wrap(`<text x="120" y="43" text-anchor="middle" fill="#38bdf8" stroke="#082f49" stroke-width="4" paint-order="stroke" font-family="Syne, sans-serif" font-weight="800" font-size="30" letter-spacing="3">HILDA</text>`);
       }
-      if (id === 'arr-309') {
-        return `<svg viewBox="0 0 220 64" class="w-full h-full"><text x="110" y="41" text-anchor="middle" fill="#fbbf24" stroke="#451a03" stroke-width="3.5" paint-order="stroke" font-family="Georgia, serif" font-weight="700" font-size="26" letter-spacing="1.5">EmperAR</text></svg>`;
+      if (id === 'ch-109') {
+        return wrap(`<text x="120" y="29" text-anchor="middle" fill="#ef4444" stroke="#000" stroke-width="3" paint-order="stroke" font-family="Georgia, serif" font-weight="700" font-size="15" letter-spacing="1.2">STRANGER THINGS</text><text x="120" y="50" text-anchor="middle" fill="#fca5a5" font-family="JetBrains Mono, monospace" font-weight="700" font-size="11" letter-spacing="2">TALES FROM '85</text>`);
       }
-      if (id === 'arr-310') {
-        return `<svg viewBox="0 0 220 64" class="w-full h-full"><text x="110" y="41" text-anchor="middle" fill="#eab308" stroke="#1c1917" stroke-width="3.5" paint-order="stroke" font-family="Space Grotesk, sans-serif" font-weight="900" font-size="24" letter-spacing="1.2">SurvivAR</text></svg>`;
+      if (id === 'ch-110') {
+        return wrap(`<text x="120" y="42" text-anchor="middle" fill="#60a5fa" stroke="#1e3a8a" stroke-width="3.5" paint-order="stroke" font-family="Syne, sans-serif" font-weight="800" font-size="20" letter-spacing="1.2">ACTION PACK</text>`);
       }
-      if (id === 'arr-311') {
-        return `<svg viewBox="0 0 220 64" class="w-full h-full"><text x="110" y="41" text-anchor="middle" fill="#4ade80" stroke="#052e16" stroke-width="3.5" paint-order="stroke" font-family="Space Grotesk, sans-serif" font-weight="900" font-size="26" letter-spacing="2">SPORTS</text></svg>`;
+      if (id === 'ch-111') {
+        return wrap(`<text x="120" y="30" text-anchor="middle" fill="#38bdf8" stroke="#0c4a6e" stroke-width="3.5" paint-order="stroke" font-family="Syne, sans-serif" font-weight="800" font-size="20">PJ MASKS</text><text x="120" y="50" text-anchor="middle" fill="#facc15" font-family="JetBrains Mono, monospace" font-weight="700" font-size="10.5" letter-spacing="1.8">POWER HEROES</text>`);
       }
-      if (id === 'arr-312') {
-        return `<svg viewBox="0 0 220 64" class="w-full h-full"><text x="110" y="25" text-anchor="middle" fill="#fde047" font-family="IBM Plex Mono, monospace" font-weight="700" font-size="11" letter-spacing="3">★ RAJINI ★</text><text x="110" y="50" text-anchor="middle" fill="#fb923c" stroke="#000" stroke-width="3.5" paint-order="stroke" font-family="Space Grotesk, sans-serif" font-weight="900" font-size="23" letter-spacing="1">SUPERSTAR</text></svg>`;
+      if (id === 'ch-112') {
+        return wrap(`<text x="120" y="32" text-anchor="middle" fill="#fb923c" stroke="#000" stroke-width="3.5" paint-order="stroke" font-family="Syne, sans-serif" font-weight="800" font-size="22">GARFIELD</text><text x="120" y="51" text-anchor="middle" fill="#fde047" font-family="JetBrains Mono, monospace" font-weight="700" font-size="11" letter-spacing="2">&amp; FRIENDS</text>`);
       }
-      if (id === 'arr-313') {
-        return `<svg viewBox="0 0 220 64" class="w-full h-full"><text x="110" y="41" text-anchor="middle" fill="#f87171" stroke="#000" stroke-width="3.5" paint-order="stroke" font-family="Space Grotesk, sans-serif" font-weight="900" font-size="24" letter-spacing="1.5">POLITICAL</text></svg>`;
+      if (id === 'ch-113') {
+        return wrap(`<text x="120" y="30" text-anchor="middle" fill="#f59e0b" stroke="#000" stroke-width="3.5" paint-order="stroke" font-family="Syne, sans-serif" font-weight="800" font-size="18.5">JACKIE CHAN</text><text x="120" y="50" text-anchor="middle" fill="#fef08a" font-family="JetBrains Mono, monospace" font-weight="700" font-size="11" letter-spacing="2">ADVENTURES</text>`);
       }
-      if (id === 'arr-314') {
-        return `<svg viewBox="0 0 220 64" class="w-full h-full"><text x="110" y="42" text-anchor="middle" fill="#f472b6" stroke="#3b0764" stroke-width="3" paint-order="stroke" font-family="Georgia, serif" font-style="italic" font-weight="700" font-size="31">Maa</text></svg>`;
+      if (id === 'ch-114') {
+        return wrap(`<text x="120" y="29" text-anchor="middle" fill="#fde047" stroke="#000" stroke-width="3" paint-order="stroke" font-family="Syne, sans-serif" font-weight="800" font-size="16">THE MAGIC</text><text x="120" y="51" text-anchor="middle" fill="#fb923c" stroke="#000" stroke-width="3" paint-order="stroke" font-family="Syne, sans-serif" font-weight="800" font-size="17">SCHOOL BUS</text>`);
       }
-      if (id === 'arr-315') {
-        return `<svg viewBox="0 0 220 64" class="w-full h-full"><text x="110" y="24" text-anchor="middle" fill="#7dd3fc" font-family="IBM Plex Mono, monospace" font-weight="700" font-size="10" letter-spacing="2.5">GLOBAL CINEMA</text><text x="110" y="49" text-anchor="middle" fill="#ffffff" stroke="#0c4a6e" stroke-width="3" paint-order="stroke" font-family="Space Grotesk, sans-serif" font-weight="800" font-size="18" letter-spacing="0.8">INTERNATIONAL</text></svg>`;
+      if (id === 'ch-115') {
+        return wrap(`<text x="120" y="32" text-anchor="middle" fill="#34d399" stroke="#064e3b" stroke-width="3.5" paint-order="stroke" font-family="Syne, sans-serif" font-weight="800" font-size="20">VIDA THE VET</text><text x="120" y="51" text-anchor="middle" fill="#a7f3d0" font-family="JetBrains Mono, monospace" font-weight="700" font-size="11" letter-spacing="2">ASK VIDA!</text>`);
       }
-      return `<div class="font-display text-xs font-bold text-white text-center truncate px-1">${ch.name}</div>`;
+      if (id === 'ch-116') {
+        return wrap(`<text x="120" y="28" text-anchor="middle" fill="#a3e635" stroke="#090d16" stroke-width="3.5" paint-order="stroke" font-family="Syne, sans-serif" font-weight="800" font-size="20">DEXTER'S</text><text x="120" y="52" text-anchor="middle" fill="#090d16" stroke="#a3e635" stroke-width="4.5" paint-order="stroke" font-family="Syne, sans-serif" font-weight="800" font-size="19">LABORATORY</text>`);
+      }
+      if (id === 'ch-117') {
+        return wrap(`<rect x="44" y="14" width="76" height="40" fill="#000" stroke="#fff" stroke-width="2"/><text x="82" y="44" text-anchor="middle" fill="#fff" font-family="Syne, sans-serif" font-weight="800" font-size="29">C</text><rect x="120" y="14" width="76" height="40" fill="#fff" stroke="#000" stroke-width="2"/><text x="158" y="44" text-anchor="middle" fill="#000" font-family="Syne, sans-serif" font-weight="800" font-size="29">N</text>`);
+      }
+      if (id === 'ch-118') {
+        return wrap(`<text x="120" y="28" text-anchor="middle" fill="#c084fc" font-family="JetBrains Mono, monospace" font-weight="700" font-size="10" letter-spacing="1.8">CARTOON NETWORK</text><text x="120" y="51" text-anchor="middle" fill="#facc15" stroke="#3b0764" stroke-width="3.5" paint-order="stroke" font-family="Syne, sans-serif" font-weight="800" font-size="19">SCOOBTOBER</text>`);
+      }
+      if (id === 'ch-119') {
+        return wrap(`<text x="120" y="16" text-anchor="middle" fill="#facc15" stroke="#000" stroke-width="2.5" paint-order="stroke" font-weight="900" font-size="10">THE</text><text x="120" y="47" text-anchor="middle" fill="#4ade80" stroke="#dc2626" stroke-width="3.5" paint-order="stroke" font-family="Syne, sans-serif" font-weight="800" font-size="31" letter-spacing="2">MASK</text><text x="120" y="61" text-anchor="middle" fill="#fde047" font-weight="800" font-size="8" letter-spacing="2">ANIMATED SERIES</text>`);
+      }
+      if (id === 'ch-120') {
+        return wrap(`<g transform="skewX(-8)"><text x="126" y="30" text-anchor="middle" fill="#ef4444" stroke="#fff" stroke-width="3" paint-order="stroke" font-weight="900" font-size="22">MIGHTY</text><text x="130" y="54" text-anchor="middle" fill="#ef4444" stroke="#fff" stroke-width="3" paint-order="stroke" font-weight="900" font-size="22">MOUSE</text></g>`);
+      }
+      if (id === 'ch-121') {
+        return wrap(`<text x="120" y="43" text-anchor="middle" fill="#dc2626" stroke="#fff" stroke-width="4.5" paint-order="stroke" font-family="Syne, sans-serif" font-weight="800" font-size="22">Ed, Edd n Eddy</text>`);
+      }
+      if (id === 'ch-122') {
+        return wrap(`<text x="120" y="30" text-anchor="middle" fill="#f97316" stroke="#000" stroke-width="3.5" paint-order="stroke" font-weight="900" font-size="22">JOHNNY</text><text x="120" y="54" text-anchor="middle" fill="#f97316" stroke="#000" stroke-width="3.5" paint-order="stroke" font-weight="900" font-size="23">BRAVO</text>`);
+      }
+      if (id === 'ch-123') {
+        return wrap(`<text x="120" y="30" text-anchor="middle" fill="#fde047" stroke="#991b1b" stroke-width="3.5" paint-order="stroke" font-family="Syne, sans-serif" font-weight="800" font-size="20">COW &amp;</text><text x="120" y="53" text-anchor="middle" fill="#f87171" stroke="#000" stroke-width="3.5" paint-order="stroke" font-family="Syne, sans-serif" font-weight="800" font-size="20">CHICKEN</text>`);
+      }
+      if (id === 'ch-124') {
+        return wrap(`<text x="120" y="37" text-anchor="middle" fill="#ef4444" stroke="#000" stroke-width="4" paint-order="stroke" font-weight="900" font-size="26">COURAGE</text><text x="120" y="55" text-anchor="middle" fill="#a3e635" stroke="#000" stroke-width="2.5" paint-order="stroke" font-weight="800" font-size="10.5">THE COWARDLY DOG</text>`);
+      }
+      if (id === 'ch-125') {
+        return wrap(`<text x="120" y="18" text-anchor="middle" fill="#86efac" font-weight="800" font-size="10">THE FLINTSTONES</text><text x="120" y="48" text-anchor="middle" fill="#6ee7b7" stroke="#064e3b" stroke-width="3.5" paint-order="stroke" font-weight="900" font-size="25">CAVE KIDS</text>`);
+      }
+      if (id === 'ch-126') {
+        return wrap(`<text x="120" y="29" text-anchor="middle" fill="#fb923c" stroke="#000" stroke-width="3.5" paint-order="stroke" font-family="Syne, sans-serif" font-weight="800" font-size="17">FRED &amp; BARNEY</text><text x="120" y="50" text-anchor="middle" fill="#fde047" font-family="JetBrains Mono, monospace" font-weight="700" font-size="11" letter-spacing="2">BEDROCK SHOW</text>`);
+      }
+      if (id === 'ch-127') {
+        return wrap(`<text x="54" y="28" fill="#fff" font-style="italic" font-weight="900" font-size="12">THE</text><text x="130" y="46" text-anchor="middle" fill="#ef4444" stroke="#000" stroke-width="3" paint-order="stroke" font-style="italic" font-weight="900" font-size="30">Jetsons</text>`);
+      }
+      if (id === 'ch-128') {
+        return wrap(`<text x="120" y="30" text-anchor="middle" fill="#fde047" stroke="#000" stroke-width="3.5" paint-order="stroke" font-weight="900" font-size="22">YOGI</text><text x="120" y="54" text-anchor="middle" fill="#4ade80" stroke="#000" stroke-width="3.5" paint-order="stroke" font-weight="900" font-size="22">BEAR</text>`);
+      }
+      if (id === 'ch-129') {
+        return wrap(`<text x="120" y="29" text-anchor="middle" fill="#facc15" stroke="#991b1b" stroke-width="3.5" paint-order="stroke" font-family="Syne, sans-serif" font-weight="800" font-size="17">THE LOONEY</text><text x="120" y="51" text-anchor="middle" fill="#fb923c" stroke="#000" stroke-width="3.5" paint-order="stroke" font-family="Syne, sans-serif" font-weight="800" font-size="18">TUNES SHOW</text>`);
+      }
+      if (id === 'ch-130') {
+        return wrap(`<circle cx="120" cy="34" r="26" fill="#0891b2" opacity="0.45"/><text x="74" y="25" fill="#f472b6" stroke="#831843" stroke-width="2" paint-order="stroke" font-style="italic" font-weight="900" font-size="14">baby</text><text x="120" y="49" text-anchor="middle" fill="#fde047" stroke="#1d4ed8" stroke-width="3" paint-order="stroke" font-weight="900" font-size="17.5">LOONEY TUNES</text>`);
+      }
+      if (id === 'ch-131') {
+        return wrap(`<text x="120" y="36" text-anchor="middle" fill="#facc15" stroke="#9333ea" stroke-width="4.5" paint-order="stroke" font-weight="900" font-size="22">SCOOBY-DOO</text><text x="120" y="54" text-anchor="middle" fill="#fde047" stroke="#7e22ce" stroke-width="2.5" paint-order="stroke" font-weight="800" font-size="10.5">WHERE ARE YOU!</text>`);
+      }
+      if (id === 'ch-132') {
+        return wrap(`<text x="120" y="35" text-anchor="middle" fill="#ef4444" stroke="#facc15" stroke-width="3" paint-order="stroke" font-family="Syne, sans-serif" font-weight="800" font-size="22">SWAT KATS</text><text x="120" y="53" text-anchor="middle" fill="#fde047" font-family="JetBrains Mono, monospace" font-weight="700" font-size="9" letter-spacing="1.8">RADICAL SQUADRON</text>`);
+      }
+      if (id === 'ch-133') {
+        return wrap(`<text x="120" y="34" text-anchor="middle" fill="#60a5fa" stroke="#000" stroke-width="3.5" paint-order="stroke" font-family="Syne, sans-serif" font-weight="800" font-size="24">POPEYE</text><text x="120" y="52" text-anchor="middle" fill="#fde047" font-family="JetBrains Mono, monospace" font-weight="700" font-size="11" letter-spacing="2.2">THE SAILOR</text>`);
+      }
+      if (id === 'ch-134') {
+        return wrap(`<text x="120" y="35" text-anchor="middle" fill="#e879f9" stroke="#4a044e" stroke-width="3.5" paint-order="stroke" font-family="Syne, sans-serif" font-weight="800" font-size="26">DORA</text><text x="120" y="53" text-anchor="middle" fill="#fde047" font-family="JetBrains Mono, monospace" font-weight="700" font-size="10" letter-spacing="2">THE EXPLORER</text>`);
+      }
+      if (id === 'ch-135') {
+        return wrap(`<text x="120" y="29" text-anchor="middle" fill="#f472b6" stroke="#500724" stroke-width="3" paint-order="stroke" font-family="Syne, sans-serif" font-weight="800" font-size="16.5">LITTLEST</text><text x="120" y="51" text-anchor="middle" fill="#c084fc" stroke="#2e1065" stroke-width="3" paint-order="stroke" font-family="Syne, sans-serif" font-weight="800" font-size="18">PET SHOP</text>`);
+      }
+      if (id === 'ch-136') {
+        return wrap(`<text x="120" y="34" text-anchor="middle" fill="#fde047" stroke="#581c87" stroke-width="3.5" paint-order="stroke" font-family="Syne, sans-serif" font-weight="800" font-size="25">SHE-RA</text><text x="120" y="52" text-anchor="middle" fill="#e9d5ff" font-family="JetBrains Mono, monospace" font-weight="700" font-size="8.5" letter-spacing="1.2">PRINCESSES OF POWER</text>`);
+      }
+      if (ch.isKpopChannel) {
+        return wrap(`<text x="120" y="30" text-anchor="middle" fill="#f472b6" stroke="#4a044e" stroke-width="3" paint-order="stroke" font-family="Syne, sans-serif" font-weight="800" font-size="22" letter-spacing="1.5">KPOP</text><text x="120" y="51" text-anchor="middle" fill="#38bdf8" stroke="#082f49" stroke-width="2.5" paint-order="stroke" font-family="JetBrains Mono, monospace" font-weight="700" font-size="12" letter-spacing="1.5">DEMON HUNTERS</text>`);
+      }
+      if (ch.isMovieChannel) {
+        const num = ch.name.replace(/\D/g, '') || '1';
+        return wrap(`<text x="120" y="35" text-anchor="middle" fill="#ffffff" font-family="Georgia, serif" font-style="italic" font-weight="700" font-size="28">Disney</text><rect x="74" y="42" width="92" height="17" rx="8.5" fill="#0284c7"/><text x="120" y="54" text-anchor="middle" fill="#fff" font-family="JetBrains Mono, monospace" font-weight="700" font-size="9.5">MOVIES ${num}</text>`);
+      }
+      return `<div class="font-cartoon text-xs font-bold text-white text-center truncate px-1">${ch.name}</div>`;
     }
 
-    /**
-     * Fetch Archive.org metadata once to resolve exact filenames & runtimes
-     */
-    async function ensureArchiveMetadata() {
-      if (archiveFileMap) return archiveFileMap;
-      archiveFileMap = new Map();
+    function cleanMovieTitle(rawTitle) {
+      return String(rawTitle || '')
+        .split('/').pop()
+        .replace(/\.[^/.]+$/, '')
+        .replace(/^\s*\(?S\d+E\d+\)?\s*[-–:]?\s*/i, '')
+        .replace(/\(\d{4}\)/g, '')
+        .replace(/\b(1080p|720p|480p|NF|WEB-DL|DD5\.1|Atmos|H264|x264|AAC|PlayWEB|Sub|Viet)\b/gi, '')
+        .replace(/\[.*?\]/g, '')
+        .replace(/[-_.]+/g, ' ')
+        .replace(/\s{2,}/g, ' ')
+        .trim();
+    }
+
+    function cleanEpisodeTitle(rawPathOrTitle, fallbackShowName = '') {
+      const raw = String(rawPathOrTitle || '').trim();
+      if (!raw) return fallbackShowName;
+      const parts = raw.split('/').filter(Boolean);
+      const filePart = (parts.pop() || raw)
+        .replace(/\.ia\.mp4$/i, '')
+        .replace(/\.[^/.]+$/, '')
+        .replace(/[_]+/g, ' ')
+        .trim();
+
+      // Extract season hint from parent folder if filename lacks Sxx
+      let seasonPrefix = '';
+      const folderStr = parts.join(' ');
+      const folderSeasonMatch = folderStr.match(/Season\s*0?(\d+)/i) || folderStr.match(/\bS0?(\d+)\b/i);
+      const hasSeasonInFile = /\bS0?\d+\s*E0?\d+\b/i.test(filePart) || /Season\s*\d+/i.test(filePart);
+      if (folderSeasonMatch && !hasSeasonInFile) {
+        seasonPrefix = `S${String(folderSeasonMatch[1]).padStart(2, '0')} • `;
+      }
+
+      const cleaned = filePart
+        .replace(/\b(480p|720p|1080p|WEB-DL|DVDRip|AAC\s*2\.0|x264|H264|BOOM)\b/gi, '')
+        .replace(/\s{2,}/g, ' ')
+        .trim();
+
+      return `${seasonPrefix}${cleaned || fallbackShowName}`;
+    }
+
+    function extractArchiveIdentifier(url) {
+      const m = String(url || '').match(/archive\.org\/(?:details|embed|download)\/([^/?#]+)/i);
+      return m ? m[1] : null;
+    }
+
+    let sharedDisneyPoolPromise = null;
+    async function resolveDisneyMoviesPool() {
+      if (sharedDisneyPoolPromise) return sharedDisneyPoolPromise;
+      sharedDisneyPoolPromise = (async () => {
+        const id = 'disney_202105';
+        const items = [];
+        try {
+          const res = await fetch(`https://archive.org/metadata/${id}`);
+          const data = await res.json();
+          const files = Array.isArray(data.files) ? data.files : [];
+          const videoExtRegex = /\.(mp4|m4v|mkv|avi|webm|ogv|mov)$/i;
+          const videoFiles = files.filter(f => {
+            const name = f.name || '';
+            const fmt = (f.format || '').toLowerCase();
+            return videoExtRegex.test(name) || fmt.includes('mpeg4') || fmt.includes('h.264') || fmt.includes('matroska');
+          });
+
+          // Prefer playable web derivatives (.ia.mp4 / h.264) over raw container files
+          videoFiles.sort((a, b) => {
+            const aDeriv = (a.source === 'derivative' || /\.ia\.mp4$/i.test(a.name || '') || /h\.264/i.test(a.format || '')) ? 0 : 1;
+            const bDeriv = (b.source === 'derivative' || /\.ia\.mp4$/i.test(b.name || '') || /h\.264/i.test(b.format || '')) ? 0 : 1;
+            return aDeriv - bDeriv;
+          });
+
+          const seenBases = new Set();
+          for (const f of videoFiles) {
+            const rawPath = f.name || '';
+            const fileNameOnly = rawPath.split('/').pop() || rawPath;
+            const base = fileNameOnly.replace(/\.ia\.mp4$/i, '').replace(/\.[^/.]+$/, '').toLowerCase();
+            if (!base || seenBases.has(base)) continue;
+            seenBases.add(base);
+
+            const encodedPath = rawPath.split('/').map(seg => encodeURIComponent(seg)).join('/');
+            const displayTitle = cleanMovieTitle(f.title || fileNameOnly) || fileNameOnly.replace(/\.[^/.]+$/, '');
+            items.push({
+              title: displayTitle,
+              url: `https://archive.org/download/${id}/${encodedPath}`,
+              embedUrl: `https://archive.org/embed/${id}/${encodedPath}?autoplay=1`,
+              duration: parseFloat(f.length) || 5400,
+              isDerivative: f.source === 'derivative' || /\.ia\.mp4$/i.test(rawPath) || /h\.264/i.test(f.format || '')
+            });
+          }
+        } catch (e) {}
+
+        if (items.length === 0) {
+          sharedDisneyPoolPromise = null;
+        }
+        return items;
+      })();
+      return sharedDisneyPoolPromise;
+    }
+
+    async function fetchChannelPlaylist(ch) {
+      if (playlistCache[ch.id] && playlistCache[ch.id].length > 0) {
+        return playlistCache[ch.id];
+      }
+
+      if (ch.isMovieChannel) {
+        const pool = await resolveDisneyMoviesPool();
+        if (pool.length > 0) {
+          // Give each of the 5 Disney channels its own distinct random shuffle & starting offset
+          const chSlot = Math.max(0, (ch.number || 201) - 201);
+          const shuffled = shuffleArray(pool);
+          const offset = (chSlot * Math.max(1, Math.floor(shuffled.length / 5))) % shuffled.length;
+          const rotated = [...shuffled.slice(offset), ...shuffled.slice(0, offset)];
+          playlistCache[ch.id] = rotated;
+          return rotated;
+        }
+      }
+
+      const identifier = extractArchiveIdentifier(ch.url);
+      if (!identifier) {
+        const fallback = [{ title: ch.name, url: ch.url, duration: 1320, isEmbed: false }];
+        playlistCache[ch.id] = fallback;
+        return fallback;
+      }
+
       try {
-        const res = await fetch(`https://archive.org/metadata/${ARCHIVE_ID}`);
+        const res = await fetch(`https://archive.org/metadata/${identifier}`);
         const data = await res.json();
         const files = Array.isArray(data.files) ? data.files : [];
-        for (const f of files) {
-          if (!f.name) continue;
-          const normKey = f.name.toLowerCase().replace(/\s+/g, ' ').trim();
-          archiveFileMap.set(normKey, {
-            exactName: f.name,
-            duration: parseFloat(f.length) || 9000
+
+        // Prioritize derivative AAC stereo MP4s (.ia.mp4 / h.264 IA) over raw AC3/surround files so Mask & Ed, Edd N Eddy always have full audio
+        const videoFiles = files.filter(f => {
+          const name = (f.name || '').toLowerCase();
+          const fmt = (f.format || '').toLowerCase();
+          return name.endsWith('.mp4') || name.endsWith('.m4v') || name.endsWith('.webm') || fmt.includes('mpeg4') || fmt.includes('h.264');
+        });
+
+        videoFiles.sort((a, b) => {
+          const aDeriv = (a.source === 'derivative' || /\.ia\.mp4$/i.test(a.name || '') || /h\.264/i.test(a.format || '')) ? 0 : 1;
+          const bDeriv = (b.source === 'derivative' || /\.ia\.mp4$/i.test(b.name || '') || /h\.264/i.test(b.format || '')) ? 0 : 1;
+          return aDeriv - bDeriv;
+        });
+
+        // Deduplicate base episode names preferring derivative AAC stereo stream
+        const seenBases = new Set();
+        const episodes = [];
+        for (const f of videoFiles) {
+          const rawPath = f.name || '';
+          const fileNameOnly = rawPath.split('/').pop() || rawPath;
+          const base = fileNameOnly.replace(/\.ia\.mp4$/i, '').replace(/\.[^/.]+$/, '').toLowerCase();
+          if (seenBases.has(base)) continue;
+          seenBases.add(base);
+          const cleanTitle = cleanEpisodeTitle(f.title || rawPath, ch.name);
+          const encodedPath = rawPath.split('/').map(seg => encodeURIComponent(seg)).join('/');
+          episodes.push({
+            title: ch.isMovieChannel ? cleanMovieTitle(cleanTitle) : cleanTitle,
+            url: `https://archive.org/download/${identifier}/${encodedPath}`,
+            embedUrl: `https://archive.org/embed/${identifier}/${encodedPath}?autoplay=1`,
+            duration: parseFloat(f.length) || 1320,
+            isDerivative: f.source === 'derivative' || /\.ia\.mp4$/i.test(rawPath) || /h\.264/i.test(f.format || '')
           });
         }
+
+        if (episodes.length > 0) {
+          if (ch.isKpopChannel) {
+            const single = [episodes[0], episodes[0], episodes[0], episodes[0]];
+            playlistCache[ch.id] = single;
+            return single;
+          }
+          const shuffled = shuffleArray(episodes);
+          playlistCache[ch.id] = shuffled;
+          return shuffled;
+        }
       } catch (e) {}
-      return archiveFileMap;
+
+      const embedFallback = [{
+        title: ch.name,
+        url: `https://archive.org/embed/${identifier}?autoplay=1`,
+        embedUrl: `https://archive.org/embed/${identifier}?autoplay=1`,
+        duration: 1320,
+        isEmbed: true
+      }];
+      playlistCache[ch.id] = embedFallback;
+      return embedFallback;
     }
 
-    async function buildChannelPlaylist(ch) {
-      if (channelPlaylists[ch.id] && channelPlaylists[ch.id].length > 0) {
-        return channelPlaylists[ch.id];
-      }
-      const metaMap = await ensureArchiveMetadata();
-      const items = ch.files.map(rawName => {
-        const normKey = rawName.toLowerCase().replace(/\s+/g, ' ').trim();
-        const matched = metaMap.get(normKey);
-        const exactFile = matched ? matched.exactName : rawName.trim();
-        return {
-          title: cleanMovieTitle(exactFile),
-          rawFile: exactFile,
-          url: `https://archive.org/download/${ARCHIVE_ID}/${encodeURIComponent(exactFile)}`,
-          duration: matched ? matched.duration : 9000
-        };
-      });
-
-      const shuffled = shuffleArray(items);
-      channelPlaylists[ch.id] = shuffled;
-      return shuffled;
-    }
-
-    async function tuneToChannel(index, jumpToRandomScene = true, specificMovieIndex = null) {
+    async function tuneToChannel(index, jumpToRandomScene = true, specificEpisodeIndex = null) {
       if (!isBrowserAuthorized()) return;
-      if (index < 0) index = ARR_CHANNELS.length - 1;
-      if (index >= ARR_CHANNELS.length) index = 0;
+      if (index < 0) index = channels.length - 1;
+      if (index >= channels.length) index = 0;
       activeChannelIndex = index;
 
-      const ch = ARR_CHANNELS[activeChannelIndex];
+      const ch = channels[activeChannelIndex];
       loaderEl.classList.remove('hidden');
       loaderTextEl.textContent = `Tuning CH ${ch.number} — ${ch.name}`;
-      loaderSubtextEl.textContent = 'Syncing A.R. Rahman cinema feed...';
+      loaderSubtextEl.textContent = 'Syncing live broadcast feed...';
 
       document.getElementById('osd-ch-num').textContent = `CH ${ch.number}`;
       document.getElementById('osd-ch-name').textContent = ch.name;
-      document.getElementById('osd-logo-slot').innerHTML = getChannelLogoSVG(ch);
+      document.getElementById('osd-logo-slot').innerHTML = getShowLogoSVG(ch);
       document.getElementById('fs-ch-number').textContent = ch.number;
-      document.getElementById('fs-now-logo').innerHTML = getChannelLogoSVG(ch);
-      document.getElementById('meta-brand-logo').innerHTML = getChannelLogoSVG(ch);
+      document.getElementById('fs-now-logo').innerHTML = getShowLogoSVG(ch);
+      document.getElementById('meta-brand-logo').innerHTML = getShowLogoSVG(ch);
 
       renderEPG();
 
-      const list = await buildChannelPlaylist(ch);
+      const list = await fetchChannelPlaylist(ch);
       currentPlaylist = list;
-      if (specificMovieIndex !== null && list[specificMovieIndex]) {
-        currentMovieIndex = specificMovieIndex;
+      if (specificEpisodeIndex !== null && list[specificEpisodeIndex]) {
+        currentEpisodeIndex = specificEpisodeIndex;
       } else {
-        currentMovieIndex = Math.floor(Math.random() * list.length);
+        currentEpisodeIndex = Math.floor(Math.random() * list.length);
       }
 
-      playCurrentMovie(jumpToRandomScene);
+      playCurrentEpisode(jumpToRandomScene);
     }
 
-    function playCurrentMovie(jumpToRandomScene = true) {
-      const ch = ARR_CHANNELS[activeChannelIndex];
-      const movie = currentPlaylist[currentMovieIndex] || { title: ch.name, url: '', duration: 9000 };
-      const nextMovie = currentPlaylist[(currentMovieIndex + 1) % currentPlaylist.length] || movie;
+    function playCurrentEpisode(jumpToRandomScene = true) {
+      const ch = channels[activeChannelIndex];
+      const ep = currentPlaylist[currentEpisodeIndex] || { title: ch.name, url: ch.url, duration: 1320 };
+      const nextEp = currentPlaylist[(currentEpisodeIndex + 1) % currentPlaylist.length] || ep;
 
-      document.getElementById('meta-movie-title').textContent = movie.title;
-      document.getElementById('meta-channel-subtitle').textContent = `${ch.name} • Feature Presentation`;
-      const mins = Math.max(60, Math.round((movie.duration || 9000) / 60));
+      const isFeature = ch.isMovieChannel || ch.isKpopChannel;
+      const displayMainTitle = isFeature ? cleanMovieTitle(ep.title) : ch.name;
+      const displaySubTitle = ch.isKpopChannel ? '24/7 Special Loop • Feature Movie' : (ch.isMovieChannel ? 'Feature Presentation' : ep.title);
+
+      document.getElementById('meta-show-title').textContent = displayMainTitle;
+      document.getElementById('meta-episode-title').textContent = displaySubTitle;
+      document.getElementById('meta-year').textContent = ch.year || '1995';
+      document.getElementById('meta-rating').textContent = ch.rating || 'TV-G';
+      const mins = Math.max(1, Math.round((ep.duration || 1320) / 60));
       document.getElementById('meta-runtime').textContent = `${mins} min`;
-      document.getElementById('meta-description').textContent = ch.desc;
+      document.getElementById('meta-description').textContent = ch.desc || '';
 
-      document.getElementById('fs-now-title').textContent = movie.title;
-      document.getElementById('fs-next-title').textContent = nextMovie.title;
-
+      document.getElementById('fs-now-title').textContent = isFeature ? displayMainTitle : ep.title;
+      document.getElementById('fs-next-title').textContent = isFeature ? cleanMovieTitle(nextEp.title) : nextEp.title;
       const now = new Date();
       const end = new Date(now.getTime() + mins * 60000);
       const fmt = (d) => d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
       document.getElementById('meta-air-window').textContent = `${fmt(now)} - ${fmt(end)}   ${ch.number} ${ch.name.toUpperCase()}`;
 
-      videoEl.src = movie.url;
+      if (ep.isEmbed) {
+        videoEl.pause();
+        videoEl.classList.add('hidden');
+        embedEl.src = ep.embedUrl || ep.url;
+        embedEl.classList.remove('hidden');
+        loaderEl.classList.add('hidden');
+        return;
+      }
+
+      embedEl.classList.add('hidden');
+      embedEl.src = '';
+      videoEl.classList.remove('hidden');
+      videoEl.src = ep.url;
 
       videoEl.onloadedmetadata = () => {
         loaderEl.classList.add('hidden');
-        if (isFinite(videoEl.duration) && videoEl.duration > 60) {
-          movie.duration = videoEl.duration;
+
+        // Verify browser audio track support (fixes silent AC3 raw uploads on Mask & Ed, Edd N Eddy)
+        const hasAudio = (typeof videoEl.mozHasAudio !== 'undefined' && videoEl.mozHasAudio) ||
+          (typeof videoEl.webkitAudioDecodedByteCount !== 'undefined') ||
+          (videoEl.audioTracks && videoEl.audioTracks.length > 0);
+        if (videoEl.audioTracks && videoEl.audioTracks.length === 0 && !ep.isDerivative && ep.embedUrl) {
+          videoEl.pause();
+          videoEl.classList.add('hidden');
+          embedEl.src = ep.embedUrl;
+          embedEl.classList.remove('hidden');
+          return;
+        }
+
+        if (isFinite(videoEl.duration) && videoEl.duration > 30) {
+          ep.duration = videoEl.duration;
           const actualMins = Math.max(1, Math.round(videoEl.duration / 60));
           document.getElementById('meta-runtime').textContent = `${actualMins} min`;
           const endActual = new Date(Date.now() + (jumpToRandomScene ? (videoEl.duration * 0.5) : videoEl.duration) * 1000);
@@ -1229,7 +1321,7 @@
 
           if (jumpToRandomScene) {
             const minOffset = videoEl.duration * 0.08;
-            const maxOffset = videoEl.duration * 0.80;
+            const maxOffset = videoEl.duration * 0.82;
             videoEl.currentTime = minOffset + Math.random() * (maxOffset - minOffset);
           }
         }
@@ -1237,11 +1329,16 @@
       };
 
       videoEl.onerror = () => {
-        showToast(`Skipping unavailable stream: ${movie.title}`);
-        playNextInQueue();
+        if (ep.embedUrl) {
+          videoEl.classList.add('hidden');
+          embedEl.src = ep.embedUrl;
+          embedEl.classList.remove('hidden');
+          loaderEl.classList.add('hidden');
+        } else {
+          playNextInQueue();
+        }
       };
 
-      // Advance to the next movie only after the current movie finishes its full actual runtime
       videoEl.onended = () => {
         playNextInQueue();
       };
@@ -1249,8 +1346,8 @@
 
     function playNextInQueue() {
       if (!currentPlaylist.length) return;
-      currentMovieIndex = (currentMovieIndex + 1) % currentPlaylist.length;
-      playCurrentMovie(false);
+      currentEpisodeIndex = (currentEpisodeIndex + 1) % currentPlaylist.length;
+      playCurrentEpisode(false);
       renderEPG();
     }
 
@@ -1258,7 +1355,7 @@
     function nextChannel() { tuneToChannel(activeChannelIndex + 1, true); }
 
     function jumpRandomScene() {
-      if (isFinite(videoEl.duration) && videoEl.duration > 30) {
+      if (isFinite(videoEl.duration) && videoEl.duration > 20) {
         videoEl.currentTime = videoEl.duration * (0.08 + Math.random() * 0.78);
         showToast('Jumped to random scene');
       }
@@ -1306,12 +1403,8 @@
 
     function formatTimeSec(sec) {
       if (!isFinite(sec) || sec < 0) return '00:00';
-      const h = Math.floor(sec / 3600);
-      const m = Math.floor((sec % 3600) / 60);
+      const m = Math.floor(sec / 60);
       const s = Math.floor(sec % 60);
-      if (h > 0) {
-        return `${h}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
-      }
       return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
     }
 
@@ -1421,7 +1514,6 @@
       const now = new Date();
       now.setMinutes(now.getMinutes() < 30 ? 0 : 30, 0, 0);
       let html = '';
-      // 30-min slot = 120px (4px per minute) so full-length movies span across multiple time slots
       for (let i = 0; i < 16; i++) {
         const slot = new Date(now.getTime() + i * 30 * 60000);
         const label = slot.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
@@ -1435,16 +1527,21 @@
       const rowsEl = document.getElementById('epg-rows');
       if (!rowsEl) return;
 
-      rowsEl.innerHTML = ARR_CHANNELS.map((ch, idx) => {
+      rowsEl.innerHTML = channels.map((ch, idx) => {
         const isActive = idx === activeChannelIndex;
-        const list = channelPlaylists[ch.id] || ch.files.map(f => ({ title: cleanMovieTitle(f), duration: 9000 }));
-        const slots = list.slice(0, 6);
+        const isFeature = ch.isMovieChannel || ch.isKpopChannel;
+        const cached = playlistCache[ch.id] || [];
+        const slots = cached.length > 0
+          ? cached.slice(0, 6)
+          : [{ title: ch.name, duration: isFeature ? 5400 : 1320 }];
 
         const blocksHtml = slots.map((item, sIdx) => {
           const isNow = isActive && sIdx === 0;
-          const mins = Math.max(60, Math.round((item.duration || 9000) / 60));
-          // Proportional width at 4px per minute (120px = 30 mins, 240px = 1 hr, 600px = 2.5 hrs)
-          const widthPx = Math.max(360, mins * 4);
+          const defaultMins = isFeature ? 90 : 22;
+          const mins = Math.max(1, Math.round((item.duration || (defaultMins * 60)) / 60));
+          // Proportional width at 4px/min (120px = 30m) so every show/movie spans its true runtime across slots
+          const widthPx = Math.max(88, mins * 4);
+          const label = isFeature ? cleanMovieTitle(item.title) : item.title;
 
           return `
             <button
@@ -1453,11 +1550,11 @@
               class="h-16 px-3 py-2 text-left border-r border-black/40 flex flex-col justify-center transition hover:brightness-110 cursor-pointer ${isNow ? 'text-slate-950 font-bold' : 'text-white'}"
             >
               <div class="flex items-center justify-between gap-1.5">
-                <span class="text-xs font-semibold truncate">${item.title}</span>
+                <span class="text-xs font-semibold truncate">${label}</span>
                 ${sIdx === 0 ? `<span class="px-1.5 py-0.2 rounded text-[9px] font-mono-tv font-bold ${isNow ? 'bg-slate-950 text-amber-300' : 'bg-black/40 text-amber-200'}">LIVE</span>` : ''}
               </div>
               <div class="font-mono-tv text-[10px] mt-0.5 ${isNow ? 'text-slate-800' : 'text-slate-300/80'}">
-                A.R. Rahman • ${mins} min • HD
+                ${mins}m • CC
               </div>
             </button>
           `;
@@ -1470,8 +1567,8 @@
               class="sticky left-0 z-20 w-36 sm:w-48 flex-shrink-0 px-2.5 py-1.5 flex items-center gap-2 border-r border-white/10 ${isActive ? 'bg-[#1a1f33]' : 'bg-[#0d111d]'} hover:bg-[#161c2e] cursor-pointer text-left"
             >
               <span class="font-mono-tv text-[11px] font-bold text-amber-300 w-7 flex-shrink-0">${ch.number}</span>
-              <div class="flex-1 h-11 flex items-center justify-center overflow-hidden">
-                ${getChannelLogoSVG(ch)}
+              <div class="w-24 sm:w-32 h-11 flex items-center justify-center overflow-hidden flex-shrink-0">
+                ${getShowLogoSVG(ch)}
               </div>
             </button>
             <div class="flex-1 flex items-stretch overflow-x-auto">
@@ -1482,11 +1579,18 @@
       }).join('');
     }
 
-    async function prefetchAllChannelPlaylists() {
-      for (const ch of ARR_CHANNELS) {
-        await buildChannelPlaylist(ch);
+    async function prefetchAllChannelSchedules() {
+      // Prioritize Disney Movies & KPop Demon Hunters channels first so movie titles appear immediately in the EPG
+      const movieChs = channels.filter(c => c.isMovieChannel || c.isKpopChannel);
+      for (const ch of movieChs) {
+        await fetchChannelPlaylist(ch);
+        renderEPG();
       }
-      renderEPG();
+      const showChs = channels.filter(c => !c.isMovieChannel && !c.isKpopChannel);
+      for (const ch of showChs) {
+        await fetchChannelPlaylist(ch);
+        renderEPG();
+      }
     }
 
     function switchBottomTab(tab) {
@@ -1513,107 +1617,134 @@
     function renderOnDemandHub() {
       const strip = document.getElementById('od-channels-strip');
       if (!strip) return;
-      strip.innerHTML = ARR_CHANNELS.map((ch, idx) => `
-        <button onclick="openOnDemandChannel(${idx})" class="rounded-xl bg-[#111522] hover:bg-[#181e30] border border-white/10 p-3 flex flex-col items-center gap-2 cursor-pointer transition">
-          <div class="h-12 w-full flex items-center justify-center">${getChannelLogoSVG(ch)}</div>
-          <span class="font-mono-tv text-[10px] text-slate-400">CH ${ch.number} • ${ch.files.length} Movies</span>
+      strip.innerHTML = channels.filter(c => !c.isMovieChannel && !c.isKpopChannel).map((ch) => {
+        const realIdx = channels.indexOf(ch);
+        return `
+        <button onclick="openOnDemandShow(${realIdx})" class="rounded-xl bg-[#111522] hover:bg-[#181e30] border border-white/10 p-3 flex flex-col items-center gap-2 cursor-pointer transition">
+          <div class="h-12 w-28 flex items-center justify-center overflow-hidden">${getShowLogoSVG(ch)}</div>
+          <span class="font-mono-tv text-[10px] text-slate-400">CH ${ch.number}</span>
         </button>
-      `).join('');
+      `;
+      }).join('');
     }
-
-    async function openOnDemandChannel(idx) {
-      const ch = ARR_CHANNELS[idx];
-      const drawer = document.getElementById('od-channel-detail');
-      drawer.classList.remove('hidden');
-      document.getElementById('od-detail-meta').textContent = `CH ${ch.number} • ${ch.files.length} FEATURE FILMS`;
-      document.getElementById('od-detail-title').textContent = ch.name;
-      document.getElementById('od-detail-desc').textContent = ch.desc;
-
-      const list = await buildChannelPlaylist(ch);
-      const grid = document.getElementById('od-movie-grid');
-      grid.innerHTML = list.map((m, mIdx) => `
-        <button onclick="switchBottomTab('livetv'); tuneToChannel(${idx}, false, ${mIdx});" class="rounded-xl bg-[#0b0d14] hover:bg-amber-400/10 border border-white/10 p-3.5 text-left transition cursor-pointer">
-          <div class="font-mono-tv text-[10px] text-amber-300">${ch.name.toUpperCase()}</div>
-          <div class="text-sm font-bold text-white mt-0.5 line-clamp-2">${m.title}</div>
-          <div class="font-mono-tv text-[10px] text-slate-400 mt-1">▶ Watch from beginning</div>
-        </button>
-      `).join('');
-    }
-
     async function renderMoviesCatalog() {
       const grid = document.getElementById('movies-grid');
       if (!grid) return;
       const query = (document.getElementById('movie-search-input')?.value || '').trim().toLowerCase();
+      const pool = await resolveDisneyMoviesPool();
+      const kpopCh = channels.find(c => c.isKpopChannel);
+      const kpopList = kpopCh ? await fetchChannelPlaylist(kpopCh) : [];
+      const combined = [
+        ...(kpopList[0] ? [{ ...kpopList[0], isKpopSpecial: true }] : []),
+        ...pool
+      ];
+      const movieChIdx = channels.findIndex(c => c.isMovieChannel);
 
-      // Deduplicate unique movies across all 9 channels
-      const uniqueMap = new Map();
-      for (let cIdx = 0; cIdx < ARR_CHANNELS.length; cIdx++) {
-        const ch = ARR_CHANNELS[cIdx];
-        const list = await buildChannelPlaylist(ch);
-        list.forEach((m, mIdx) => {
-          const key = m.title.toLowerCase();
-          if (!uniqueMap.has(key)) {
-            uniqueMap.set(key, { movie: m, chIdx: cIdx, mIdx, ch });
-          }
-        });
-      }
-
-      const entries = Array.from(uniqueMap.values()).filter(entry =>
-        entry.movie.title.toLowerCase().includes(query)
-      );
-
-      grid.innerHTML = entries.map(entry => `
-        <div class="rounded-2xl bg-gradient-to-b from-[#182038] to-[#0d111c] border border-white/10 p-3.5 flex flex-col justify-between gap-3">
-          <div class="space-y-2">
-            <div class="flex justify-between font-mono-tv text-[9px] text-slate-300">
-              <span class="px-1.5 py-0.5 rounded bg-black/40">HD</span>
-              <span class="px-1.5 py-0.5 rounded bg-black/40 text-amber-300">CH ${entry.ch.number}</span>
+      const filtered = combined.filter(m => cleanMovieTitle(m.title).toLowerCase().includes(query));
+      grid.innerHTML = filtered.map((m, idx) => {
+        const title = cleanMovieTitle(m.title);
+        const logoCh = m.isKpopSpecial ? kpopCh : (channels[movieChIdx] || { id: 'ch-201', name: 'Disney Movies 1', isMovieChannel: true });
+        return `
+          <div class="rounded-2xl bg-gradient-to-b from-[#17213a] to-[#0d111c] border border-white/10 p-3.5 flex flex-col justify-between gap-3">
+            <div class="space-y-2">
+              <div class="flex justify-between font-mono-tv text-[9px] text-slate-300">
+                <span class="px-1.5 py-0.5 rounded bg-black/40">HD</span>
+                <span class="px-1.5 py-0.5 rounded bg-black/40">${m.isKpopSpecial ? 'PG' : 'G / PG'}</span>
+              </div>
+              <div class="h-12 w-full flex items-center justify-center overflow-hidden">
+                ${getShowLogoSVG(logoCh)}
+              </div>
+              <div class="text-xs sm:text-sm font-bold text-white text-center line-clamp-2">${title}</div>
             </div>
-            <div class="h-11 flex items-center justify-center">
-              ${getChannelLogoSVG(entry.ch)}
-            </div>
-            <div class="text-xs sm:text-sm font-bold text-white text-center line-clamp-2">${entry.movie.title}</div>
+            <button onclick="playMovieOnDemand(${idx})" class="w-full py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs cursor-pointer transition">
+              ▶ Watch Movie
+            </button>
           </div>
-          <button onclick="switchBottomTab('livetv'); tuneToChannel(${entry.chIdx}, false, ${entry.mIdx});" class="w-full py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs cursor-pointer transition">
-            ▶ Watch Movie
-          </button>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     }
 
-    async function renderGlobalSearch() {
+    async function playMovieOnDemand(combinedIndex) {
+      const pool = await resolveDisneyMoviesPool();
+      const kpopCh = channels.find(c => c.isKpopChannel);
+      const kpopList = kpopCh ? await fetchChannelPlaylist(kpopCh) : [];
+      const combined = [
+        ...(kpopList[0] ? [{ ...kpopList[0], isKpopSpecial: true }] : []),
+        ...pool
+      ];
+      const movie = combined[combinedIndex];
+      if (!movie) return;
+      if (movie.isKpopSpecial && kpopCh) {
+        const kpopIdx = channels.indexOf(kpopCh);
+        switchBottomTab('livetv');
+        tuneToChannel(kpopIdx, false, 0);
+        return;
+      }
+      const movieChIdx = Math.max(0, channels.findIndex(c => c.isMovieChannel));
+      playlistCache[channels[movieChIdx].id] = [movie, ...pool.filter(p => p.url !== movie.url)];
+      switchBottomTab('livetv');
+      tuneToChannel(movieChIdx, false, 0);
+    }
+
+    function renderGlobalSearch() {
       const q = (document.getElementById('global-search-input')?.value || '').trim().toLowerCase();
       const box = document.getElementById('global-search-results');
       if (!box) return;
       if (!q) {
-        box.innerHTML = '<div class="text-xs text-slate-500">Type a movie or channel name to search across all 15 A.R. Rahman channels.</div>';
+        box.innerHTML = '<div class="text-xs text-slate-500">Start typing to search all cartoon channels and Disney movies.</div>';
         return;
       }
-
-      const results = [];
-      for (let cIdx = 0; cIdx < ARR_CHANNELS.length; cIdx++) {
-        const ch = ARR_CHANNELS[cIdx];
-        const list = await buildChannelPlaylist(ch);
-        list.forEach((m, mIdx) => {
-          if (m.title.toLowerCase().includes(q) || ch.name.toLowerCase().includes(q)) {
-            results.push({ movie: m, ch, cIdx, mIdx });
-          }
-        });
-      }
-
-      box.innerHTML = results.slice(0, 30).map(r => `
-        <button onclick="switchBottomTab('livetv'); tuneToChannel(${r.cIdx}, false, ${r.mIdx});" class="w-full rounded-xl bg-[#111522] hover:bg-[#192034] border border-white/10 p-3 flex items-center justify-between text-left cursor-pointer">
-          <div>
-            <div class="font-mono-tv text-[10px] text-amber-300">CH ${r.ch.number} • ${r.ch.name}</div>
-            <div class="text-sm font-bold text-white">${r.movie.title}</div>
-          </div>
-          <span class="text-xs font-bold text-amber-300">Watch Movie →</span>
-        </button>
-      `).join('') || '<div class="text-xs text-slate-500">No matching movies found.</div>';
+      const matches = channels.filter(c => c.name.toLowerCase().includes(q));
+      box.innerHTML = matches.map(c => {
+        const idx = channels.indexOf(c);
+        return `
+          <button onclick="switchBottomTab('livetv'); tuneToChannel(${idx}, true);" class="w-full rounded-xl bg-[#111522] hover:bg-[#192034] border border-white/10 p-3 flex items-center justify-between text-left cursor-pointer">
+            <div>
+              <div class="font-mono-tv text-[10px] text-amber-300">CH ${c.number}</div>
+              <div class="text-sm font-bold text-white">${c.name}</div>
+            </div>
+            <span class="text-xs font-bold text-amber-300">Watch Live →</span>
+          </button>
+        `;
+      }).join('');
     }
 
+    function openManageModal() {
+      document.getElementById('manage-modal').classList.remove('hidden');
+    }
+
+    function closeManageModal() {
+      document.getElementById('manage-modal').classList.add('hidden');
+    }
+
+    function addCustomChannel() {
+      const name = (document.getElementById('new-ch-name').value || '').trim();
+      const url = (document.getElementById('new-ch-url').value || '').trim();
+      if (!name || !url) {
+        showToast('Enter both channel name and link');
+        return;
+      }
+      const nextNum = Math.max(...channels.map(c => c.number)) + 1;
+      channels.push({
+        id: 'ch-' + Date.now(),
+        number: nextNum,
+        name,
+        year: 'Classic',
+        rating: 'TV-G',
+        color: '#1e293b',
+        url,
+        desc: `24/7 broadcast of ${name}.`
+      });
+      saveChannels();
+      closeManageModal();
+      renderEPG();
+      tuneToChannel(channels.length - 1, true);
+      showToast(`Added CH ${nextNum}: ${name}`);
+    }
+
+    // Initialize Application only when browser is authorized
     let appBooted = false;
-    function startArrSApp() {
+    function startToonSApp() {
       if (appBooted) {
         if (videoEl && videoEl.paused && videoEl.src) {
           videoEl.play().catch(() => {});
@@ -1625,13 +1756,13 @@
       setInterval(updateLiveClock, 1000);
       renderEPG();
       tuneToChannel(0, true);
-      prefetchAllChannelPlaylists();
+      prefetchAllChannelSchedules();
     }
 
     window.addEventListener('load', () => {
       const authorized = applyAuthorizationState();
       if (authorized) {
-        startArrSApp();
+        startToonSApp();
       }
     });
   </script>
